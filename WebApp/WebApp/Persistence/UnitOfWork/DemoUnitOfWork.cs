@@ -17,6 +17,10 @@ namespace WebApp.Persistence.UnitOfWork
             _context = context;
         }
 
+
+        [Dependency]
+        public IProductRepository Products { get; set; }
+
         public int Complete()
         {
             return _context.SaveChanges();

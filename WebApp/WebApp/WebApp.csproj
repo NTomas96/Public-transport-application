@@ -259,18 +259,25 @@
     <Compile Include="Migrations\201905222056072_InitialMigration.Designer.cs">
       <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905281236530_AddedProduct.cs" />
+    <Compile Include="Migrations\201905281236530_AddedProduct.Designer.cs">
+      <DependentUpon>201905281236530_AddedProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\GeoCords.cs" />
     <Compile Include="Models\Line.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\RideSchedule.cs" />
     <Compile Include="Models\Station.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\TicketType.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
+    <Compile Include="Persistence\Repository\IProductRepository.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
+    <Compile Include="Persistence\Repository\ProductRepository.cs" />
     <Compile Include="Persistence\Repository\Repository.cs" />
     <Compile Include="Persistence\UnitOfWork\DemoUnitOfWork.cs" />
     <Compile Include="Persistence\UnitOfWork\IUnitOfWork.cs" />
@@ -374,6 +381,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201905222056072_InitialMigration.resx">
       <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905281236530_AddedProduct.resx">
+      <DependentUpon>201905281236530_AddedProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
