@@ -7,7 +7,7 @@ using WebApp.Models;
 
 namespace WebApp.Persistence.Repository
 {
-    public interface IProductRepository
+    public interface IProductRepository : IRepository<Product,int>
     {
         IEnumerable<Product> GetAllProducts(int pageIndex, int pageSize);
     }
