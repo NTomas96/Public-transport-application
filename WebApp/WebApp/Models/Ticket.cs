@@ -9,5 +9,6 @@ namespace WebApp.Models
     {
         public int Id { get; set; }
         public TicketType TicketType{ get; set; }
+        public ApplicationUser TicketUser { get; set; }
     }
 }
