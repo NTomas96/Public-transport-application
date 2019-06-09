@@ -1,14 +1,18 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { TestComponent }      from './test/test.component';
-import { TestComponent2 }      from './test/test2.component';
-import { TestComponent3 }      from './test/test3.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { HomeComponent } from "./home/home.component";
+import { LinesComponent } from "./lines/lines.component";
+import { TimetableComponent } from "./timetable/timetable.component";
+import { LivemapComponent } from "./livemap/livemap.component";
+import { PricesComponent } from "./prices/prices.component";
 
 const routes: Routes = [
-	{ path: 'test', component: TestComponent },
-	{ path: 'test2', component: TestComponent2 },
-	{ path: 'test3', component: TestComponent3 },
-	{ path: '', component: TestComponent }
+	{ path: "home", component: HomeComponent },
+	{ path: "", component: HomeComponent },
+  { path: "lines", component: LinesComponent},
+  { path: "timetable", component: TimetableComponent },
+  { path: "livemap", component: LivemapComponent },
+  { path: "prices", component: PricesComponent }
 ];
 
 @NgModule({
