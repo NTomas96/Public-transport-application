@@ -1,0 +1,6 @@
+<mat-toolbar color="primary">
+    <mat-nav-list>
+        <a class="nav-list-item" *ngFor="let link of links" mat-button color="primary" routerLink="{{ link.href }}" > <mat-icon>{{ link.icon }}</mat-icon> {{ link.name }} </a>
+    </mat-nav-list>
+</mat-toolbar>
+<router-outlet></router-outlet>

@@ -1,0 +1,19 @@
+.side-nav
+{
+    width: 250px;
+}
+
+.nav-list-item
+{
+    display: inline-block!important;
+    color: #fff;
+}
+
+.mat-nav-list
+{
+    padding: 0!important;
+}
+
+.mat-button.mat-primary .mat-button-focus-overlay, .mat-icon-button.mat-primary .mat-button-focus-overlay, .mat-stroked-button.mat-primary .mat-button-focus-overlay{
+    background-color: #000!important;
+}
