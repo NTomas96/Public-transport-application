@@ -20,6 +20,7 @@ import { LinesComponent } from "./lines/lines.component";
 import { TimetableComponent } from "./timetable/timetable.component";
 import { LivemapComponent } from "./livemap/livemap.component";
 import { PricesComponent } from "./prices/prices.component";
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PricesComponent } from "./prices/prices.component";
 	  LinesComponent,
 	  TimetableComponent,
 	  LivemapComponent,
-	  PricesComponent
+	  PricesComponent,
+	  LoginComponent
   ],
   imports: [
 	  BrowserModule,

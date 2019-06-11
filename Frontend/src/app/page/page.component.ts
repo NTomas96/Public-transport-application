@@ -13,5 +13,6 @@ export class PageComponent {
 	  { href: "timetable", name: "Red voznje", icon: "today" },
 	  { href: "livemap", name: "Trenutna lokacija", icon: "directions_bus" },
 	  { href: "prices", name: "Cenovnik", icon: "money" },
+	  { href: "login", name: "Registruj se!", icon: "account_circle"}
   ];
 }
