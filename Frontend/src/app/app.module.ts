@@ -6,7 +6,16 @@ import { PageComponent } from "./page/page.component";
 import { HomeComponent } from "./home/home.component";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatButtonModule, MatCheckboxModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule } from "@angular/material";
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatSidenavModule,
+  MatListModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatGridListModule
+} from "@angular/material";
+
 import { LinesComponent } from "./lines/lines.component";
 import { TimetableComponent } from "./timetable/timetable.component";
 import { LivemapComponent } from "./livemap/livemap.component";
@@ -30,7 +39,8 @@ import { PricesComponent } from "./prices/prices.component";
 	  MatSidenavModule,
 	  MatListModule,
 	  MatToolbarModule,
-	  MatIconModule
+	  MatIconModule,
+	  MatGridListModule
   ],
   providers: [],
   bootstrap: [PageComponent]
