@@ -1,1 +1,16 @@
-Welcome to {{ title }}!
+<div class="text-container">
+	<h1 class="mat-headline">Mreza linija</h1>
+	<mat-divider></mat-divider>
+	<div class="map-body">
+		<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+
+			<agm-polyline *ngFor="let line of lines" [strokeColor]="'lightblue'" [strokeWeight]="4">
+				<agm-polyline-point *ngFor="let point of line.waypoints;" [latitude]="point.lat" [longitude]="point.lon">
+				</agm-polyline-point>
+			</agm-polyline>
+
+			<agm-marker *ngFor="let station of stations" [latitude]="station.lat" [longitude]="station.lon" [iconUrl]="'assets/img/bus-icon.png'"></agm-marker>
+
+		</agm-map>
+	</div>
+</div>

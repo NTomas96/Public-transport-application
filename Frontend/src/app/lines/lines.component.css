@@ -1,0 +1,12 @@
+.text-container {
+	padding-left: 40px;
+	padding-right: 40px;
+}
+
+.map-body {
+	margin-top: 16px;
+}
+
+agm-map {
+	height: 600px;
+}

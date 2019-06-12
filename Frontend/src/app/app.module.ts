@@ -21,6 +21,7 @@ import {TimetableComponent} from "./timetable/timetable.component";
 import {LivemapComponent} from "./livemap/livemap.component";
 import {PricesComponent} from "./prices/prices.component";
 import {LoginComponent} from "./login/login.component";
+import {AgmCoreModule} from "@agm/core";
 
 @NgModule({
 	declarations: [
@@ -42,7 +43,10 @@ import {LoginComponent} from "./login/login.component";
 		MatListModule,
 		MatToolbarModule,
 		MatIconModule,
-		MatGridListModule
+		MatGridListModule,
+		AgmCoreModule.forRoot({
+			apiKey: "AIzaSyCLn-niMlI4zaZVqToyMaFmFCw_qAryqa4" // Google Maps API key
+		})
 	],
 	providers: [],
 	bootstrap: [PageComponent]
