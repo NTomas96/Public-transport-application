@@ -1,10 +1,10 @@
-import { Component } from "@angular/core";
+import {Component} from "@angular/core";
 
 @Component({
-  selector: "app-timetable",
-  templateUrl: "./timetable.component.html",
-  styleUrls: ["./timetable.component.css"]
+	selector: "app-timetable",
+	templateUrl: "./timetable.component.html",
+	styleUrls: ["./timetable.component.css"]
 })
 export class TimetableComponent {
-  title = "Red voznje";
+	title = "Red voznje";
 }

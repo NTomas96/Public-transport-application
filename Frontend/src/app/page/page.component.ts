@@ -1,18 +1,18 @@
-import { Component } from "@angular/core";
+import {Component} from "@angular/core";
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./page.component.html",
-  styleUrls: ["./page.component.css"]
+	selector: "app-root",
+	templateUrl: "./page.component.html",
+	styleUrls: ["./page.component.css"]
 })
 export class PageComponent {
-  title = "...";
-  links = [
-	  { href: "", name: "Pocetna", icon: "home" },
-	  { href: "lines", name: "Mreza linija", icon: "map" },
-	  { href: "timetable", name: "Red voznje", icon: "today" },
-	  { href: "livemap", name: "Trenutna lokacija", icon: "directions_bus" },
-	  { href: "prices", name: "Cenovnik", icon: "money" },
-	  { href: "login", name: "Registruj se!", icon: "account_circle"}
-  ];
+	title = "...";
+	links = [
+		{href: "", name: "Pocetna", icon: "home", side: "left"},
+		{href: "lines", name: "Mreza linija", icon: "map", side: "left"},
+		{href: "timetable", name: "Red voznje", icon: "today", side: "left"},
+		{href: "livemap", name: "Trenutna lokacija", icon: "directions_bus", side: "left"},
+		{href: "prices", name: "Cenovnik", icon: "money", side: "left"},
+		{href: "login", name: "Prijava", icon: "account_circle", side: "right"}
+	];
 }

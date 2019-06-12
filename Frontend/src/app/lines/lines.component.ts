@@ -6,5 +6,5 @@ import { Component } from "@angular/core";
   styleUrls: ["./lines.component.css"]
 })
 export class LinesComponent {
-  title = "Mreza linija";
+	title = "Mreza linija";
 }
