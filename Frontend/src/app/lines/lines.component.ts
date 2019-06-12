@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { MapTypeStyle } from "@agm/core";
 
 @Component({
   selector: "app-lines",
@@ -10,6 +11,11 @@ export class LinesComponent {
 	lat = 44.2743;
 	lng = 19.8903;
 	zoom = 14;
+
+	mapStyle = [({
+		featureType: "transit.station.bus",
+		stylers: [{ visibility: "off" }]
+	} as MapTypeStyle)];
 
 	stations = [
 		{name: "Iverak", lat: 44.293703, lon: 19.969926},
