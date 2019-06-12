@@ -3,7 +3,6 @@
 	<mat-divider></mat-divider>
 	<div class="map-body">
 		<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="mapStyle">
-
 			<agm-polyline *ngFor="let line of lines" [strokeColor]="line.color" [strokeWeight]="4">
 				<agm-polyline-point *ngFor="let point of line.waypoints;" [latitude]="point.lat" [longitude]="point.lon">
 				</agm-polyline-point>
@@ -13,4 +12,5 @@
 
 		</agm-map>
 	</div>
+
 </div>

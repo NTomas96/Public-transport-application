@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { MapTypeStyle } from "@agm/core";
 
+
 @Component({
   selector: "app-lines",
   templateUrl: "./lines.component.html",
   styleUrls: ["./lines.component.css"]
 })
 export class LinesComponent {
+
 	title = "Mreza linija";
 	lat = 44.2743;
 	lng = 19.8903;
