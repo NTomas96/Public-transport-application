@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Backend</RootNamespace>
     <AssemblyName>Backend</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -89,6 +90,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Models\GeoCords.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Line.cs" />
@@ -106,6 +108,19 @@
     <Compile Include="Persistence\Repository\Repository.cs" />
     <Compile Include="Persistence\UnitOfWork\DemoUnitOfWork.cs" />
     <Compile Include="Persistence\UnitOfWork\IUnitOfWork.cs" />
+=======
+    <Compile Include="Models\GeoLocation.cs" />
+    <Compile Include="Models\Line.cs" />
+    <Compile Include="Models\LineType.cs" />
+    <Compile Include="Models\PassigerType.cs" />
+    <Compile Include="Models\Pricelist.cs" />
+    <Compile Include="Models\Station.cs" />
+    <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Models\TicketType.cs" />
+    <Compile Include="Models\Timetable.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserType.cs" />
+>>>>>>> b9f0eb17e11d478e125d32efcafcf732ff3cdb98
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
