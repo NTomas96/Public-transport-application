@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using Unity;
 
@@ -17,11 +18,13 @@ namespace Backend
             var resolver = new UnityResolver(container);
             resolver.RegisterTypes();
             config.DependencyResolver = resolver;
+            config.EnableCors();
 
             //GlobalHost.DependencyResolver = new SignalRUnityDependencyResolver(container);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

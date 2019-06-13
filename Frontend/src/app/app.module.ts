@@ -22,6 +22,8 @@ import {LivemapComponent} from "./livemap/livemap.component";
 import {PricesComponent} from "./prices/prices.component";
 import {LoginComponent} from "./login/login.component";
 import {AgmCoreModule} from "@agm/core";
+import {HttpClientModule} from "@angular/common/http";
+import {ApiService} from "./api/api.service";
 
 @NgModule({
 	declarations: [
@@ -35,6 +37,7 @@ import {AgmCoreModule} from "@agm/core";
 	],
 	imports: [
 		BrowserModule,
+		HttpClientModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		MatButtonModule,
@@ -48,7 +51,7 @@ import {AgmCoreModule} from "@agm/core";
 			apiKey: "AIzaSyCLn-niMlI4zaZVqToyMaFmFCw_qAryqa4" // Google Maps API key
 		})
 	],
-	providers: [],
+	providers: [ApiService],
 	bootstrap: [PageComponent]
 })
 export class AppModule {
