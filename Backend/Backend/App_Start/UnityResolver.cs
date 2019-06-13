@@ -1,4 +1,5 @@
 ﻿using Backend.Persistence;
+using Backend.Persistence.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -67,6 +68,7 @@ namespace Backend.App_Start
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<ILineRepository, LineRepository>();
             container.RegisterType<IStationRepository, StationRepository>();
+            container.RegisterType<ITimetableRepository, TimetableRepository>();
 
             container.RegisterType<DbContext, AppDbContext>(new PerResolveLifetimeManager());
             container.RegisterType<IUnitOfWork, DemoUnitOfWork>();

@@ -41,4 +41,8 @@ export class ApiService {
 		return this.http.get(environment.apiUrl + "Lines/" + id, this.httpOptions).pipe(
 			map(ApiService.extractData));
 	}
+
+	getTimetables(): Observable<any> {
+		return this.http.get(environment.apiUrl + "Timetables", this.httpOptions).pipe(map(ApiService.extractData));
+	}
 }

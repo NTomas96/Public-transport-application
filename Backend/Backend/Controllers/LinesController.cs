@@ -87,7 +87,7 @@ namespace Backend.Controllers
         // GET: api/Lines
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IQueryable<Line> GetLines()
-        {
+        {            
             return unitOfWork.Lines.GetLines();
         }
 
