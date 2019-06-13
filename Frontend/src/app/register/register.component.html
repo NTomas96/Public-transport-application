@@ -1,0 +1,53 @@
+<div class="text-container">
+	<h1 class="mat-headline">Registracija</h1>
+	<mat-divider></mat-divider>
+	<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+		<div class="mat-body register-body">
+			<mat-form-field>
+				<input matInput placeholder="Ime" formControlName="firstName">
+			</mat-form-field>
+
+			<mat-form-field>
+				<input matInput placeholder="Prezime" formControlName="lastName">
+			</mat-form-field>
+
+			<mat-form-field>
+				<input type="email" matInput placeholder="E-mail" formControlName="email" [errorStateMatcher]="matcher">
+				<mat-error *ngIf="registrationForm.controls['email'].hasError('email') && !registrationForm.controls['email'].hasError('required')">
+					Please enter a valid email address
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field>
+				<input matInput type="password" placeholder="Lozinka" formControlName="password">
+			</mat-form-field>
+
+			<mat-form-field>
+				<input matInput type="password" placeholder="Potvrdi lozinku" formControlName="confirmPassword">
+			</mat-form-field>
+
+			<!--<mat-form-field>
+				<input matInput [matDatepicker]="picker" placeholder="Datum rodjenja" formControlName="dayOfBirth">
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
+			</mat-form-field>-->
+
+			<mat-form-field>
+				<input matInput placeholder="Adresa" formControlName="address">
+			</mat-form-field>
+
+			<mat-form-field>
+				<mat-label>Tip naloga</mat-label>
+				<mat-select formControlName="passagerType">
+					<mat-option *ngFor="let pt of passagerTypes" [value]="pt">
+						{{pt}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<!-- need to add  aditional info browser-->
+
+			<button mat-raised-button color="primary" [disabled]="registrationForm.invalid" (click)="onSubmit()">Registruj se</button>
+		</div>
+	</form>
+</div>

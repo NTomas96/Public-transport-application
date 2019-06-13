@@ -1,15 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { Validators } from "@angular/forms";
+import {MyErrorStateMatcher} from "../mailErrorCathcer";
 
 @Component({
   	selector: "app-registration",
-  	templateUrl: "./registration.component.html",
-  	styleUrls: ["./registration.component.css"]
+  	templateUrl: "./register.component.html",
+  	styleUrls: ["./register.component.css"]
 })
-export class RegistrationComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
 	passagerTypes = ["Student", "Pensioner", "Regular"];
+
+	matcher = new MyErrorStateMatcher();
 
 	registrationForm = this.fb.group({
 		firstName: ["", Validators.required],

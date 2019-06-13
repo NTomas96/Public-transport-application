@@ -1,6 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
+import {MyErrorStateMatcher} from "../mailErrorCathcer";
+
+
 @Component({
 	selector: "app-login",
 	templateUrl: "./login.component.html",
@@ -11,6 +14,8 @@ export class LoginComponent implements OnInit {
 
 	loginForm: FormGroup;
 
+	matcher = new MyErrorStateMatcher();
+
 	constructor(private fb: FormBuilder) {}
 
 	onSubmit() {
@@ -19,7 +24,7 @@ export class LoginComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.loginForm = this.fb.group({
-			username: ["", Validators.required],
+			email: ["", Validators.required, Validators.email],
 			password: ["", Validators.required]
 		});
 	}
