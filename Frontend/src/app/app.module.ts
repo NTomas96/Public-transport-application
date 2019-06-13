@@ -14,7 +14,7 @@ import {
 	MatListModule,
 	MatToolbarModule,
 	MatIconModule,
-	MatGridListModule, MatFormFieldModule
+	MatGridListModule, MatFormFieldModule, MatInputModule
 } from "@angular/material";
 
 import {LinesComponent} from "./lines/lines.component";
@@ -54,7 +54,8 @@ import {ApiService} from "./api/api.service";
 			apiKey: "AIzaSyCLn-niMlI4zaZVqToyMaFmFCw_qAryqa4" // Google Maps API key
 		}),
 		ReactiveFormsModule,
-		MatFormFieldModule
+		MatFormFieldModule,
+		MatInputModule
 	],
 	providers: [ApiService],
 	bootstrap: [PageComponent]

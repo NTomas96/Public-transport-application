@@ -1,4 +1,20 @@
-.container-alignment
-{
-	text-align: center;
+.text-container {
+	padding-left: 40px;
+	padding-right: 40px;
+}
+
+.login-body {
+	margin-top: 16px;
+	width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.login-body > * {
+	width: 100%;
+}
+
+.button-divider {
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
