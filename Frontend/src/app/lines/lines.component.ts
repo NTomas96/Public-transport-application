@@ -28,7 +28,7 @@ export class LinesComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.apiService
-			.getLinesWithWaypoints()
+			.getLinesWithStations()
 			.subscribe(
 				(lines) => {
 					this.lines = lines;

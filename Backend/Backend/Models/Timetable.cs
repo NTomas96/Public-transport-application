@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,7 +16,22 @@ namespace Backend.Models
         public DayOfWeek DayOfWeek { get; set; }
         [Index("Timetable_1", 2, IsUnique = true)]
         public Line Line { get; set; }
-        public List<long> Departures { get; set; }
-       
+
+        [NotMapped]
+        public List<long> Departures
+        {
+            get
+            {
+                return Array.ConvertAll(DeparturesInternal.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries), long.Parse).ToList();
+            }
+            set
+            {
+                DeparturesInternal = String.Join(";", value.Select(p => p.ToString()).ToArray());
+            }
+        }
+
+        [JsonIgnore]
+        public string DeparturesInternal { get; set; }
+
     }
 }

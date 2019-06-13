@@ -3,42 +3,20 @@
 	<mat-divider></mat-divider>
 	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 		<div class="mat-body login-body">
-
 			<mat-form-field>
-				<input matInput placeholder="Email">
+				<input type="email" matInput placeholder="E-mail" formControlName="email" [errorStateMatcher]="matcher">
+				<mat-error *ngIf="loginForm.controls['email'].hasError('email') && !loginForm.controls['email'].hasError('required')">
+					Please enter a valid email address
+				</mat-error>
 			</mat-form-field>
 
 			<mat-form-field>
-				<input matInput placeholder="Password" type="password">
+				<input matInput type="password" placeholder="Lozinka" formControlName="password">
 			</mat-form-field>
 
-			<button mat-raised-button color="primary">Prijava</button>
+			<button mat-raised-button color="primary" [disabled]="loginForm.invalid" (click)="onSubmit()">Prijava</button>
 			<mat-divider class="button-divider"></mat-divider>
-			<button mat-raised-button color="primary">Registracija</button>
+			<button mat-raised-button color="primary" routerLink="/register" >Registracija</button>
 		</div>
 	</form>
 </div>
-
-<!--
-<div class="container-alignment">
-	<h1>Prijava</h1>
-	<mat-divider></mat-divider>
-
-	<mat-form-field>
-		<input matInput placeholder="Input">
-	</mat-form-field>
-
-	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-		<div>
-			<label for="us">Korisnicko ime:</label>
-			<input id="us" type="text" formControlName="username" placeholder="Korisnicko ime (email)">
-		</div>
-		<div>
-			<label for="ps">Lozinka:</label>
-			<input id="ps" type="password" formControlName="password" placeholder="Lozinka">
-		</div>
-		<button mat-button color="primary" type="submit" [disabled]="loginForm.invalid">Uloguj se</button>
-		<a mat-button color="primary" routerLink="/register">Registruj se</a>
-	</form>
-</div>
--->

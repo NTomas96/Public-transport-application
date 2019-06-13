@@ -22,8 +22,8 @@ export class ApiService {
 		return res || {};
 	}
 
-	getLinesWithWaypoints(): Observable<any> {
-		return this.http.get(environment.apiUrl + "Lines/WithWaypoints", this.httpOptions).pipe(
+	getLinesWithStations(): Observable<any> {
+		return this.http.get(environment.apiUrl + "Lines/WithStations", this.httpOptions).pipe(
 			map(ApiService.extractData));
 	}
 

@@ -14,11 +14,9 @@
 					<agm-polyline-point *ngFor="let point of selectedLine.Waypoints;" [latitude]="point.Lat" [longitude]="point.Lon">
 					</agm-polyline-point>
 				</agm-polyline>
+
+				<agm-marker *ngFor="let station of selectedLine.Stations" [latitude]="station.Lat" [longitude]="station.Lon" [iconUrl]="'assets/img/bus-icon.png'"></agm-marker>
 			</ng-container>
-
-
-			<agm-marker *ngFor="let station of stations" [latitude]="station.lat" [longitude]="station.lon" [iconUrl]="'assets/img/bus-icon.png'"></agm-marker>
-
 		</agm-map>
 	</div>
 

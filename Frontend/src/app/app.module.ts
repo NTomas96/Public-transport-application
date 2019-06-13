@@ -14,7 +14,12 @@ import {
 	MatListModule,
 	MatToolbarModule,
 	MatIconModule,
-	MatGridListModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule
+	MatGridListModule,
+	MatFormFieldModule,
+	MatInputModule,
+	MatOptionModule,
+	MatSelectModule,
+	MatDatepickerModule
 } from "@angular/material";
 
 import {LinesComponent} from "./lines/lines.component";
@@ -23,7 +28,7 @@ import {LivemapComponent} from "./livemap/livemap.component";
 import {PricesComponent} from "./prices/prices.component";
 import {LoginComponent} from "./login/login.component";
 import {AgmCoreModule} from "@agm/core";
-import {RegistrationComponent} from "./registration/registration.component";
+import {RegisterComponent} from "./register/register.component";
 import {HttpClientModule} from "@angular/common/http";
 import {ApiService} from "./api/api.service";
 
@@ -36,7 +41,7 @@ import {ApiService} from "./api/api.service";
 		LivemapComponent,
 		PricesComponent,
 		LoginComponent,
-		RegistrationComponent
+		RegisterComponent
 	],
 	imports: [
 		BrowserModule,
@@ -57,7 +62,10 @@ import {ApiService} from "./api/api.service";
 		}),
 		ReactiveFormsModule,
 		MatFormFieldModule,
-		MatInputModule
+		MatInputModule,
+		MatDatepickerModule,
+		MatDatepickerModule,
+		MatDatepickerModule
 	],
 	providers: [ApiService],
 	bootstrap: [PageComponent]

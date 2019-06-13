@@ -6,7 +6,7 @@ import {TimetableComponent} from "./timetable/timetable.component";
 import {LivemapComponent} from "./livemap/livemap.component";
 import {PricesComponent} from "./prices/prices.component";
 import {LoginComponent} from "./login/login.component";
-import {RegistrationComponent} from "./registration/registration.component";
+import {RegisterComponent} from "./register/register.component";
 
 const routes: Routes = [
 	{path: "home", component: HomeComponent},
@@ -16,7 +16,7 @@ const routes: Routes = [
 	{path: "livemap", component: LivemapComponent},
 	{path: "prices", component: PricesComponent},
 	{path: "login", component: LoginComponent},
-	{path: "register", component: RegistrationComponent}
+	{path: "register", component: RegisterComponent}
 ];
 
 @NgModule({

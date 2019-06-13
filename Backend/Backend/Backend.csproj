@@ -163,14 +163,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906131000140_InitialCreate.cs" />
-    <Compile Include="Migrations\201906131000140_InitialCreate.Designer.cs">
-      <DependentUpon>201906131000140_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201906131117381_InitialCreate.cs" />
+    <Compile Include="Migrations\201906131117381_InitialCreate.Designer.cs">
+      <DependentUpon>201906131117381_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\GeoLocation.cs" />
     <Compile Include="Models\Vehicle.cs" />
-    <Compile Include="Models\Waypoint.cs" />
     <Compile Include="Persistence\AppDbContext.cs" />
     <Compile Include="Models\Line.cs" />
     <Compile Include="Models\LineType.cs" />
@@ -206,8 +205,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906131000140_InitialCreate.resx">
-      <DependentUpon>201906131000140_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906131117381_InitialCreate.resx">
+      <DependentUpon>201906131117381_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
