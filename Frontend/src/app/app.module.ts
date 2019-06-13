@@ -1,5 +1,6 @@
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
+import {ReactiveFormsModule} from "@angular/forms";
 
 import {AppRoutingModule} from "./app-routing.module";
 import {PageComponent} from "./page/page.component";
@@ -13,7 +14,7 @@ import {
 	MatListModule,
 	MatToolbarModule,
 	MatIconModule,
-	MatGridListModule
+	MatGridListModule, MatFormFieldModule
 } from "@angular/material";
 
 import {LinesComponent} from "./lines/lines.component";
@@ -52,7 +53,8 @@ import {ApiService} from "./api/api.service";
 		AgmCoreModule.forRoot({
 			apiKey: "AIzaSyCLn-niMlI4zaZVqToyMaFmFCw_qAryqa4" // Google Maps API key
 		}),
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		MatFormFieldModule
 	],
 	providers: [ApiService],
 	bootstrap: [PageComponent]

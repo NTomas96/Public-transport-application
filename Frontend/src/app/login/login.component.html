@@ -1,14 +1,18 @@
-<h1>Welcome to {{ title }}!</h1>
-<form [formGroup]="loginForm" (ngSubmit)="OnSubmit()">
-	<div>
-		<label for="us">Korisnicko ime:</label>
-		<input id="us" type="text" formControlName="username" placeholder="Korisnicko ime (email)">
-	</div>
-	<div>
-		<label for="ps">Lozinka:</label>
-		<input id="ps" type="password" formControlName="password" placeholder="Lozinka">
-	</div>
-	<button mat-button color="primary" type="submit" [disabled]="loginForm.invalid">Uloguj se</button>
-	<a mat-button color="primary" routerLink="/register">Registruj se</a>
-</form>
-
+<div class="container-alignment">
+	<h1>Prijava</h1>
+	<mat-divider></mat-divider>
+	<br/>
+	<br/>
+	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+		<div>
+			<label for="us">Korisnicko ime:</label>
+			<input id="us" type="text" formControlName="username" placeholder="Korisnicko ime (email)">
+		</div>
+		<div>
+			<label for="ps">Lozinka:</label>
+			<input id="ps" type="password" formControlName="password" placeholder="Lozinka">
+		</div>
+		<button mat-button color="primary" type="submit" [disabled]="loginForm.invalid">Uloguj se</button>
+		<a mat-button color="primary" routerLink="/register">Registruj se</a>
+	</form>
+</div>
