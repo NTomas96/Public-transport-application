@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { Validators } from "@angular/forms";
 import {MyErrorStateMatcher} from "../mailErrorCathcer";
 
@@ -12,17 +12,18 @@ export class RegisterComponent implements OnInit {
 
 	passagerTypes = ["Student", "Pensioner", "Regular"];
 
-	matcher = new MyErrorStateMatcher();
+	matcherEmail = new MyErrorStateMatcher();
+	matcherPassword = new MyErrorStateMatcher();
 
 	registrationForm = this.fb.group({
-		firstName: ["", Validators.required],
-		lastName: ["", Validators.required],
-		email: ["", Validators.required, Validators.email],
-		password: ["", Validators.required, Validators.minLength(6)],
-		confirmPassword: ["", Validators.required, Validators.minLength(6)],
-		dayOfBirth: ["", Validators.required],
-		address: ["", Validators.required],
-		passagerType: [this.passagerTypes[0], Validators.required],
+		firstName: ["", [Validators.required]],
+		lastName: ["", [Validators.required]],
+		email: ["", [Validators.required, Validators.email]],
+		password: ["", [Validators.required, Validators.minLength(6)]],
+		confirmPassword: ["", [Validators.required, Validators.minLength(6)]],
+		dayOfBirth: ["", [Validators.required]],
+		address: ["", [Validators.required]],
+		passagerType: [this.passagerTypes[0], [Validators.required]],
 		aditionalInfo: [""],
 	});
 

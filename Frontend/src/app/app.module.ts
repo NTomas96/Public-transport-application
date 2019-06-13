@@ -17,10 +17,8 @@ import {
 	MatGridListModule,
 	MatFormFieldModule,
 	MatInputModule,
-	ErrorStateMatcher,
-	ShowOnDirtyErrorStateMatcher,
-	MatDatepickerModule,
-	MatSelectModule
+	MatSelectModule,
+	MatDatepickerModule
 } from "@angular/material";
 
 import {LinesComponent} from "./lines/lines.component";
@@ -63,7 +61,9 @@ import {ApiService} from "./api/api.service";
 		MatFormFieldModule,
 		MatInputModule,
 		MatDatepickerModule,
-		MatSelectModule
+		MatSelectModule,
+		MatDatepickerModule,
+		MatDatepickerModule
 	],
 	providers: [ApiService],
 	bootstrap: [PageComponent]

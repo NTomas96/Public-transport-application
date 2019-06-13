@@ -12,25 +12,26 @@
 			</mat-form-field>
 
 			<mat-form-field>
-				<input type="email" matInput placeholder="E-mail" formControlName="email" [errorStateMatcher]="matcher">
+				<input type="email" matInput placeholder="E-mail" formControlName="email" [errorStateMatcher]="matcherEmail"/>
 				<mat-error *ngIf="registrationForm.controls['email'].hasError('email') && !registrationForm.controls['email'].hasError('required')">
-					Please enter a valid email address
+					Unesite ispravanu E-mail adresu
 				</mat-error>
 			</mat-form-field>
 
 			<mat-form-field>
-				<input matInput type="password" placeholder="Lozinka" formControlName="password">
+				<input matInput type="password" placeholder="Lozinka" formControlName="password"/>
+				<mat-hint>min 6 karaktera</mat-hint>
 			</mat-form-field>
 
 			<mat-form-field>
 				<input matInput type="password" placeholder="Potvrdi lozinku" formControlName="confirmPassword">
 			</mat-form-field>
 
-			<!--<mat-form-field>
-				<input matInput [matDatepicker]="picker" placeholder="Datum rodjenja" formControlName="dayOfBirth">
+			<mat-form-field>
+				<input matInput [matDatepicker]="picker" placeholder="Choose a date">
 				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 				<mat-datepicker #picker></mat-datepicker>
-			</mat-form-field>-->
+			</mat-form-field>
 
 			<mat-form-field>
 				<input matInput placeholder="Adresa" formControlName="address">
