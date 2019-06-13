@@ -1,5 +1,6 @@
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
+import {ReactiveFormsModule} from "@angular/forms";
 
 import {AppRoutingModule} from "./app-routing.module";
 import {PageComponent} from "./page/page.component";
@@ -22,6 +23,7 @@ import {LivemapComponent} from "./livemap/livemap.component";
 import {PricesComponent} from "./prices/prices.component";
 import {LoginComponent} from "./login/login.component";
 import {AgmCoreModule} from "@agm/core";
+import {RegistrationComponent} from "./registration/registration.component";
 
 @NgModule({
 	declarations: [
@@ -31,7 +33,8 @@ import {AgmCoreModule} from "@agm/core";
 		TimetableComponent,
 		LivemapComponent,
 		PricesComponent,
-		LoginComponent
+		LoginComponent,
+		RegistrationComponent
 	],
 	imports: [
 		BrowserModule,
@@ -46,7 +49,8 @@ import {AgmCoreModule} from "@agm/core";
 		MatGridListModule,
 		AgmCoreModule.forRoot({
 			apiKey: "AIzaSyCLn-niMlI4zaZVqToyMaFmFCw_qAryqa4" // Google Maps API key
-		})
+		}),
+		ReactiveFormsModule
 	],
 	providers: [],
 	bootstrap: [PageComponent]
