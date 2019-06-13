@@ -10,5 +10,8 @@ namespace WebApp.Persistence.Repository
     public interface ILineRepository : IRepository<Line,int>
     {
         IQueryable<Line> GetLines();
+        IQueryable<Line> GetLinesWithWaypoints();
+
+        Line GetLineWithWaypoints(int id);
     }
 }

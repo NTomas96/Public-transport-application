@@ -7,11 +7,9 @@ using System.Web;
 
 namespace Backend.Models
 {
-    public class Station : GeoLocation
+    public class Waypoint : GeoLocation
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public List<Line> Lines { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace Backend.Models
         public string Name { get; set; }
         public string Color { get; set; }
         public LineType LineType { get; set; }
-        public List<GeoLocation> Waypoints { get; set; }
+        public List<Waypoint> Waypoints { get; set; }
+        public List<Station> Stations { get; set; }
     }
 }

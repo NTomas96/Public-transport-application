@@ -200,8 +200,6 @@ C:\Users\Spajk\Desktop\uniproj\Backend\Backend\bin\System.Text.Encodings.Web.xml
 C:\Users\Spajk\Desktop\uniproj\Backend\Backend\bin\Unity.Abstractions.pdb
 C:\Users\Spajk\Desktop\uniproj\Backend\Backend\bin\Unity.Container.pdb
 C:\Users\Spajk\Desktop\uniproj\Backend\Backend\bin\Unity.Microsoft.DependencyInjection.pdb
-C:\Users\Spajk\Desktop\uniproj\Backend\Backend\obj\Debug\Backend.Migrations.InitialCreate.resources
-C:\Users\Spajk\Desktop\uniproj\Backend\Backend\obj\Debug\Backend.csproj.GenerateResource.cache
 C:\Users\Spajk\Desktop\uniproj\Backend\Backend\bin\System.Web.Cors.dll
 C:\Users\Spajk\Desktop\uniproj\Backend\Backend\bin\System.Web.Http.Cors.dll
 C:\Users\Spajk\Desktop\uniproj\Backend\Backend\bin\System.Web.Http.Cors.xml
@@ -412,3 +410,5 @@ D:\Nemanja Faks\Godina4\Letnji semestar 18-19\Programiranje u smart grid sistemi
 D:\Nemanja Faks\Godina4\Letnji semestar 18-19\Programiranje u smart grid sistemima\Web2Projekat\Backend\Backend\obj\Debug\Backend.csproj.CopyComplete
 D:\Nemanja Faks\Godina4\Letnji semestar 18-19\Programiranje u smart grid sistemima\Web2Projekat\Backend\Backend\obj\Debug\Backend.dll
 D:\Nemanja Faks\Godina4\Letnji semestar 18-19\Programiranje u smart grid sistemima\Web2Projekat\Backend\Backend\obj\Debug\Backend.pdb
+C:\Users\Spajk\Desktop\uniproj\Backend\Backend\obj\Debug\Backend.Migrations.InitialCreate.resources
+C:\Users\Spajk\Desktop\uniproj\Backend\Backend\obj\Debug\Backend.csproj.GenerateResource.cache

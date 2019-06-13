@@ -14,7 +14,7 @@ import {
 	MatListModule,
 	MatToolbarModule,
 	MatIconModule,
-	MatGridListModule, MatFormFieldModule, MatInputModule
+	MatGridListModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule
 } from "@angular/material";
 
 import {LinesComponent} from "./lines/lines.component";
@@ -50,6 +50,8 @@ import {ApiService} from "./api/api.service";
 		MatToolbarModule,
 		MatIconModule,
 		MatGridListModule,
+		MatOptionModule,
+		MatSelectModule,
 		AgmCoreModule.forRoot({
 			apiKey: "AIzaSyCLn-niMlI4zaZVqToyMaFmFCw_qAryqa4" // Google Maps API key
 		}),

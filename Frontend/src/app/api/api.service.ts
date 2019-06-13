@@ -22,6 +22,11 @@ export class ApiService {
 		return res || {};
 	}
 
+	getLinesWithWaypoints(): Observable<any> {
+		return this.http.get(environment.apiUrl + "Lines/WithWaypoints", this.httpOptions).pipe(
+			map(ApiService.extractData));
+	}
+
 	getLines(): Observable<any> {
 		return this.http.get(environment.apiUrl + "Lines", this.httpOptions).pipe(
 			map(ApiService.extractData));
@@ -29,6 +34,11 @@ export class ApiService {
 
 	getStations(): Observable<any> {
 		return this.http.get(environment.apiUrl + "Stations", this.httpOptions).pipe(
+			map(ApiService.extractData));
+	}
+
+	getLine(id): Observable<any> {
+		return this.http.get(environment.apiUrl + "Lines/" + id, this.httpOptions).pipe(
 			map(ApiService.extractData));
 	}
 }

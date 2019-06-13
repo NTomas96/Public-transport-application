@@ -13,7 +13,7 @@ namespace Backend.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201906130140328_InitialCreate"; }
+            get { return "201906131000140_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

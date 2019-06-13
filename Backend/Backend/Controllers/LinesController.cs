@@ -60,6 +60,27 @@ namespace Backend.Controllers
         {
             return unitOfWork.Lines.GetLines();
         }
+
+        [Route("api/Lines/WithWaypoints")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IQueryable<Line> GetLinesWithWaypoints()
+        {
+            return unitOfWork.Lines.GetLinesWithWaypoints();
+        }
+
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [ResponseType(typeof(Line))]
+        public IHttpActionResult GetLine(int id)
+        {
+            Line line = unitOfWork.Lines.GetLineWithWaypoints(id);
+            if (line == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(line);
+        }
+
         /*
         // GET: api/Lines/5
         [ResponseType(typeof(Line))]

@@ -19,7 +19,24 @@ namespace WebApp.Persistence.Repository
 
         public IQueryable<Line> GetLines()
         {
+            return appDbContext.Lines;
+        }
+
+        public IQueryable<Line> GetLinesWithWaypoints()
+        {
             return appDbContext.Lines.Include(l => l.Waypoints);
+        }
+
+        public Line GetLineWithWaypoints(int id)
+        {
+            Line line = Get(id);
+
+            if(line != null)
+            {
+                appDbContext.Entry(line).Collection(l => l.Waypoints).Load();
+            }
+
+            return line;
         }
     }
 }

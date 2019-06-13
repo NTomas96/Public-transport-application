@@ -1,1 +1,25 @@
-Welcome to {{ title }}!
+<div class="text-container">
+	<h1 class="mat-headline">Trenutna lokacija</h1>
+	<mat-divider></mat-divider>
+	<div class="map-body">
+		<mat-form-field>
+			<mat-label>Linija</mat-label>
+			<mat-select (selectionChange)="lineChanged($event)">
+				<mat-option *ngFor="let line of lines" [value]="line.Id">{{line.Name}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="mapStyle">
+			<ng-container *ngIf="selectedLine !== null">
+				<agm-polyline [strokeColor]="selectedLine.Color" [strokeWeight]="4">
+					<agm-polyline-point *ngFor="let point of selectedLine.Waypoints;" [latitude]="point.Lat" [longitude]="point.Lon">
+					</agm-polyline-point>
+				</agm-polyline>
+			</ng-container>
+
+
+			<agm-marker *ngFor="let station of stations" [latitude]="station.lat" [longitude]="station.lon" [iconUrl]="'assets/img/bus-icon.png'"></agm-marker>
+
+		</agm-map>
+	</div>
+
+</div>

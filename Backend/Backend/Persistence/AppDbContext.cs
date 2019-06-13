@@ -14,7 +14,7 @@ namespace Backend.Persistence
         public DbSet<Station> Stations { get; set; }
         public DbSet<Pricelist> Pricelists { get; set; }
         public DbSet<Line> Lines { get; set; }
-        public DbSet<GeoLocation> GeoLocations { get; set; }
+        public DbSet<Waypoint> Waypoints { get; set; }
 
         public AppDbContext() : base("name=DefaultConnection")
         {

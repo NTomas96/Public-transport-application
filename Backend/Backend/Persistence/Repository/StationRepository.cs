@@ -19,7 +19,7 @@ namespace WebApp.Persistence.Repository
 
         IQueryable<Station> IStationRepository.GetStations()
         {
-            return appDbContext.Stations.Include(l => l.GeoLocation);
+            return appDbContext.Stations;
         }
     }
 }

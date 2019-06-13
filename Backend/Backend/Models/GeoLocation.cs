@@ -9,9 +9,6 @@ namespace Backend.Models
 {
     public class GeoLocation
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         public double Lat { get; set; }
         public double Lon { get; set; }
     }
