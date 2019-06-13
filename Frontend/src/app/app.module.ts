@@ -19,7 +19,7 @@ import {
 	MatInputModule,
 	MatOptionModule,
 	MatSelectModule,
-	MatDatepickerModule
+	MatDatepickerModule, MatNativeDateModule
 } from "@angular/material";
 
 import {LinesComponent} from "./lines/lines.component";
@@ -57,6 +57,7 @@ import {ApiService} from "./api/api.service";
 		MatGridListModule,
 		MatOptionModule,
 		MatSelectModule,
+		MatNativeDateModule,
 		AgmCoreModule.forRoot({
 			apiKey: "AIzaSyCLn-niMlI4zaZVqToyMaFmFCw_qAryqa4" // Google Maps API key
 		}),
