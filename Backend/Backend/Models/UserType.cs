@@ -7,9 +7,8 @@ namespace Backend.Models
 {
     public enum UserType
     {
-        Unregistered=0,
-        Passager=1,
-        Controlor=2,
-        Admin=4
+        Passenger = 0,
+        Controller = 1,
+        Admin = 2
     }
 }

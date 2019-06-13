@@ -7,7 +7,7 @@ namespace Backend.Models
 {
     public enum LineType
     {
-        CityLine=0,
-        SuburbanLine=1
+        CityLine = 0,
+        SuburbanLine = 1
     }
 }

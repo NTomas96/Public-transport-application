@@ -7,9 +7,9 @@ namespace Backend.Models
 {
     public enum TicketType
     {
-        TimeTicket=0,
-        DailyTicket=1,
-        MounthlyTicket=2,
-        YearlyTicket=4
+        TimeTicket = 0,
+        DailyTicket = 1,
+        MonthlyTicket = 2,
+        YearlyTicket = 4
     }
 }

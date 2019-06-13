@@ -19,7 +19,7 @@ namespace WebApp.Persistence.UnitOfWork
 
 
         [Dependency]
-        public IProductRepository Products { get; set; }
+        public IUserRepository Users { get; set; }
 
         public int Complete()
         {
