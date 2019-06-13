@@ -65,6 +65,8 @@ namespace Backend.App_Start
 
             // TODO: Register your type's mappings here.
             container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<ILineRepository, LineRepository>();
+            container.RegisterType<IStationRepository, StationRepository>();
 
             container.RegisterType<DbContext, AppDbContext>(new PerResolveLifetimeManager());
             container.RegisterType<IUnitOfWork, DemoUnitOfWork>();

@@ -1,6 +1,5 @@
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
-import {ReactiveFormsModule} from "@angular/forms";
 
 import {AppRoutingModule} from "./app-routing.module";
 import {PageComponent} from "./page/page.component";
@@ -24,6 +23,8 @@ import {PricesComponent} from "./prices/prices.component";
 import {LoginComponent} from "./login/login.component";
 import {AgmCoreModule} from "@agm/core";
 import {RegistrationComponent} from "./registration/registration.component";
+import {HttpClientModule} from "@angular/common/http";
+import {ApiService} from "./api/api.service";
 
 @NgModule({
 	declarations: [
@@ -38,6 +39,7 @@ import {RegistrationComponent} from "./registration/registration.component";
 	],
 	imports: [
 		BrowserModule,
+		HttpClientModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		MatButtonModule,
@@ -52,7 +54,7 @@ import {RegistrationComponent} from "./registration/registration.component";
 		}),
 		ReactiveFormsModule
 	],
-	providers: [],
+	providers: [ApiService],
 	bootstrap: [PageComponent]
 })
 export class AppModule {
