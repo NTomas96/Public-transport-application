@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import {MyErrorStateMatcher} from "../mailErrorCathcer";
+import {ApiService} from "../api/api.service";
 
 
 @Component({
@@ -16,10 +17,18 @@ export class LoginComponent implements OnInit {
 
 	matcher = new MyErrorStateMatcher();
 
-	constructor(private fb: FormBuilder) {}
+	constructor(private fb: FormBuilder, private apiService: ApiService) {}
 
 	onSubmit() {
-		console.warn(this.loginForm.value);
+		this.apiService.loginUser(this.loginForm.value, {
+			success: (data) => {
+				ApiService.setJwtToken(data.Token as string);
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
+
 	}
 
 	ngOnInit(): void {

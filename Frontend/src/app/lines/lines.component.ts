@@ -27,20 +27,22 @@ export class LinesComponent implements OnInit {
 	lines = [];
 
 	ngOnInit(): void {
-		this.apiService
-			.getLinesWithStations()
-			.subscribe(
-				(lines) => {
-					this.lines = lines;
-				}
-			);
+		this.apiService.getLinesWithStations({
+			success: (data) => {
+				this.lines = data;
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
 
-		this.apiService
-			.getStations()
-			.subscribe(
-				(stations) => {
-					this.stations = stations;
-				}
-			);
+		this.apiService.getStations({
+			success: (data) => {
+				this.stations = data;
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
 	}
 }

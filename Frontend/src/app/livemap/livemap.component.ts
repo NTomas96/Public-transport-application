@@ -30,30 +30,33 @@ export class LivemapComponent implements OnInit {
 	selectedLine = null;
 
 	ngOnInit(): void {
-		this.apiService
-			.getLines()
-			.subscribe(
-				(lines) => {
-					this.lines = lines;
-				}
-			);
+		this.apiService.getLinesWithStations({
+			success: (data) => {
+				this.lines = data;
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
 
-		this.apiService
-			.getStations()
-			.subscribe(
-				(stations) => {
-					this.stations = stations;
-				}
-			);
+		this.apiService.getStations({
+			success: (data) => {
+				this.stations = data;
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
 	}
 
 	lineChanged($event: MatSelectChange) {
-		this.apiService
-			.getLine($event.value)
-			.subscribe(
-				(line) => {
-					this.selectedLine = line;
-				}
-			);
+		this.apiService.getLine($event.value, {
+			success: (data) => {
+				this.selectedLine = data;
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
 	}
 }

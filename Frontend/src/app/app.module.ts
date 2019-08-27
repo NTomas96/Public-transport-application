@@ -59,7 +59,7 @@ import {ApiService} from "./api/api.service";
 		MatSelectModule,
 		MatNativeDateModule,
 		AgmCoreModule.forRoot({
-			apiKey: "AIzaSyCLn-niMlI4zaZVqToyMaFmFCw_qAryqa4" // Google Maps API key
+			apiKey: "AIzaSyDuUc5PE9D64mJOBPUzEIHAs0gTTo_86Sc" // Google Maps API key
 		}),
 		ReactiveFormsModule,
 		MatFormFieldModule,

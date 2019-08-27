@@ -14,7 +14,7 @@
 			<mat-form-field>
 				<input type="email" matInput placeholder="E-mail" formControlName="email" [errorStateMatcher]="matcherEmail"/>
 				<mat-error *ngIf="registrationForm.controls['email'].hasError('email') && !registrationForm.controls['email'].hasError('required')">
-					Unesite ispravanu E-mail adresu
+					Unesite ispravnu E-mail adresu
 				</mat-error>
 			</mat-form-field>
 
@@ -28,7 +28,7 @@
 			</mat-form-field>
 
 			<mat-form-field>
-				<input matInput [matDatepicker]="picker" placeholder="Choose a date">
+				<input matInput formControlName="dayOfBirth" [matDatepicker]="picker" placeholder="Datum rodjenja">
 				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 				<mat-datepicker #picker></mat-datepicker>
 			</mat-form-field>
@@ -39,16 +39,16 @@
 
 			<mat-form-field>
 				<mat-label>Tip naloga</mat-label>
-				<mat-select formControlName="passagerType">
-					<mat-option *ngFor="let pt of passagerTypes" [value]="pt">
+				<mat-select formControlName="passengerType">
+					<mat-option *ngFor="let pt of passengerTypes; let i = index" [value]="i">
 						{{pt}}
 					</mat-option>
 				</mat-select>
 			</mat-form-field>
 
-			<!-- need to add  aditional info browser-->
+			<!-- need to add  additional info browser-->
 
-			<button mat-raised-button color="primary" [disabled]="registrationForm.invalid" (click)="onSubmit()">Registruj se</button>
+			<button mat-raised-button color="primary" [disabled]="false" >Registruj se</button>
 		</div>
 	</form>
 </div>

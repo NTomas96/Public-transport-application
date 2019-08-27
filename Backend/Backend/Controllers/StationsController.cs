@@ -17,7 +17,7 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace Backend.Controllers
 {
-    public class StationsController : ApiController
+    public class StationsController : BetterApiController
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -54,10 +54,9 @@ namespace Backend.Controllers
         }
 
         // GET: api/Lines
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public IQueryable<Station> GetStations()
+        public IHttpActionResult GetStations()
         {
-            return unitOfWork.Stations.GetStations();
+            return JsonResult(unitOfWork.Stations.GetStations());
         }
         /*
         // GET: api/Lines/5

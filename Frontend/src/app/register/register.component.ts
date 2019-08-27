@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { Validators } from "@angular/forms";
 import {MyErrorStateMatcher} from "../mailErrorCathcer";
+import {ApiService} from "../api/api.service";
 
 @Component({
   	selector: "app-registration",
@@ -10,7 +11,10 @@ import {MyErrorStateMatcher} from "../mailErrorCathcer";
 })
 export class RegisterComponent implements OnInit {
 
-	passagerTypes = ["Student", "Pensioner", "Regular"];
+	constructor(private fb: FormBuilder, private apiService: ApiService) {
+	}
+
+	passengerTypes = ["Regularani", "Student", "Penzioner"];
 
 	matcherEmail = new MyErrorStateMatcher();
 
@@ -22,16 +26,21 @@ export class RegisterComponent implements OnInit {
 		confirmPassword: ["", [Validators.required, Validators.minLength(6)]],
 		dayOfBirth: ["", [Validators.required]],
 		address: ["", [Validators.required]],
-		passagerType: [this.passagerTypes[0], [Validators.required]],
-		aditionalInfo: [""],
+		passengerType: [0, [Validators.required]],
+		additionalInfo: [""]
 	});
-
-  	constructor(private fb: FormBuilder) { }
 
   	ngOnInit() {
   	}
 
 	onSubmit() {
-		console.warn(this.registrationForm.value);
+		this.apiService.registerUser(this.registrationForm.value, {
+			success: (data) => {
+				// TODO: do something with server response
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
 	}
 }

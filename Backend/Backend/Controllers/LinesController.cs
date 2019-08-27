@@ -18,7 +18,7 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace Backend.Controllers
 {
-    public class LinesController : ApiController
+    public class LinesController : BetterApiController
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -85,30 +85,27 @@ namespace Backend.Controllers
         }
 
         // GET: api/Lines
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public IQueryable<Line> GetLines()
+        public IHttpActionResult GetLines()
         {
-            return unitOfWork.Lines.GetLines();
+            return JsonResult(unitOfWork.Lines.GetLines());
         }
 
         [Route("api/Lines/WithStations")]
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public IQueryable<Line> GetLinesWitStations()
+        public IHttpActionResult GetLinesWitStations()
         {
-            return unitOfWork.Lines.GetLinesWithStations();
+            return JsonResult(unitOfWork.Lines.GetLinesWithStations());
         }
 
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        [ResponseType(typeof(Line))]
+        
         public IHttpActionResult GetLine(int id)
         {
             Line line = unitOfWork.Lines.GetLineWithStations(id);
             if (line == null)
             {
-                return NotFound();
+                return ErrorResult(2001, "Line doesn't exist.");
             }
 
-            return Ok(line);
+            return JsonResult(line);
         }
 
         /*
