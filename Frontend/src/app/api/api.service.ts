@@ -94,4 +94,8 @@ export class ApiService {
 	loginUser(user, callbackObject) {
 		this.apiPostRequest("Users/Login", user, callbackObject);
 	}
+
+	getTimetables(): Observable<any> {
+		return this.http.get(environment.apiUrl + "Timetables", this.httpOptions).pipe(map(ApiService.extractData));
+	}
 }

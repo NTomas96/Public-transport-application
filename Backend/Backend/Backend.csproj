@@ -172,13 +172,14 @@
     <Compile Include="Controllers\BetterApiController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="Controllers\LinesController.cs" />
+    <Compile Include="Controllers\TimetablesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906131117381_InitialCreate.cs" />
-    <Compile Include="Migrations\201906131117381_InitialCreate.Designer.cs">
-      <DependentUpon>201906131117381_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201906131351418_InitialCreate.cs" />
+    <Compile Include="Migrations\201906131351418_InitialCreate.Designer.cs">
+      <DependentUpon>201906131351418_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\GeoLocation.cs" />
@@ -199,10 +200,12 @@
     <Compile Include="Models\UserType.cs" />
     <Compile Include="Persistence\Repository\ILineRepository.cs" />
     <Compile Include="Persistence\Repository\IStationRepository.cs" />
+    <Compile Include="Persistence\Repository\ITimetableRepository.cs" />
     <Compile Include="Persistence\Repository\IUserRepository.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
     <Compile Include="Persistence\Repository\StationRepository.cs" />
     <Compile Include="Persistence\Repository\LineRepository.cs" />
+    <Compile Include="Persistence\Repository\TimetableRepository.cs" />
     <Compile Include="Persistence\Repository\UserRepository.cs" />
     <Compile Include="Persistence\Repository\Repository.cs" />
     <Compile Include="Persistence\UnitOfWork\DemoUnitOfWork.cs" />
@@ -228,8 +231,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906131117381_InitialCreate.resx">
-      <DependentUpon>201906131117381_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906131351418_InitialCreate.resx">
+      <DependentUpon>201906131351418_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

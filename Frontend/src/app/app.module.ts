@@ -19,7 +19,7 @@ import {
 	MatInputModule,
 	MatOptionModule,
 	MatSelectModule,
-	MatDatepickerModule, MatNativeDateModule
+	MatDatepickerModule, MatNativeDateModule, MatTableModule, MatPaginatorModule
 } from "@angular/material";
 
 import {LinesComponent} from "./lines/lines.component";
@@ -66,7 +66,9 @@ import {ApiService} from "./api/api.service";
 		MatInputModule,
 		MatDatepickerModule,
 		MatDatepickerModule,
-		MatDatepickerModule
+		MatDatepickerModule,
+		MatTableModule,
+		MatPaginatorModule
 	],
 	providers: [ApiService],
 	bootstrap: [PageComponent]

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Backend.Persistence.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace WebApp.Persistence.UnitOfWork
         IUserRepository Users { get; set; }
         ILineRepository Lines { get; set; }
         IStationRepository Stations { get; set; }
+        ITimetableRepository Timetables { get; set; }
         
         int Complete();
     }

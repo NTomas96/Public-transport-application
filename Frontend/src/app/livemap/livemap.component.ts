@@ -59,4 +59,12 @@ export class LivemapComponent implements OnInit {
 			}
 		});
 	}
+
+	onMouseOver(infoWindow: any) {
+		infoWindow.open();
+	}
+
+	onMouseOut(infoWindow: any) {
+		infoWindow.close();
+	}
 }
