@@ -82,8 +82,20 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.5.5.0\lib\net461\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.5.5.0\lib\net461\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.5.0\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.5.0\lib\net461\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
@@ -157,6 +169,7 @@
   <ItemGroup>
     <Compile Include="App_Start\UnityResolver.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BetterApiController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="Controllers\LinesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -170,6 +183,10 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\GeoLocation.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\Web\ApiResponse.cs" />
+    <Compile Include="Models\Web\ErrorApiResponse.cs" />
+    <Compile Include="Models\Web\LoginResponse.cs" />
+    <Compile Include="Models\Web\SuccessApiResponse.cs" />
     <Compile Include="Persistence\AppDbContext.cs" />
     <Compile Include="Models\Line.cs" />
     <Compile Include="Models\LineType.cs" />
@@ -191,6 +208,12 @@
     <Compile Include="Persistence\UnitOfWork\DemoUnitOfWork.cs" />
     <Compile Include="Persistence\UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\ErrorApiResult.cs" />
+    <Compile Include="Util\ApiResult.cs" />
+    <Compile Include="Util\Hash.cs" />
+    <Compile Include="Util\JwtAuthorizeAttribute.cs" />
+    <Compile Include="Util\JwtManager.cs" />
+    <Compile Include="Util\JwtPrincipal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Unity;
 
 namespace Backend
@@ -15,10 +16,11 @@ namespace Backend
             // Web API configuration and services
 
             var container = new UnityContainer();
+            container.EnableDebugDiagnostic(); // TODO: remove this
             var resolver = new UnityResolver(container);
             resolver.RegisterTypes();
             config.DependencyResolver = resolver;
-            config.EnableCors();
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             //GlobalHost.DependencyResolver = new SignalRUnityDependencyResolver(container);
 
