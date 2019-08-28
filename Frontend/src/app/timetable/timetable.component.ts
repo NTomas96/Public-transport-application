@@ -25,12 +25,14 @@ export class TimetableComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.apiService
-			.getTimetables()
-			.subscribe(
-				(timetables) => {
+			.getTimetables({
+				success: (timetables) => {
 					this.timetables = timetables;
+				},
+				error: (code, message) => {
+					alert("Error " + message);
 				}
-			);
+			});
 		// this.dataSource.paginator = this.paginator;
 	}
 }

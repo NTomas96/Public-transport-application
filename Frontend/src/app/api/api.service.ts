@@ -29,7 +29,7 @@ export class ApiService {
 			return {
 				headers: new HttpHeaders({
 					"Content-Type": "application/json",
-					Authorization: "Bearer " + this.jwtKey
+					Authorization: "Bearer " + ApiService.jwtKey
 				}),
 				observe: "response" as "response" // javascript wtf
 			};
@@ -95,7 +95,7 @@ export class ApiService {
 		this.apiPostRequest("Users/Login", user, callbackObject);
 	}
 
-	getTimetables(): Observable<any> {
-		return this.http.get(environment.apiUrl + "Timetables", this.httpOptions).pipe(map(ApiService.extractData));
+	getTimetables(callbackObject)  {
+		this.apiRequest("Timetables", callbackObject);
 	}
 }
