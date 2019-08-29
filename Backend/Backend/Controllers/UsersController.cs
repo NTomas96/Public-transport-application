@@ -58,6 +58,7 @@ namespace Backend.Controllers
 
                 var response = new LoginResponse();
                 response.Token = userToken;
+				user.Password = "";
                 response.User = user;
 
                 return JsonResult(response);
