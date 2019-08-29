@@ -10,7 +10,7 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace Backend.Controllers
 {
-    public class TimetablesController : ApiController
+    public class TimetablesController : BetterApiController
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -20,8 +20,7 @@ namespace Backend.Controllers
         }
 
         // GET: api/Timetables
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public IQueryable<Timetable> GetTimetables()
+        public IHttpActionResult GetTimetables()
         {
 			/*
             List<Timetable> timetables = new List<Timetable>();
@@ -74,7 +73,7 @@ namespace Backend.Controllers
             unitOfWork.Complete();
 
             return null;*/
-            return unitOfWork.Timetables.GetTimetables();
+            return JsonResult(unitOfWork.Timetables.GetTimetables());
         }
     }
 }
