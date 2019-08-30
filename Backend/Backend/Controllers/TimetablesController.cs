@@ -19,61 +19,28 @@ namespace Backend.Controllers
             this.unitOfWork = u;
         }
 
-        // GET: api/Timetables
-        public IHttpActionResult GetTimetables()
+        [Route("api/Timetables/{line}")]
+        public IHttpActionResult Get(int line, DateTime date)
         {
-			/*
-            List<Timetable> timetables = new List<Timetable>();
-            int timespan = 600;
-            int lineid = 2;
-            
-            DayOfWeek day = DayOfWeek.Sunday;
-            
-            do
+            Line lineObj = this.unitOfWork.Lines.Get(line);
+
+            if(lineObj != null)
             {
-                while(lineid!=7)
+                Timetable table = unitOfWork.Timetables.GetTimetable(lineObj.Id, date.DayOfWeek);
+
+                if(table != null)
                 {
-                    Timetable tt = new Timetable();
-                    tt.DayOfWeek = day;
-                    tt.Line = unitOfWork.Lines.Get(lineid);
-
-                    var list = new List<long>();
-
-                    for (int i = 0; i < 68; i++)
-                    {
-                        list.Add(25200 + i * timespan);
-                    }
-
-                    tt.Departures = list;
-                    
-                    timetables.Add(tt);
-                    lineid++;
+                    return JsonResult(table);
                 }
-                Timetable tt1 = new Timetable();
-                tt1.DayOfWeek = DayOfWeek.Saturday;
-                tt1.Line = unitOfWork.Lines.Get(lineid);
-
-                var list1 = new List<long>();
-
-                for (int i = 0; i < 68; i++)
+                else
                 {
-                    list1.Add(25200 + i * timespan);
+                    return ErrorResult(4001, "Time table not found.");
                 }
-
-                tt1.Departures = list1;
-
-                timetables.Add(tt1);
-                    lineid = 1;
-                    day++;
-                    timespan += 150;
-            } while (day != DayOfWeek.Saturday);
-
-
-            unitOfWork.Timetables.AddRange(timetables.AsEnumerable());
-            unitOfWork.Complete();
-
-            return null;*/
-            return JsonResult(unitOfWork.Timetables.GetTimetables());
+            }
+            else
+            {
+                return ErrorResult(4001, "Line not found.");
+            }
         }
     }
 }

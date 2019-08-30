@@ -17,6 +17,11 @@ namespace Backend.Persistence.Repository
 
         }
 
+        public Timetable GetTimetable(int lineId, DayOfWeek dayOfWeek)
+        {
+            return appDbContext.Timetables.Where(timetable => timetable.DayOfWeek == dayOfWeek && timetable.Line.Id == lineId).FirstOrDefault();
+        }
+
         public IQueryable<Timetable> GetTimetables()
         {
             return appDbContext.Timetables;

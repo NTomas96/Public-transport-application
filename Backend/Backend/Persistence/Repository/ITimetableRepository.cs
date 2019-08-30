@@ -11,5 +11,6 @@ namespace Backend.Persistence.Repository
     public interface ITimetableRepository : IRepository<Timetable, int>
     {
         IQueryable<Timetable> GetTimetables();
+        Timetable GetTimetable(int lineId, DayOfWeek dayOfWeek);
     }
 }

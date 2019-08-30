@@ -95,7 +95,7 @@ export class ApiService {
 		this.apiPostRequest("Users/Login", user, callbackObject);
 	}
 
-	getTimetables(callbackObject)  {
-		this.apiRequest("Timetables", callbackObject);
+	getTimetable(line, date, callbackObject)  {
+		this.apiRequest("Timetables/" + line + "?date=" + date, callbackObject);
 	}
 }
