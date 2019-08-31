@@ -1,5 +1,5 @@
 <div class="text-container">
-	<h1 class="mat-headline">Trenutna lokacija</h1>
+	<h1 class="mat-headline">Red voznje</h1>
 	<mat-divider></mat-divider>
 	<div>
 		<mat-form-field>
@@ -23,8 +23,8 @@
 		</mat-form-field>
 	</div>
 	<div *ngIf="selectedTimetable != null" class="timetable-body">
-		<h5 class="mat-headline">Linija: {{selectedTimetable.Line.Name}}</h5>
-		<h5 class="mat-headline">Dan: {{dayNames[selectedTimetable.DayOfWeek]}}</h5>
+		<h5 class="mat-headline mat-h2">Linija: {{selectedTimetable.Line.Name}}</h5>
+		<h5 class="mat-headline mat-h2">Dan: {{dayNames[selectedTimetable.DayOfWeek]}}</h5>
 
 		<table mat-table [dataSource]="selectedTimetableSorted" class="mat-elevation-z8">
 			<ng-container *ngFor="let column of displayColumns">

@@ -1,8 +1,6 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {ApiService} from "../api/api.service";
 import {MatSelectChange} from "@angular/material";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
 	selector: "app-timetable",

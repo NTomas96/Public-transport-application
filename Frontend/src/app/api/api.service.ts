@@ -98,4 +98,8 @@ export class ApiService {
 	getTimetable(line, date, callbackObject)  {
 		this.apiRequest("Timetables/" + line + "?date=" + date, callbackObject);
 	}
+
+	getTicketPrice(selectedTicketType, selectedPassengerType, callbackObject) {
+		this.apiRequest("Pricelists/" + selectedTicketType + "/" + selectedPassengerType, callbackObject);
+	}
 }

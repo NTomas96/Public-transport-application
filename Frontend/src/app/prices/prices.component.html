@@ -1,1 +1,22 @@
-Welcome to {{ title }}!
+<div class="text-container">
+	<h1 class="mat-headline">Cenovnik</h1>
+	<mat-divider></mat-divider>
+	<div>
+		<mat-form-field>
+			<mat-label>Tip karte:</mat-label>
+			<mat-select (selectionChange)="ticketTypeChanged($event)">
+				<mat-option *ngFor="let ticketType of ticketTypes" [value]="ticketType.id">{{ticketType.name}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-label>Tip korisnika:</mat-label>
+			<mat-select (selectionChange)="passengerTypeChanged($event)" >
+				<mat-option *ngFor="let passengerType of passengerTypes" [value]="passengerType.id">{{passengerType.name}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+	<div *ngIf="selectedTicket != null">
+		<h5 class="mat-headline mat-h2">Cena {{getTicketTypeName(selectedTicket.TicketType)}} karte za {{getPassengerTypeName(selectedTicket.PassengerType)}} je: {{selectedTicket.Price}} RSD</h5>
+	</div>
+</div>
