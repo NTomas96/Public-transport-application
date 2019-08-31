@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusPositionService", "BusPositionService\BusPositionService.csproj", "{FFEA9CF6-E060-44DF-BDC2-9E6A509EB6F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFEA9CF6-E060-44DF-BDC2-9E6A509EB6F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFEA9CF6-E060-44DF-BDC2-9E6A509EB6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFEA9CF6-E060-44DF-BDC2-9E6A509EB6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFEA9CF6-E060-44DF-BDC2-9E6A509EB6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1AC4E7F5-6E73-4469-9BF7-9BE8D758A57C}
+	EndGlobalSection
+EndGlobal
