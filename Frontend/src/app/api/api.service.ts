@@ -8,13 +8,28 @@ import {environment} from "../../environments/environment";
 export class ApiService {
 
 	constructor(private http: HttpClient) {
+		const value = localStorage.getItem("jwtToken");
+		if (value !== null) {
+			this.setJwtToken(value);
+		}
 	}
 
 
-	static jwtKey = "";
+	private jwtKey = null;
 
-	static setJwtToken(token: string) {
-		ApiService.jwtKey = token;
+	setJwtToken(token: string) {
+		this.jwtKey = token;
+
+		if (token !== null) {
+			localStorage.setItem("jwtToken", token);
+		} else {
+			localStorage.removeItem("jwtToken");
+		}
+
+	}
+
+	loggedIn() {
+		return this.jwtKey !== null;
 	}
 
 	getHttpOptions(auth?: boolean) {
@@ -29,7 +44,7 @@ export class ApiService {
 			return {
 				headers: new HttpHeaders({
 					"Content-Type": "application/json",
-					Authorization: "Bearer " + ApiService.jwtKey
+					Authorization: "Bearer " + this.jwtKey
 				}),
 				observe: "response" as "response" // javascript wtf
 			};
@@ -101,5 +116,9 @@ export class ApiService {
 
 	getTicketPrice(selectedTicketType, selectedPassengerType, callbackObject) {
 		this.apiRequest("Pricelists/" + selectedTicketType + "/" + selectedPassengerType, callbackObject);
+	}
+
+	getUser(callbackObject) {
+		this.apiRequest("Users/Me", callbackObject, true);
 	}
 }

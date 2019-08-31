@@ -10,5 +10,6 @@ namespace WebApp.Persistence.Repository
     public interface IUserRepository : IRepository<User,int>
     {
         User GetUserByEmail(string email);
+        User GetUserById(int id);
     }
 }

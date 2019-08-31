@@ -1,0 +1,44 @@
+<div class="text-container">
+	<h1 class="mat-headline">Registracija</h1>
+	<mat-divider></mat-divider>
+	<form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+		<div class="mat-body register-body">
+			<mat-form-field>
+				<input matInput placeholder="Ime" formControlName="firstName">
+			</mat-form-field>
+
+			<mat-form-field>
+				<input matInput placeholder="Prezime" formControlName="lastName">
+			</mat-form-field>
+
+			<mat-form-field>
+				<input type="email" matInput placeholder="E-mail" formControlName="email" [errorStateMatcher]="matcherEmail"/>
+				<mat-error *ngIf="editProfileForm.controls['email'].hasError('email') && !editProfileForm.controls['email'].hasError('required')">
+					Unesite ispravnu E-mail adresu
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field>
+				<input matInput type="password" placeholder="Lozinka" formControlName="password"/>
+				<mat-hint>min 6 karaktera</mat-hint>
+			</mat-form-field>
+
+			<mat-form-field>
+				<input matInput type="password" placeholder="Potvrdi lozinku" formControlName="confirmPassword">
+			</mat-form-field>
+
+			<mat-form-field>
+				<input matInput formControlName="dayOfBirth" [matDatepicker]="picker" placeholder="Datum rodjenja">
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
+			</mat-form-field>
+
+			<mat-form-field>
+				<input matInput placeholder="Adresa" formControlName="address">
+			</mat-form-field>
+
+
+			<button mat-raised-button color="primary" [disabled]="false" >Sacuvaj</button>
+		</div>
+	</form>
+</div>

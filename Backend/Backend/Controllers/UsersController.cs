@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
+using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
@@ -70,17 +71,20 @@ namespace Backend.Controllers
         }
 
         // GET: api/Users/5
-        [ResponseType(typeof(User))]
+        [Route("api/Users/Me")]
         [JwtAuthorize]
-        public IHttpActionResult GetUser(string id)
+        public IHttpActionResult GetMe()
         {
-            User user = unitOfWork.Users.GetUserByEmail(id);
-            if (user == null)
+            var principal = Thread.CurrentPrincipal as JwtPrincipal;
+
+            User user = unitOfWork.Users.GetUserById(principal.UserId);
+            if (user != null)
             {
-                return NotFound();
+                user.Password = "******";
+                return JsonResult(user);
             }
 
-            return Ok(user);
+            return ErrorResult(6001, "Unexpected error somehow managed to occur. God help us.");
         }
     }
 }

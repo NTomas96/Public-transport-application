@@ -3,6 +3,7 @@ import { FormBuilder } from "@angular/forms";
 import { Validators } from "@angular/forms";
 import {MyErrorStateMatcher} from "../mailErrorCathcer";
 import {ApiService} from "../api/api.service";
+import {Router} from "@angular/router";
 
 @Component({
   	selector: "app-registration",
@@ -11,7 +12,7 @@ import {ApiService} from "../api/api.service";
 })
 export class RegisterComponent implements OnInit {
 
-	constructor(private fb: FormBuilder, private apiService: ApiService) {
+	constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
 	}
 
 	passengerTypes = ["Regularani", "Student", "Penzioner"];
@@ -31,6 +32,9 @@ export class RegisterComponent implements OnInit {
 	});
 
   	ngOnInit() {
+		if (this.apiService.loggedIn()) {
+			this.router.navigateByUrl("/profile");
+		}
   	}
 
 	onSubmit() {

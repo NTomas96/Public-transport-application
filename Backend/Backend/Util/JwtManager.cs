@@ -24,7 +24,8 @@ namespace Backend.Util
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, "" + user.Id)
+                    new Claim(ClaimTypes.NameIdentifier, "" + user.Id),
+                    new Claim(ClaimTypes.Role, "" + (int) user.UserType)
                 }),
 
                 Expires = now.AddMinutes(Convert.ToInt32(expireMinutes)),

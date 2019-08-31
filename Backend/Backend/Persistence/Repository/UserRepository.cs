@@ -21,5 +21,10 @@ namespace WebApp.Persistence.Repository
         {
             return appDbContext.Users.Where(u => u.Email.Equals(email)).FirstOrDefault();
         }
+
+        public User GetUserById(int id)
+        {
+            return appDbContext.Users.Where(u => u.Id == id).FirstOrDefault();
+        }
     }
 }

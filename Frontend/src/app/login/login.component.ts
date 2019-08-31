@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import {MyErrorStateMatcher} from "../mailErrorCathcer";
 import {ApiService} from "../api/api.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -17,12 +18,13 @@ export class LoginComponent implements OnInit {
 
 	matcher = new MyErrorStateMatcher();
 
-	constructor(private fb: FormBuilder, private apiService: ApiService) {}
+	constructor(private router: Router, private fb: FormBuilder, private apiService: ApiService) {}
 
 	onSubmit() {
 		this.apiService.loginUser(this.loginForm.value, {
 			success: (data) => {
-				ApiService.setJwtToken(data.Token as string);
+				this.apiService.setJwtToken(data.Token as string);
+				this.router.navigateByUrl("/home");
 			},
 			error: (code, message) => {
 				alert("Error " + message);
@@ -32,6 +34,11 @@ export class LoginComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+
+		if (this.apiService.loggedIn()) {
+			this.router.navigateByUrl("/profile");
+		}
+
 		this.loginForm = this.fb.group({
 			email: ["", [Validators.required, Validators.email]],
 			password: ["", [Validators.required]]
