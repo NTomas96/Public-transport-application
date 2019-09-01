@@ -178,13 +178,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906131351418_InitialCreate.cs" />
-    <Compile Include="Migrations\201906131351418_InitialCreate.Designer.cs">
-      <DependentUpon>201906131351418_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201909011347057_InitialCreate.cs" />
+    <Compile Include="Migrations\201909011347057_InitialCreate.Designer.cs">
+      <DependentUpon>201909011347057_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\GeoLocation.cs" />
+    <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\VerificationStatus.cs" />
     <Compile Include="Models\Web\ApiResponse.cs" />
     <Compile Include="Models\Web\ErrorApiResponse.cs" />
     <Compile Include="Models\Web\LoginResponse.cs" />
@@ -234,8 +236,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906131351418_InitialCreate.resx">
-      <DependentUpon>201906131351418_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909011347057_InitialCreate.resx">
+      <DependentUpon>201909011347057_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

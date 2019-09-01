@@ -43,18 +43,21 @@ namespace Backend.Migrations
                 .Index(t => new { t.TicketType, t.PassengerType }, unique: true, name: "Pricelist_1");
             
             CreateTable(
-                "dbo.Timetables",
+                "dbo.Tickets",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        DayOfWeek = c.Int(nullable: false),
-                        DeparturesInternal = c.String(),
-                        Line_Id = c.Int(),
+                        TicketNumber = c.String(maxLength: 15, unicode: false),
+                        TimeBought = c.DateTime(nullable: false),
+                        PayPalOrderId = c.String(maxLength: 100, unicode: false),
+                        PayPalData = c.String(),
+                        User_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Lines", t => t.Line_Id)
-                .Index(t => t.DayOfWeek, unique: true, name: "Timetable_1")
-                .Index(t => t.Line_Id);
+                .ForeignKey("dbo.Users", t => t.User_Id)
+                .Index(t => t.TicketNumber, unique: true)
+                .Index(t => t.PayPalOrderId, unique: true)
+                .Index(t => t.User_Id);
             
             CreateTable(
                 "dbo.Users",
@@ -70,9 +73,25 @@ namespace Backend.Migrations
                         PassengerType = c.Int(nullable: false),
                         AdditionalInfo = c.String(),
                         UserType = c.Int(nullable: false),
+                        Active = c.Boolean(nullable: false),
+                        VerificationStatus = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Email, unique: true);
+            
+            CreateTable(
+                "dbo.Timetables",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        DayOfWeek = c.Int(nullable: false),
+                        DeparturesInternal = c.String(),
+                        Line_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Lines", t => t.Line_Id)
+                .Index(t => t.DayOfWeek, unique: true, name: "Timetable_1")
+                .Index(t => t.Line_Id);
             
             CreateTable(
                 "dbo.Vehicles",
@@ -109,20 +128,25 @@ namespace Backend.Migrations
         {
             DropForeignKey("dbo.Vehicles", "Line_Id", "dbo.Lines");
             DropForeignKey("dbo.Timetables", "Line_Id", "dbo.Lines");
+            DropForeignKey("dbo.Tickets", "User_Id", "dbo.Users");
             DropForeignKey("dbo.StationLines", "Line_Id", "dbo.Lines");
             DropForeignKey("dbo.StationLines", "Station_Id", "dbo.Stations");
             DropIndex("dbo.StationLines", new[] { "Line_Id" });
             DropIndex("dbo.StationLines", new[] { "Station_Id" });
             DropIndex("dbo.Vehicles", new[] { "Line_Id" });
             DropIndex("dbo.Vehicles", new[] { "TrackerSerial" });
-            DropIndex("dbo.Users", new[] { "Email" });
             DropIndex("dbo.Timetables", new[] { "Line_Id" });
             DropIndex("dbo.Timetables", "Timetable_1");
+            DropIndex("dbo.Users", new[] { "Email" });
+            DropIndex("dbo.Tickets", new[] { "User_Id" });
+            DropIndex("dbo.Tickets", new[] { "PayPalOrderId" });
+            DropIndex("dbo.Tickets", new[] { "TicketNumber" });
             DropIndex("dbo.Pricelists", "Pricelist_1");
             DropTable("dbo.StationLines");
             DropTable("dbo.Vehicles");
-            DropTable("dbo.Users");
             DropTable("dbo.Timetables");
+            DropTable("dbo.Users");
+            DropTable("dbo.Tickets");
             DropTable("dbo.Pricelists");
             DropTable("dbo.Stations");
             DropTable("dbo.Lines");

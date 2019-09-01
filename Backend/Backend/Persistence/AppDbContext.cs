@@ -15,6 +15,7 @@ namespace Backend.Persistence
         public DbSet<Pricelist> Pricelists { get; set; }
         public DbSet<Line> Lines { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
 
         public AppDbContext() : base("name=DefaultConnection")
         {
