@@ -71,7 +71,7 @@ namespace Backend.Controllers
                 var response = new LoginResponse();
                 response.Token = userToken;
 				user.Password = "";
-                response.User = user;
+                response.UserType = user.UserType;
 
                 return JsonResult(response);
             }
@@ -112,7 +112,7 @@ namespace Backend.Controllers
 
         // GET: api/Users/5
         [Route("api/Users/Me")]
-        [JwtAuthorize]
+        [JwtAuthorize(new UserType[] { UserType.Passenger })]
         public IHttpActionResult GetMe()
         {
             var principal = Thread.CurrentPrincipal as JwtPrincipal;
@@ -125,6 +125,29 @@ namespace Backend.Controllers
             }
 
             return ErrorResult(6001, "Unexpected error somehow managed to occur. God help us.");
+        }
+
+        [Route("api/Users/Unverified")]
+        [JwtAuthorize(new UserType[] { UserType.Controller })]
+        public IHttpActionResult GetUnverified()
+        {
+            return JsonResult(unitOfWork.Users.GetUnverifiedUsers());
+        }
+
+        [Route("api/Users/Verify/Accept/{userId}")]
+        [HttpPost]
+        [JwtAuthorize(new UserType[] { UserType.Controller })]
+        public IHttpActionResult Accept(int userId)
+        {
+            return JsonResult(null);
+        }
+
+        [Route("api/Users/Verify/Deny/{userId}")]
+        [HttpPost]
+        [JwtAuthorize(new UserType[] { UserType.Controller })]
+        public IHttpActionResult Deny(int userId)
+        {
+            return JsonResult(null);
         }
     }
 }

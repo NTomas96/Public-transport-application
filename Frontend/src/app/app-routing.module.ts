@@ -9,6 +9,7 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {LogoutComponent} from "./logout/logout.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {UserverifyComponent} from "./userverify/userverify.component";
 
 const routes: Routes = [
 	{path: "home", component: HomeComponent},
@@ -20,7 +21,8 @@ const routes: Routes = [
 	{path: "login", component: LoginComponent},
 	{path: "register", component: RegisterComponent},
 	{path: "logout", component: LogoutComponent},
-	{path: "profile", component: ProfileComponent}
+	{path: "profile", component: ProfileComponent},
+	{path: "userverify", component: UserverifyComponent}
 ];
 
 @NgModule({

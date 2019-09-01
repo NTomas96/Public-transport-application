@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 	onSubmit() {
 		this.apiService.loginUser(this.loginForm.value, {
 			success: (data) => {
-				this.apiService.setJwtToken(data.Token as string);
+				this.apiService.setJwtToken(data.Token as string, data.UserType);
 				this.router.navigateByUrl("/home");
 			},
 			error: (code, message) => {

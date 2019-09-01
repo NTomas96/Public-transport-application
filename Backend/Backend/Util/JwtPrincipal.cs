@@ -15,7 +15,7 @@ namespace Backend.Util
         public JwtPrincipal(int userId, UserType userType) : base(new GenericIdentity("" + userId, "Jwt"), new string[] { userType.ToString() })
         {
             UserId = userId;
-            UserType = UserType;
+            UserType = userType;
         }
     }
 }

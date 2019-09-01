@@ -20,16 +20,23 @@ export class PageComponent {
 		{href: "livemap", name: "Trenutna lokacija", icon: "directions_bus", side: "left"},
 		{href: "prices", name: "Cenovnik", icon: "money", side: "left"},
 		{href: "login", name: "Prijava", icon: "account_circle", side: "right", auth: false},
-		{href: "profile", name: "Profil", icon: "account_circle", side: "right", auth: true},
+		{href: "profile", name: "Profil", icon: "account_circle", side: "right", auth: true, role: 0},
+		{href: "userverify", name: "Verifikacija korisnika", icon: "account_circle", side: "right", auth: true, role: 1},
 		{href: "logout", name: "Odjava", icon: "account_circle", side: "right", auth: true}
 
 	];
 
 	shouldShowLink(link) {
-		return (link.auth === undefined || (link.auth === true && this.getAuth()) || (link.auth === false && ! this.getAuth()));
+		return (link.auth === undefined ||
+			((link.auth === true && this.getAuth()) && (link.role === undefined || (link.role === this.getRole()) )) ||
+			(link.auth === false && ! this.getAuth()));
 	}
 
 	getAuth() {
 		return this.apiService.loggedIn();
+	}
+
+	getRole() {
+		return this.apiService.getRole();
 	}
 }

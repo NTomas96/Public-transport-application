@@ -9,27 +9,36 @@ export class ApiService {
 
 	constructor(private http: HttpClient) {
 		const value = localStorage.getItem("jwtToken");
-		if (value !== null) {
-			this.setJwtToken(value);
+		const value2 = localStorage.getItem("userRole");
+		if (value !== null && value2 !== null) {
+			this.setJwtToken(value, parseInt(value2, 10));
 		}
 	}
 
 
 	private jwtKey = null;
+	private userRole = null;
 
-	setJwtToken(token: string) {
+	setJwtToken(token: string, userRole: number) {
 		this.jwtKey = token;
+		this.userRole = userRole;
 
 		if (token !== null) {
 			localStorage.setItem("jwtToken", token);
+			localStorage.setItem("userRole", "" + userRole);
 		} else {
 			localStorage.removeItem("jwtToken");
+			localStorage.removeItem("userRole");
 		}
 
 	}
 
 	loggedIn() {
 		return this.jwtKey !== null;
+	}
+
+	getRole() {
+		return this.userRole;
 	}
 
 	getHttpOptions(auth?: boolean) {
@@ -124,5 +133,9 @@ export class ApiService {
 
 	getUser(callbackObject) {
 		this.apiRequest("Users/Me", callbackObject, true);
+	}
+
+	getUnverifiedUsers(callbackObject) {
+		this.apiRequest("Users/Unverified", callbackObject, true);
 	}
 }

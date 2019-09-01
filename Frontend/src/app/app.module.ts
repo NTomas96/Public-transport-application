@@ -19,7 +19,7 @@ import {
 	MatInputModule,
 	MatOptionModule,
 	MatSelectModule,
-	MatDatepickerModule, MatNativeDateModule, MatTableModule, MatPaginatorModule
+	MatDatepickerModule, MatNativeDateModule, MatTableModule, MatPaginatorModule, MatCardModule
 } from "@angular/material";
 
 import {LinesComponent} from "./lines/lines.component";
@@ -34,6 +34,8 @@ import {ApiService} from "./api/api.service";
 import { LogoutComponent } from "./logout/logout.component";
 import { ProfileComponent } from "./profile/profile.component";
 import {MaterialFileInputModule} from "ngx-material-file-input";
+import { UserverifyComponent } from './userverify/userverify.component';
+import { InfodialogComponent } from './userverify/infodialog/infodialog.component';
 
 @NgModule({
 	declarations: [
@@ -47,6 +49,8 @@ import {MaterialFileInputModule} from "ngx-material-file-input";
 		RegisterComponent,
 		LogoutComponent,
 		ProfileComponent,
+		UserverifyComponent,
+		InfodialogComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -74,10 +78,12 @@ import {MaterialFileInputModule} from "ngx-material-file-input";
 		MatDatepickerModule,
 		MatTableModule,
 		MatPaginatorModule,
-		MaterialFileInputModule
+		MaterialFileInputModule,
+		MatCardModule
 	],
 	providers: [ApiService],
-	bootstrap: [PageComponent]
+	bootstrap: [PageComponent],
+	entryComponents: [InfodialogComponent]
 })
 export class AppModule {
 }

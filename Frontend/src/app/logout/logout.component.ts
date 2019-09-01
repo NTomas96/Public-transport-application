@@ -13,7 +13,7 @@ export class LogoutComponent implements OnInit {
 
 	ngOnInit() {
 		setTimeout(() => {
-			this.apiService.setJwtToken(null);
+			this.apiService.setJwtToken(null, null);
 			this.router.navigateByUrl("/login");
 		}, 0);
 

@@ -11,5 +11,6 @@ namespace WebApp.Persistence.Repository
     {
         User GetUserByEmail(string email);
         User GetUserById(int id);
+        IQueryable<User> GetUnverifiedUsers();
     }
 }

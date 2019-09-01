@@ -26,5 +26,10 @@ namespace WebApp.Persistence.Repository
         {
             return appDbContext.Users.Where(u => u.Id == id).FirstOrDefault();
         }
+
+        public IQueryable<User> GetUnverifiedUsers()
+        {
+            return appDbContext.Users.Where(u => u.UserType == UserType.Passenger && u.VerificationStatus == VerificationStatus.Processing);
+        }
     }
 }

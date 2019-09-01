@@ -127,7 +127,7 @@ export class RegisterComponent implements OnInit {
 
 		this.apiService.registerUser(this.registrationForm.value, {
 			success: (data) => {
-				// TODO: do something with server response
+				this.router.navigateByUrl("/login");
 			},
 			error: (code, message) => {
 				alert("Error " + message);
