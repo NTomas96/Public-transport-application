@@ -23,5 +23,7 @@ namespace Backend.Models
         public PassengerType PassengerType { get; set; }
         public string AdditionalInfo { get; set; }
         public UserType UserType { get; set; }
+        public bool Active { get; set; }
+        public VerificationStatus VerificationStatus { get; set; }
     }
 }

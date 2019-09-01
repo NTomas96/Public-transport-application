@@ -33,6 +33,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {ApiService} from "./api/api.service";
 import { LogoutComponent } from "./logout/logout.component";
 import { ProfileComponent } from "./profile/profile.component";
+import {MaterialFileInputModule} from "ngx-material-file-input";
 
 @NgModule({
 	declarations: [
@@ -72,7 +73,8 @@ import { ProfileComponent } from "./profile/profile.component";
 		MatDatepickerModule,
 		MatDatepickerModule,
 		MatTableModule,
-		MatPaginatorModule
+		MatPaginatorModule,
+		MaterialFileInputModule
 	],
 	providers: [ApiService],
 	bootstrap: [PageComponent]

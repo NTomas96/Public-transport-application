@@ -31,7 +31,6 @@ namespace Backend.Controllers
             this.unitOfWork = u;
         }
 
-        // 
         [Route("api/Users/Register")]
         [HttpPost]
         public IHttpActionResult Register(User user)
@@ -68,6 +67,35 @@ namespace Backend.Controllers
             {
                 return ErrorResult(5001, "User not found!");
             }
+        }
+
+        [Route("api/Users/EditProfile")]
+        [JwtAuthorize]
+        [HttpPost]
+        public IHttpActionResult EditProfile(User profile)
+        {
+            var principal = Thread.CurrentPrincipal as JwtPrincipal;
+
+            User user = unitOfWork.Users.GetUserById(principal.UserId);
+            if (user != null)
+            {
+                user.FirstName = profile.FirstName;
+                user.LastName = profile.LastName;
+                user.Email = profile.Email;
+                user.DayOfBirth = profile.DayOfBirth;
+                user.Address = profile.Address;
+
+                if(!profile.Password.Equals("******"))
+                {
+                    user.Password = Hash.Sha256Hash(profile.Password);
+                }
+
+                unitOfWork.Complete();
+
+                return JsonResult(true);
+            }
+
+            return ErrorResult(6001, "Unexpected error somehow managed to occur. God help us.");
         }
 
         // GET: api/Users/5
