@@ -6,3 +6,9 @@
 .home-text {
 	margin-top: 16px;
 }
+
+.mat-background {
+	background-image: url("~src/assets/img/HomeBackground.jpg");
+	height: 100px;
+	width: 100px;
+}

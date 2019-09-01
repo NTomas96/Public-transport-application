@@ -6,7 +6,7 @@
 			<mat-form-field>
 				<input type="email" matInput placeholder="E-mail" formControlName="email" [errorStateMatcher]="matcher">
 				<mat-error *ngIf="loginForm.controls['email'].hasError('email') && !loginForm.controls['email'].hasError('required')">
-					Please enter a valid email address
+					Unesite pravilno email.
 				</mat-error>
 			</mat-form-field>
 

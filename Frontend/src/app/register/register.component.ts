@@ -63,7 +63,6 @@ export class RegisterComponent implements OnInit {
 		passengerType: ""
 	};
 
-
 	passengerTypes = ["Regularani", "Student", "Penzioner"];
 
 	matcherEmail = new MyErrorStateMatcher();
@@ -143,7 +142,6 @@ export class RegisterComponent implements OnInit {
 			}, false);
 
 			reader.readAsDataURL(this.registrationForm.value.additionalInfo.files[0]);
-
 		}
 	}
 }

@@ -3,38 +3,75 @@
 	<mat-divider></mat-divider>
 	<form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
 		<div class="mat-body register-body">
-			<mat-form-field>
-				<input matInput placeholder="Ime" formControlName="firstName">
+			<mat-form-field [ngClass]="{'has-error' : formErrors.firstName}">
+				<input matInput placeholder="Ime" formControlName="firstName" (blur)="logValidationErrors()">
+				<mat-error *ngIf="formErrors.firstName">
+					{{formErrors.firstName}}
+				</mat-error>
 			</mat-form-field>
 
-			<mat-form-field>
-				<input matInput placeholder="Prezime" formControlName="lastName">
+			<mat-form-field [ngClass]="{'has-error' : formErrors.lastName}">
+				<input matInput placeholder="Prezime" formControlName="lastName" (blur)="logValidationErrors()">
+				<mat-error *ngIf="formErrors.lastName">
+					{{formErrors.lastName}}
+				</mat-error>
 			</mat-form-field>
 
-			<mat-form-field>
-				<input type="email" matInput placeholder="E-mail" formControlName="email" [errorStateMatcher]="matcherEmail"/>
-				<mat-error *ngIf="editProfileForm.controls['email'].hasError('email') && !editProfileForm.controls['email'].hasError('required')">
-					Unesite ispravnu E-mail adresu
+			<mat-form-field [ngClass]="{'has-error' : formErrors.email}">
+				<input type="email" matInput placeholder="E-mail" formControlName="email" [errorStateMatcher]="matcherEmail" (blur)="logValidationErrors()"/>
+				<mat-error *ngIf="formErrors.email">
+					{{formErrors.email}}
+				</mat-error>
+			</mat-form-field>
+
+			<div formGroupName="passwordGroup" class="mat-body register-body">
+				<mat-form-field [ngClass]="{'has-error' : formErrors.password}">
+					<input matInput type="password" placeholder="Lozinka" formControlName="password" [type] = "hideP ? 'password' : 'text'" (blur)="logValidationErrors()"/>
+					<mat-icon matSuffix (click)="hideP = !hideP">{{hideP ? 'visibility' : 'visibility_off'}}</mat-icon>
+					<mat-error *ngIf="formErrors.password">
+						{{formErrors.password}}
+					</mat-error>
+				</mat-form-field>
+
+				<mat-form-field [ngClass]="{'has-error' : formErrors.confirmPassword || formErrors.passwordGroup}">
+					<input matInput type="password" placeholder="Potvrdi lozinku" formControlName="confirmPassword" [type] = "hideCP ? 'password' : 'text'" (blur)="logValidationErrors()"/>
+					<mat-icon matSuffix (click)="hideCP = !hideCP">{{hideCP ? 'visibility' : 'visibility_off'}}</mat-icon>
+					<mat-error *ngIf="formErrors.confirmPassword || formErrors.passwordGroup">
+						{{formErrors.confirmPassword ? formErrors.confirmPassword : formErrors.passwordGroup}}
+					</mat-error>
+				</mat-form-field>
+			</div>
+
+			<mat-form-field [ngClass]="{'has-error' : formErrors.dayOfBirth}">
+				<input matInput formControlName="dayOfBirth" [matDatepicker]="picker" placeholder="Datum rodjenja" (blur)="logValidationErrors()">
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
+				<mat-error *ngIf="formErrors.dayOfBirth">
+					{{formErrors.dayOfBirth}}
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field [ngClass]="{'has-error' : formErrors.address}">
+				<input matInput placeholder="Adresa" formControlName="address" (blur)="logValidationErrors()">
+				<mat-error *ngIf="formErrors.address">
+					{{formErrors.address}}
 				</mat-error>
 			</mat-form-field>
 
 			<mat-form-field>
-				<input matInput type="password" placeholder="Lozinka" formControlName="password"/>
-				<mat-hint>min 6 karaktera</mat-hint>
+				<mat-label>Tip naloga</mat-label>
+				<mat-select formControlName="passengerType" [disabled]="true">
+					<mat-option *ngFor="let pt of passengerTypes; let i = index" [value]="i">
+						{{pt}}
+					</mat-option>
+				</mat-select>
 			</mat-form-field>
 
-			<mat-form-field>
-				<input matInput type="password" placeholder="Potvrdi lozinku" formControlName="confirmPassword">
-			</mat-form-field>
-
-			<mat-form-field>
-				<input matInput formControlName="dayOfBirth" [matDatepicker]="picker" placeholder="Datum rodjenja">
-				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-				<mat-datepicker #picker></mat-datepicker>
-			</mat-form-field>
-
-			<mat-form-field>
-				<input matInput placeholder="Adresa" formControlName="address">
+			<mat-form-field [hidden]="editProfileForm.value.passengerType === 0">
+				<mat-label>Slika za verifikaciju (opciono)</mat-label>
+				<ngx-mat-file-input formControlName="additionalInfo" (change)="onFileChanged();" placeholder="Basic Input" [accept]="'image/*'"></ngx-mat-file-input>
+				<mat-icon matSuffix>folder</mat-icon>
+				<img *ngIf="additionalInfo !== null;" src="{{additionalInfo}}" width="200" height="200"  alt="Preview image"/>
 			</mat-form-field>
 
 
