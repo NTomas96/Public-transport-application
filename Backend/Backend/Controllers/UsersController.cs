@@ -39,6 +39,18 @@ namespace Backend.Controllers
             user.Id = 0;
             user.Password = Hash.Sha256Hash(user.Password);
 
+            if(user.PassengerType != PassengerType.Regular)
+            {
+                user.VerificationStatus = VerificationStatus.Processing;
+                user.Active = false;
+            }
+            else
+            {
+                user.VerificationStatus = VerificationStatus.Accepted;
+                user.Active = true;
+                user.AdditionalInfo = null;
+            }
+
             unitOfWork.Users.Add(user);
             unitOfWork.Complete();
 

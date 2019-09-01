@@ -1,6 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import {AbstractControl, FormBuilder, FormGroup} from "@angular/forms";
-import { Validators } from "@angular/forms";
+import {Component, OnInit} from "@angular/core";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MyErrorStateMatcher} from "../mailErrorCathcer";
 import {ApiService} from "../api/api.service";
 import {Router} from "@angular/router";
@@ -86,6 +85,8 @@ export class RegisterComponent implements OnInit {
 	hideP: boolean;
 	hideCP: boolean;
 
+	additionalInfo = null;
+
   	ngOnInit() {
 		if (this.apiService.loggedIn()) {
 			this.router.navigateByUrl("/profile");
@@ -121,6 +122,9 @@ export class RegisterComponent implements OnInit {
 
 	onSubmit() {
 
+		this.registrationForm.value.password = this.registrationForm.value.passwordGroup.password;
+		this.registrationForm.value.additionalInfo = this.additionalInfo;
+
 		this.apiService.registerUser(this.registrationForm.value, {
 			success: (data) => {
 				// TODO: do something with server response
@@ -135,15 +139,11 @@ export class RegisterComponent implements OnInit {
 		if (this.registrationForm.value.additionalInfo !== null && this.registrationForm.value.additionalInfo instanceof FileInput) {
 			const reader  = new FileReader();
 			reader.addEventListener("load", () => {
-				this.registrationForm.value.additionalInfo = reader.result;
+				this.additionalInfo = reader.result;
 			}, false);
 
 			reader.readAsDataURL(this.registrationForm.value.additionalInfo.files[0]);
 
 		}
-	}
-
-	imageAvailable(): boolean {
-  		return typeof(this.registrationForm.value.additionalInfo) === "string";
 	}
 }
