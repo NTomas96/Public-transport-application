@@ -31,8 +31,8 @@ import {AgmCoreModule} from "@agm/core";
 import {RegisterComponent} from "./register/register.component";
 import {HttpClientModule} from "@angular/common/http";
 import {ApiService} from "./api/api.service";
-import { LogoutComponent } from './logout/logout.component';
-import { ProfileComponent } from './profile/profile.component';
+import { LogoutComponent } from "./logout/logout.component";
+import { ProfileComponent } from "./profile/profile.component";
 
 @NgModule({
 	declarations: [
@@ -45,7 +45,7 @@ import { ProfileComponent } from './profile/profile.component';
 		LoginComponent,
 		RegisterComponent,
 		LogoutComponent,
-		ProfileComponent
+		ProfileComponent,
 	],
 	imports: [
 		BrowserModule,
