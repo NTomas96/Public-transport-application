@@ -11,6 +11,8 @@ namespace Backend.Util
 {
     public class ApiResult<T> : JsonResult<T>
     {
+        // TODO: use camelCase
+        // public ApiResult(T result, HttpRequestMessage request) : base(result, new JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver() }, Encoding.UTF8, request)
         public ApiResult(T result, HttpRequestMessage request) : base(result, new JsonSerializerSettings(), Encoding.UTF8, request)
         {
 

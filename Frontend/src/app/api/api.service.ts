@@ -110,6 +110,10 @@ export class ApiService {
 		this.apiPostRequest("Users/Login", user, callbackObject);
 	}
 
+	editProfileUser(user, callbackObject) {
+		this.apiPostRequest("Users/EditProfile", user, callbackObject, true);
+	}
+
 	getTimetable(line, date, callbackObject)  {
 		this.apiRequest("Timetables/" + line + "?date=" + date, callbackObject);
 	}

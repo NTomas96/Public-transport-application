@@ -50,7 +50,14 @@ export class ProfileComponent implements OnInit {
 	}
 
 	onSubmit() {
-
+		this.apiService.editProfileUser(this.editProfileForm.value, {
+			success: (data) => {
+				// TODO: do something with server response
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
 	}
 
 
