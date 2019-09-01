@@ -4,6 +4,7 @@ import { Validators } from "@angular/forms";
 import {MyErrorStateMatcher} from "../mailErrorCathcer";
 import {ApiService} from "../api/api.service";
 import {Router} from "@angular/router";
+import {FileInput} from "ngx-material-file-input";
 
 @Component({
   	selector: "app-registration",
@@ -28,7 +29,7 @@ export class RegisterComponent implements OnInit {
 		dayOfBirth: ["", [Validators.required]],
 		address: ["", [Validators.required]],
 		passengerType: [0, [Validators.required]],
-		additionalInfo: [""]
+		additionalInfo: [null]
 	});
 
   	ngOnInit() {
@@ -38,6 +39,7 @@ export class RegisterComponent implements OnInit {
   	}
 
 	onSubmit() {
+
 		this.apiService.registerUser(this.registrationForm.value, {
 			success: (data) => {
 				// TODO: do something with server response
@@ -46,5 +48,21 @@ export class RegisterComponent implements OnInit {
 				alert("Error " + message);
 			}
 		});
+	}
+
+	onFileChanged() {
+		if (this.registrationForm.value.additionalInfo !== null && this.registrationForm.value.additionalInfo instanceof FileInput) {
+			const reader  = new FileReader();
+			reader.addEventListener("load", () => {
+				this.registrationForm.value.additionalInfo = reader.result;
+			}, false);
+
+			reader.readAsDataURL(this.registrationForm.value.additionalInfo.files[0]);
+
+		}
+	}
+
+	imageAvailable(): boolean {
+  		return typeof(this.registrationForm.value.additionalInfo) === "string";
 	}
 }

@@ -46,6 +46,13 @@
 				</mat-select>
 			</mat-form-field>
 
+			<mat-form-field [hidden]="registrationForm.value.passengerType === 0">
+				<mat-label>Slika za verifikaciju (opciono)</mat-label>
+				<ngx-mat-file-input formControlName="additionalInfo" (change)="onFileChanged();" placeholder="Basic Input" [accept]="'image/*'"></ngx-mat-file-input>
+				<mat-icon matSuffix>folder</mat-icon>
+				<img *ngIf="imageAvailable();" src="{{registrationForm.value.additionalInfo}}" width="200" height="200"  alt="Preview image"/>
+			</mat-form-field>
+
 			<!-- need to add  additional info browser-->
 
 			<button mat-raised-button color="primary" [disabled]="false" >Registruj se</button>
