@@ -36,54 +36,7 @@ namespace Backend.Controllers
         [Route("api/Lines/WithStations")]
         public IHttpActionResult GetLinesWitStations()
         {
-
-            var lines = unitOfWork.Lines.GetLines();
-            
-            //List<Vehicle> buses = new List<Vehicle>();
-            List<Timetable> timetables = new List<Timetable>();
-
-
-            foreach (Line l in lines)
-            {
-                /*for (int i = 0; i < 3; i++)
-                {
-                    Vehicle bus = new Vehicle();
-                    bus.TrackerSerial = "SN_Line" + l.Id + "_BusNO:" + i;
-                    bus.Name = "BUS";
-                    bus.Line = l;
-                    bus.Lat = 0;
-                    bus.Lon = 0;
-
-                    buses.Add(bus);
-                }
-                */
-
-                List<long> tList = new List<long>();
-
-                for (int j = 0; j <= 6; j++)
-                {
-                    Timetable timetable = new Timetable();
-                    timetable.Line = l;
-                    timetable.DayOfWeek = (DayOfWeek)j;
-                    for (int i = 21600; i <= 86400; i += 1800)
-                    {
-                        tList.Add(i);
-                    }
-
-                    timetable.Departures = tList;
-
-                    timetables.Add(timetable);
-                }
-
-            }
-
-           
-            //unitOfWork.Vehicles.AddRange(buses.AsEnumerable());
-            unitOfWork.Timetables.AddRange(timetables.AsEnumerable());
-            unitOfWork.Complete();
-
-            return null;
-            // return JsonResult(unitOfWork.Lines.GetLinesWithStations());
+            return JsonResult(unitOfWork.Lines.GetLinesWithStations());
         }
 
         
