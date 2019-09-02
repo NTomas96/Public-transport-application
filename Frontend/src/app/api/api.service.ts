@@ -154,4 +154,9 @@ export class ApiService {
 	getTicketPriceMe(buyTicketType, callbackObject) {
 		this.apiRequest("Pricelists/Me/" + buyTicketType, callbackObject);
 	}
+
+	buyTicket(ticketType, orderId, callbackObject) {
+		this.apiPostRequest("BuyTickets/" + ticketType + "/" + orderId, "", callbackObject, this.loggedIn());
+
+	}
 }
