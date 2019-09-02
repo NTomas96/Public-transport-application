@@ -44,7 +44,7 @@ export class PricesComponent implements OnInit {
 	private initConfig(cardType): void {
 		this.payPalConfig = {
 			currency: "EUR",
-			clientId: "sb",
+			clientId: "ATsKexGYCoUhokUVT1tHhSjXHKAuvNcRLNNFXWYbyzsS7uPFOThLrcoesZjsDWjhp2Ly3xBWFzp00T3t",
 			createOrderOnClient: (data) => ({
 				intent: "CAPTURE",
 				purchase_units: [
@@ -87,6 +87,14 @@ export class PricesComponent implements OnInit {
 				});
 			},
 			onClientAuthorization: (data) => {
+				this.apiService.buyTicket(this.buyTicketTypePrice.TicketType, data.id, {
+					success: (res) => {
+
+					},
+					error: (code, message) => {
+						alert("Error " + message);
+					}
+				});
 				console.log("onClientAuthorization - you should probably inform your server about completed transaction at this point", data);
 			},
 			onCancel: (data, actions) => {

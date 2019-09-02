@@ -71,6 +71,7 @@ namespace Backend.App_Start
             container.RegisterType<ITimetableRepository, TimetableRepository>();
             container.RegisterType<IPricelistRepository, PricelistRepository>();
             container.RegisterType<IVehicleRepository, VehicleRepository>();
+            container.RegisterType<ITicketRepository, TicketRepository>();
 
             container.RegisterType<DbContext, AppDbContext>(new PerResolveLifetimeManager());
             container.RegisterType<IUnitOfWork, DemoUnitOfWork>();

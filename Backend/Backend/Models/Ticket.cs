@@ -16,6 +16,7 @@ namespace Backend.Models
         [StringLength(15)]
         public string TicketNumber { get; set; }
         public User User { get; set; }
+        public TicketType TicketType { get; set; }
         public DateTime TimeBought { get; set; }
         [Index(IsUnique = true)]
         [Column(TypeName = "VARCHAR")]

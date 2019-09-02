@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BraintreeHttp-Dotnet, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BraintreeHttp-Dotnet.0.3.0\lib\netstandard2.0\BraintreeHttp-Dotnet.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -90,6 +93,9 @@
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.5.0\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPalCheckoutSdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayPalCheckoutSdk.1.0.2\lib\netstandard2.0\PayPalCheckoutSdk.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -170,6 +176,7 @@
     <Compile Include="App_Start\UnityResolver.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BetterApiController.cs" />
+    <Compile Include="Controllers\BuyTicketsController.cs" />
     <Compile Include="Controllers\StationsController.cs" />
     <Compile Include="Controllers\LinesController.cs" />
     <Compile Include="Controllers\PricelistsController.cs" />
@@ -185,6 +192,10 @@
     <Compile Include="Migrations\201909020850196_RemoveUniqueConstraint.cs" />
     <Compile Include="Migrations\201909020850196_RemoveUniqueConstraint.Designer.cs">
       <DependentUpon>201909020850196_RemoveUniqueConstraint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909021026277_TicketType.cs" />
+    <Compile Include="Migrations\201909021026277_TicketType.Designer.cs">
+      <DependentUpon>201909021026277_TicketType.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\GeoLocation.cs" />
@@ -206,12 +217,14 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserType.cs" />
     <Compile Include="Persistence\Repository\ILineRepository.cs" />
+    <Compile Include="Persistence\Repository\ITicketRepository.cs" />
     <Compile Include="Persistence\Repository\IStationRepository.cs" />
     <Compile Include="Persistence\Repository\IPricelistRepository.cs" />
     <Compile Include="Persistence\Repository\ITimetableRepository.cs" />
     <Compile Include="Persistence\Repository\IUserRepository.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
     <Compile Include="Persistence\Repository\IVehicleRepository.cs" />
+    <Compile Include="Persistence\Repository\TicketRepository.cs" />
     <Compile Include="Persistence\Repository\StationRepository.cs" />
     <Compile Include="Persistence\Repository\LineRepository.cs" />
     <Compile Include="Persistence\Repository\PricelistRepository.cs" />
@@ -228,6 +241,8 @@
     <Compile Include="Util\JwtAuthorizeAttribute.cs" />
     <Compile Include="Util\JwtManager.cs" />
     <Compile Include="Util\JwtPrincipal.cs" />
+    <Compile Include="Util\PayPalClient.cs" />
+    <Compile Include="Util\RandomUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -247,6 +262,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909020850196_RemoveUniqueConstraint.resx">
       <DependentUpon>201909020850196_RemoveUniqueConstraint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909021026277_TicketType.resx">
+      <DependentUpon>201909021026277_TicketType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

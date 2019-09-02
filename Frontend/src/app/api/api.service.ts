@@ -152,7 +152,7 @@ export class ApiService {
 	}
 
 	getTicketPriceMe(buyTicketType, callbackObject) {
-		this.apiRequest("Pricelists/Me/" + buyTicketType, callbackObject);
+		this.apiRequest("Pricelists/Me/" + buyTicketType, callbackObject, this.loggedIn());
 	}
 
 	buyTicket(ticketType, orderId, callbackObject) {
