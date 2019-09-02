@@ -76,7 +76,7 @@ export class ProfileComponent implements OnInit {
 		dayOfBirth: ["", [Validators.required]],
 		address: ["", [Validators.required]],
 		passengerType: [""],
-		additionalInfo: [null],
+		additionalInfo: ["", [Validators.required]],
 		verificationStatus: [""]
 	});
 
@@ -150,14 +150,12 @@ export class ProfileComponent implements OnInit {
 
 		this.apiService.editProfileUser(this.editProfileForm.value, {
 			success: (data) => {
-				// TODO: do something with server response
+				alert("Izmene prihvacene.")
 			},
 			error: (code, message) => {
 				alert("Error " + message);
 			}
 		});
-
-		alert("Podaci su promenjeni");
 	}
 
 	onFileChanged() {

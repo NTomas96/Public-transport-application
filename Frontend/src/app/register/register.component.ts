@@ -127,6 +127,7 @@ export class RegisterComponent implements OnInit {
 		this.apiService.registerUser(this.registrationForm.value, {
 			success: (data) => {
 				this.router.navigateByUrl("/login");
+				alert("Uspesno ste se registrovali.")
 			},
 			error: (code, message) => {
 				alert("Error " + message);

@@ -68,7 +68,7 @@
 			</mat-form-field>
 
 			<mat-form-field [hidden]="editProfileForm.value.passengerType === 0">
-				<mat-label>Slika za verifikaciju (opciono)</mat-label>
+				<mat-label>Slika za verifikaciju</mat-label>
 				<ngx-mat-file-input formControlName="additionalInfo" (change)="onFileChanged();" placeholder="Basic Input" [accept]="'image/*'"></ngx-mat-file-input>
 				<mat-icon matSuffix>folder</mat-icon>
 				<img *ngIf="additionalInfo !== null;" src="{{additionalInfo}}" width="200" height="200"  alt="Preview image"/>

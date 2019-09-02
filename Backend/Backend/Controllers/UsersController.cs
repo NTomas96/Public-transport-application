@@ -35,27 +35,32 @@ namespace Backend.Controllers
         [HttpPost]
         public IHttpActionResult Register(User user)
         {
-            user.UserType = UserType.Passenger;
-            user.Id = 0;
-            user.Password = Hash.Sha256Hash(user.Password);
-
-            if(user.PassengerType != PassengerType.Regular)
+            if(user.checkUserProperties())
             {
-                user.VerificationStatus = VerificationStatus.Processing;
-                user.Active = false;
+                user.UserType = UserType.Passenger;
+                user.Id = 0;
+                user.Password = Hash.Sha256Hash(user.Password);
+
+                if (user.PassengerType != PassengerType.Regular)
+                {
+                    user.VerificationStatus = VerificationStatus.Processing;
+                    user.Active = false;
+                }
+                else
+                {
+                    user.VerificationStatus = VerificationStatus.Accepted;
+                    user.Active = true;
+                    user.AdditionalInfo = null;
+                }
+
+                unitOfWork.Users.Add(user);
+                unitOfWork.Complete();
+
+
+                return JsonResult(user);
             }
-            else
-            {
-                user.VerificationStatus = VerificationStatus.Accepted;
-                user.Active = true;
-                user.AdditionalInfo = null;
-            }
 
-            unitOfWork.Users.Add(user);
-            unitOfWork.Complete();
-
-
-            return JsonResult(user);
+            return ErrorResult(442, "Greska! Proverite da li ste uneli sva polja.");
         }
 
         [Route("api/Users/Login")]
@@ -91,33 +96,36 @@ namespace Backend.Controllers
             User user = unitOfWork.Users.GetUserById(principal.UserId);
             if (user != null)
             {
-                user.FirstName = profile.FirstName;
-                user.LastName = profile.LastName;
-                user.Email = profile.Email;
-                user.DayOfBirth = profile.DayOfBirth;
-                user.Address = profile.Address;
-                
-                if(profile.AdditionalInfo!=null)
+                if(profile.checkUserProperties() && !(String.IsNullOrEmpty(profile.AdditionalInfo) || String.IsNullOrWhiteSpace(profile.AdditionalInfo)))
                 {
-                    if(user.AdditionalInfo != null)
+                    user.FirstName = profile.FirstName;
+                    user.LastName = profile.LastName;
+                    user.Email = profile.Email;
+                    user.DayOfBirth = profile.DayOfBirth;
+                    user.Address = profile.Address;
+
+                    if (user.AdditionalInfo != null)
                     {
-                        if(user.AdditionalInfo != profile.AdditionalInfo)
+                        if (user.AdditionalInfo != profile.AdditionalInfo)
                         {
                             user.Active = false;
                             user.VerificationStatus = VerificationStatus.Processing;
                             user.AdditionalInfo = profile.AdditionalInfo;
                         }
                     }
+
+                    if (!profile.Password.Equals("******"))
+                    {
+                        user.Password = Hash.Sha256Hash(profile.Password);
+                    }
+
+                    unitOfWork.Complete();
+
+                    return JsonResult(true);
                 }
 
-                if(!profile.Password.Equals("******"))
-                {
-                    user.Password = Hash.Sha256Hash(profile.Password);
-                }
-
-                unitOfWork.Complete();
-
-                return JsonResult(true);
+                return ErrorResult(442, "Greska! Proverite da li ste uneli sve podatke.");
+                
             }
 
             return ErrorResult(6001, "Unexpected error somehow managed to occur. God help us.");
