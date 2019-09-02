@@ -61,7 +61,7 @@ namespace BusPositionService
                     for(int i=0;i<3;i++)
                     {
                         Bus bus = new Bus();
-                        bus.TrackerSerial = "SN_Line" + l.Id + "_BusNO:" + i;
+                        bus.TrackerSerial = "SN_Line" + l.Name + "_BusNO:" + i;
 
                         Random rnd = new Random();
                         int index = rnd.Next(0, l.Waypoints.Count);
