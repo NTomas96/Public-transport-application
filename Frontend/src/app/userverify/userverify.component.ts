@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {ApiService} from "../api/api.service";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {InfodialogComponent} from "./infodialog/infodialog.component";
+import {Router} from "@angular/router";
 
 @Component({
 	selector: "app-userverify",
@@ -27,6 +28,10 @@ export class UserverifyComponent implements OnInit {
 	displayColumnsParsed = Array.from(this.displayColumns, (x) => x.key);
 
 	ngOnInit() {
+		this.refreshData();
+	}
+
+	refreshData() {
 		this.apiService.getUnverifiedUsers({
 			success: (users) => {
 				this.unverifiedUsers = users;
@@ -50,10 +55,24 @@ export class UserverifyComponent implements OnInit {
 	}
 
 	acceptUser(element: any) {
-
+		this.apiService.acceptUser(element.Id, {
+			success: (ignore) => {
+				this.refreshData();
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
 	}
 
 	denyUser(element: any) {
-
+		this.apiService.denyUser(element.Id, {
+			success: (ignore) => {
+				this.refreshData();
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
 	}
 }

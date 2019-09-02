@@ -17,6 +17,7 @@ namespace Backend.Util
     public class JwtAuthorizeAttribute : Attribute, IAuthenticationFilter
     {
         private UserType[] roles = null;
+        public bool DontBlock { get; set; } = false;
 
         public JwtAuthorizeAttribute()
         {
@@ -37,13 +38,12 @@ namespace Backend.Util
 
             if (authorization == null || authorization.Scheme != "Bearer")
             {
-
-                context.ErrorResult = new ErrorApiResult<ErrorApiResponse>(new ErrorApiResponse(1001, "Missing credentials"), request);
+                if(!DontBlock) context.ErrorResult = new ErrorApiResult<ErrorApiResponse>(new ErrorApiResponse(1001, "Missing credentials"), request);
                 return;
             }
             if (string.IsNullOrEmpty(authorization.Parameter))
             {
-                context.ErrorResult = new ErrorApiResult<ErrorApiResponse>(new ErrorApiResponse(1002, "Missing Jwt Token"), request);
+                if (!DontBlock) context.ErrorResult = new ErrorApiResult<ErrorApiResponse>(new ErrorApiResponse(1002, "Missing Jwt Token"), request);
                 return;
             }
 
@@ -52,13 +52,13 @@ namespace Backend.Util
 
             if (principal == null)
             {
-                context.ErrorResult = new ErrorApiResult<ErrorApiResponse>(new ErrorApiResponse(1003, "Invalid token"), request);
+                if (!DontBlock) context.ErrorResult = new ErrorApiResult<ErrorApiResponse>(new ErrorApiResponse(1003, "Invalid token"), request);
                 return;
             }
 
             if(this.roles != null && ! roles.Contains(principal.UserType))
             {
-                context.ErrorResult = new ErrorApiResult<ErrorApiResponse>(new ErrorApiResponse(1004, "Unauthorized request"), request);
+                if (!DontBlock) context.ErrorResult = new ErrorApiResult<ErrorApiResponse>(new ErrorApiResponse(1004, "Unauthorized request"), request);
                 return;
             }
 

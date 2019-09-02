@@ -19,4 +19,17 @@
 	<div *ngIf="selectedTicket != null">
 		<h5 class="mat-headline mat-h2">Cena {{getTicketTypeName(selectedTicket.TicketType)}} karte za {{getPassengerTypeName(selectedTicket.PassengerType)}} je: {{selectedTicket.Price}} RSD</h5>
 	</div>
+	<h1 class="mat-headline">Kupi kartu</h1>
+	<mat-divider></mat-divider>
+	<div>
+		<mat-form-field>
+			<mat-label>Tip karte:</mat-label>
+			<mat-select (selectionChange)="buyTicketTypeChanged($event)">
+				<mat-option *ngFor="let ticketType of getBuyTicketTypes()" [value]="ticketType.id">{{ticketType.name}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-divider class="button-divider"></mat-divider>
+		<ngx-paypal *ngIf="buyTicketType !== null" [config]="payPalConfig"></ngx-paypal>
+		<!--<button id="buy" mat-raised-button color="primary" [disabled]="buyTicketType === null" (click)="buyTicket()" >Kupi kartu</button>-->
+	</div>
 </div>

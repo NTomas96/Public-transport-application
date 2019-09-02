@@ -182,6 +182,10 @@
     <Compile Include="Migrations\201909011347057_InitialCreate.Designer.cs">
       <DependentUpon>201909011347057_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909020850196_RemoveUniqueConstraint.cs" />
+    <Compile Include="Migrations\201909020850196_RemoveUniqueConstraint.Designer.cs">
+      <DependentUpon>201909020850196_RemoveUniqueConstraint.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\GeoLocation.cs" />
     <Compile Include="Models\Ticket.cs" />
@@ -238,6 +242,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201909011347057_InitialCreate.resx">
       <DependentUpon>201909011347057_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909020850196_RemoveUniqueConstraint.resx">
+      <DependentUpon>201909020850196_RemoveUniqueConstraint.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

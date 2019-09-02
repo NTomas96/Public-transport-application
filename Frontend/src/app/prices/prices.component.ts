@@ -1,13 +1,14 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {MatSelectChange} from "@angular/material";
 import {ApiService} from "../api/api.service";
+import {ICreateOrderRequest, IPayPalConfig} from "ngx-paypal/lib/models/paypal-models";
 
 @Component({
 	selector: "app-prices",
 	templateUrl: "./prices.component.html",
 	styleUrls: ["./prices.component.css"]
 })
-export class PricesComponent {
+export class PricesComponent implements OnInit {
 
 	constructor(private apiService: ApiService) {
 
@@ -25,9 +26,80 @@ export class PricesComponent {
 		{id: 2, name: "Mesecna"},
 		{id: 3, name: "Godisnja"},
 	];
+
+	buyTicketTypes = [];
+	buyTicketType = null;
+	buyTicketTypePrice = null;
+
 	selectedTicketType = null;
 	selectedPassengerType = null;
 	selectedTicket = null;
+
+	public payPalConfig?: IPayPalConfig;
+
+	ngOnInit() {
+		this.updateBuyTickets();
+	}
+
+	private initConfig(cardType): void {
+		this.payPalConfig = {
+			currency: "EUR",
+			clientId: "sb",
+			createOrderOnClient: (data) => ({
+				intent: "CAPTURE",
+				purchase_units: [
+					{
+						amount: {
+							currency_code: "EUR",
+							value: "" + cardType.Price,
+							breakdown: {
+								item_total: {
+									currency_code: "EUR",
+									value: "" + cardType.Price
+								}
+							}
+						},
+						items: [
+							{
+								name: this.ticketTypes[cardType.TicketType] + " karta",
+								quantity: "1",
+								category: "DIGITAL_GOODS",
+								unit_amount: {
+									currency_code: "EUR",
+									value: "" + cardType.Price,
+								},
+							}
+						]
+					}
+				]
+			} as ICreateOrderRequest),
+			advanced: {
+				commit: "true"
+			},
+			style: {
+				label: "paypal",
+				layout: "vertical"
+			},
+			onApprove: (data, actions) => {
+				console.log("onApprove - transaction was approved, but not authorized", data, actions);
+				actions.order.get().then(details => {
+					console.log("onApprove - you can get full order details inside onApprove: ", details);
+				});
+			},
+			onClientAuthorization: (data) => {
+				console.log("onClientAuthorization - you should probably inform your server about completed transaction at this point", data);
+			},
+			onCancel: (data, actions) => {
+				console.log("OnCancel", data, actions);
+			},
+			onError: err => {
+				console.log("OnError", err);
+			},
+			onClick: (data, actions) => {
+				console.log("onClick", data, actions);
+			},
+		};
+	}
 
 	getPassengerTypeName(id: number) {
 		return this.passengerTypes.filter(o => o.id === id)[0].name;
@@ -43,6 +115,20 @@ export class PricesComponent {
 		if (this.selectedPassengerType != null) {
 			this.updateTicket(this.selectedTicketType, this.selectedPassengerType);
 		}
+	}
+
+	buyTicketTypeChanged($event: MatSelectChange) {
+		this.buyTicketType = $event.value;
+
+		this.apiService.getTicketPriceMe(this.buyTicketType, {
+			success: (price) => {
+				this.buyTicketTypePrice = price;
+				this.initConfig(price);
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
 	}
 
 	passengerTypeChanged($event: MatSelectChange) {
@@ -62,5 +148,29 @@ export class PricesComponent {
 				alert("Error " + message);
 			}
 		});
+	}
+
+	updateBuyTickets() {
+		if (!this.apiService.loggedIn()) {
+			this.buyTicketTypes = [{id: 0, name: "Vremenska"}];
+			return;
+		}
+
+		this.apiService.getUser({
+			success: (user) => {
+				if (user.Active) {
+					this.buyTicketTypes = this.ticketTypes;
+				} else {
+					this.buyTicketTypes = [];
+				}
+			},
+			error: (code, message) => {
+				alert("Error " + message);
+			}
+		});
+	}
+
+	getBuyTicketTypes() {
+		return this.buyTicketTypes;
 	}
 }
