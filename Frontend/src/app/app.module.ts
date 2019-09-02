@@ -36,7 +36,7 @@ import { ProfileComponent } from "./profile/profile.component";
 import {MaterialFileInputModule} from "ngx-material-file-input";
 import { UserverifyComponent } from "./userverify/userverify.component";
 import { InfodialogComponent } from "./userverify/infodialog/infodialog.component";
-
+import {NgxPayPalModule} from "ngx-paypal";
 @NgModule({
 	declarations: [
 		PageComponent,
@@ -79,7 +79,8 @@ import { InfodialogComponent } from "./userverify/infodialog/infodialog.componen
 		MatTableModule,
 		MatPaginatorModule,
 		MaterialFileInputModule,
-		MatCardModule
+		MatCardModule,
+		NgxPayPalModule
 	],
 	providers: [ApiService],
 	bootstrap: [PageComponent],

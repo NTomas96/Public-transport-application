@@ -139,7 +139,23 @@ namespace Backend.Controllers
         [JwtAuthorize(new UserType[] { UserType.Controller })]
         public IHttpActionResult Accept(int userId)
         {
-            return JsonResult(null);
+            User user = unitOfWork.Users.GetUserById(userId);
+
+            if(user != null && user.UserType == UserType.Passenger && user.VerificationStatus == VerificationStatus.Processing)
+            {
+                user.VerificationStatus = VerificationStatus.Accepted;
+                user.Active = true;
+                user.AdditionalInfo = "";
+                unitOfWork.Complete();
+
+                return JsonResult(null);
+            }
+            else
+            {
+                return ErrorResult(7001, "User not found.");
+            }
+
+            
         }
 
         [Route("api/Users/Verify/Deny/{userId}")]
@@ -147,7 +163,21 @@ namespace Backend.Controllers
         [JwtAuthorize(new UserType[] { UserType.Controller })]
         public IHttpActionResult Deny(int userId)
         {
-            return JsonResult(null);
+            User user = unitOfWork.Users.GetUserById(userId);
+
+            if (user != null && user.UserType == UserType.Passenger && user.VerificationStatus == VerificationStatus.Processing)
+            {
+                user.VerificationStatus = VerificationStatus.Denied;
+                user.Active = false;
+                user.AdditionalInfo = "";
+                unitOfWork.Complete();
+
+                return JsonResult(null);
+            }
+            else
+            {
+                return ErrorResult(7001, "User not found.");
+            }
         }
     }
 }

@@ -142,4 +142,16 @@ export class ApiService {
 	getUnverifiedUsers(callbackObject) {
 		this.apiRequest("Users/Unverified", callbackObject, true);
 	}
+
+	acceptUser(userId, callbackObject) {
+		this.apiPostRequest("Users/Verify/Accept/" + userId, "", callbackObject, true);
+	}
+
+	denyUser(userId, callbackObject) {
+		this.apiPostRequest("Users/Verify/Deny/" + userId, "", callbackObject, true);
+	}
+
+	getTicketPriceMe(buyTicketType, callbackObject) {
+		this.apiRequest("Pricelists/Me/" + buyTicketType, callbackObject);
+	}
 }

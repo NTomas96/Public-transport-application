@@ -12,9 +12,7 @@ namespace Backend.Models
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Index("Timetable_1", 1, IsUnique = true)]
         public DayOfWeek DayOfWeek { get; set; }
-        [Index("Timetable_1", 2, IsUnique = true)]
         public Line Line { get; set; }
 
         [NotMapped]
