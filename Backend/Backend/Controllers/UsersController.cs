@@ -96,6 +96,19 @@ namespace Backend.Controllers
                 user.Email = profile.Email;
                 user.DayOfBirth = profile.DayOfBirth;
                 user.Address = profile.Address;
+                
+                if(profile.AdditionalInfo!=null)
+                {
+                    if(user.AdditionalInfo != null)
+                    {
+                        if(user.AdditionalInfo != profile.AdditionalInfo)
+                        {
+                            user.Active = false;
+                            user.VerificationStatus = VerificationStatus.Processing;
+                            user.AdditionalInfo = profile.AdditionalInfo;
+                        }
+                    }
+                }
 
                 if(!profile.Password.Equals("******"))
                 {
