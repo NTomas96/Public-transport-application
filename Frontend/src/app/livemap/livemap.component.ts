@@ -27,9 +27,20 @@ export class LivemapComponent implements OnInit {
 	} as MapTypeStyle)];
 
 	stations = [];
+	vehicles = [];
 	lines = [];
 
 	selectedLine = null;
+
+	getVehicleById(id) {
+		for (const vehicle of this.vehicles) {
+			if (vehicle.Id === id) {
+				return vehicle;
+			}
+		}
+
+		return null;
+	}
 
 	ngOnInit(): void {
 		this.apiService.getLinesWithStations({
@@ -52,8 +63,19 @@ export class LivemapComponent implements OnInit {
 
 		const connection = $.hubConnection("http://localhost:57563");
 		const contosoChatHubProxy = connection.createHubProxy("Bus");
-		contosoChatHubProxy.on("hello", (name, message) => {
-			console.log(name + " " + message);
+		contosoChatHubProxy.on("hello", (v) => {
+
+			let vehicle = this.getVehicleById(v.Id);
+
+			if (vehicle === null) {
+				this.vehicles.push(v);
+			}
+			else {
+				vehicle.Lat = v.Lat;
+				vehicle.Lon = v.Lon;
+			}
+
+			//console.log(vehicle);
 		});
 		connection.start().done(() => {
 

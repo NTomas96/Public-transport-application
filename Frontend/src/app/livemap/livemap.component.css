@@ -10,3 +10,7 @@
 agm-map {
 	height: 600px;
 }
+
+agm-marker[hidden] {
+	display: none;
+}

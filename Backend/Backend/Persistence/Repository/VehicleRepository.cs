@@ -24,7 +24,7 @@ namespace Backend.Persistence.Repository
 
         public Vehicle GetVehicleByTrackerSerial(string busId)
         {
-            return appDbContext.Vehicles.Where(v => busId.Equals(v.TrackerSerial)).FirstOrDefault();
+            return appDbContext.Vehicles.Include(v => v.Line).Where(v => busId.Equals(v.TrackerSerial)).FirstOrDefault();
         }
     }
 }

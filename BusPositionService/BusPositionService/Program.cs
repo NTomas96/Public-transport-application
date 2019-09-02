@@ -31,13 +31,15 @@ namespace BusPositionService
 
                         string parameters = JsonConvert.SerializeObject(bj);
 
-                        HttpPost("http://localhost/", parameters);
+                        HttpPost("http://localhost:57563/api/Lines/Bus", parameters);
                     }
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
             }
-        }        
+        }
+
+        private static Random rnd = new Random();
 
         public static void importLines()
         {
@@ -63,7 +65,7 @@ namespace BusPositionService
                         Bus bus = new Bus();
                         bus.TrackerSerial = "SN_Line" + l.Name + "_BusNO:" + i;
 
-                        Random rnd = new Random();
+                        
                         int index = rnd.Next(0, l.Waypoints.Count);
 
                         bus.BusLocation.Lat = l.Waypoints[index].Lat;
@@ -90,7 +92,7 @@ namespace BusPositionService
             WebRequest req = WebRequest.Create(URI);
 
             //Add these, as we're doing a POST
-            req.ContentType = "application/x-www-form-urlencoded";
+            req.ContentType = "application/json";
             req.Method = "POST";
 
             //We need to count how many bytes we're sending. Post'ed Faked Forms should be name=value&

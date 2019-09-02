@@ -303,6 +303,7 @@
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Models\VerificationStatus.cs" />
     <Compile Include="Models\Web\ApiResponse.cs" />
+    <Compile Include="Models\Web\BusJson.cs" />
     <Compile Include="Models\Web\ErrorApiResponse.cs" />
     <Compile Include="Models\Web\LoginResponse.cs" />
     <Compile Include="Models\Web\SuccessApiResponse.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Backend.Models;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 
@@ -18,9 +19,9 @@ namespace Backend.Hubs
             Clients.All.hello();
         }
 
-        public static void SayHello()
+        public static void SayHello(Vehicle vehicle)
         {
-            hubContext.Clients.All.hello();
+            hubContext.Clients.All.hello(vehicle);
         }
     }
 }
