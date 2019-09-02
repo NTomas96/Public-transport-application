@@ -34,8 +34,8 @@ import {ApiService} from "./api/api.service";
 import { LogoutComponent } from "./logout/logout.component";
 import { ProfileComponent } from "./profile/profile.component";
 import {MaterialFileInputModule} from "ngx-material-file-input";
-import { UserverifyComponent } from './userverify/userverify.component';
-import { InfodialogComponent } from './userverify/infodialog/infodialog.component';
+import { UserverifyComponent } from "./userverify/userverify.component";
+import { InfodialogComponent } from "./userverify/infodialog/infodialog.component";
 
 @NgModule({
 	declarations: [

@@ -28,26 +28,26 @@ export class RegisterComponent implements OnInit {
 		},
 		email: {
 			required: "Unesite email.",
-			email: "Unesite ispravnu email adresu."
+			email: "Unesite ispravnu email adresu.",
 		},
 		password: {
 			required: "Niste uneneli lozinku.",
-			minlength: "Greska pri unosu (min 6 karaktera)."
+			minlength: "Greska pri unosu (min 6 karaktera).",
 		},
 		confirmPassword: {
-			required: "Niste ponovili lozinku."
+			required: "Niste ponovili lozinku.",
 		},
 		passwordGroup: {
-			passwordMismatch: "Lozinke se ne poklapaju, potvrdi lozinku ponovo."
+			passwordMismatch: "Lozinke se ne poklapaju, potvrdi lozinku ponovo.",
 		},
 		dayOfBirth: {
-			required: "Unesite datum rodjnja."
+			required: "Unesite datum rodjnja.",
 		},
 		address: {
-			required: "Unesite adresu."
+			required: "Unesite adresu.",
 		},
 		passengerType: {
-			required: "Izaberite tip putnika."
+			required: "Izaberite tip putnika.",
 		}
 	};
 
@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
 		passwordGroup: this.fb.group ({
 			password: ["", [Validators.required, Validators.minLength(6)]],
 			confirmPassword: ["", [Validators.required]]
-		}, { validator: CustomValidators.checkPassword}),
+		}, {validator: CustomValidators.checkPassword}),
 		dayOfBirth: ["", [Validators.required]],
 		address: ["", [Validators.required]],
 		passengerType: [0, [Validators.required]],

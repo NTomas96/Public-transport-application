@@ -10,6 +10,6 @@ namespace Backend.Models
         TimeTicket = 0,
         DailyTicket = 1,
         MonthlyTicket = 2,
-        YearlyTicket = 4
+        YearlyTicket = 3
     }
 }

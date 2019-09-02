@@ -63,6 +63,7 @@ export class ProfileComponent implements OnInit {
 	matcherEmail = new MyErrorStateMatcher();
 
 	passengerTypes = ["Regularani", "Student", "Penzioner"];
+	verificationStatuses = [ "Obradjuje se" , "Prihvacen", "Odbijen"];
 
 	editProfileForm = this.fb.group({
 		firstName: ["", [Validators.required]],
@@ -75,13 +76,15 @@ export class ProfileComponent implements OnInit {
 		dayOfBirth: ["", [Validators.required]],
 		address: ["", [Validators.required]],
 		passengerType: [""],
-		additionalInfo: [null]
+		additionalInfo: [null],
+		verificationStatus: [""]
 	});
 
 	hideP: boolean;
 	hideCP: boolean;
 
 	additionalInfo = null;
+	// verificationStatus = null;
 
 	ngOnInit() {
 		if (! this.apiService.loggedIn()) {
@@ -108,7 +111,8 @@ export class ProfileComponent implements OnInit {
 					dayOfBirth: user.DayOfBirth,
 					address: user.Address,
 					passengerType: user.PassengerType,
-					additionalInfo: user.AdditionalInfo
+					additionalInfo: user.AdditionalInfo,
+					verificationStatus: user.VerificationStatus
 				}, {emitEvent: false});
 				this.additionalInfo = user.AdditionalInfo;
 			},
@@ -152,6 +156,8 @@ export class ProfileComponent implements OnInit {
 				alert("Error " + message);
 			}
 		});
+
+		alert("Podaci su promenjeni");
 	}
 
 	onFileChanged() {

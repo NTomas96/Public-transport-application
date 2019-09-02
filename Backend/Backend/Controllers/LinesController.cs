@@ -22,63 +22,6 @@ namespace Backend.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
 
-        /*
-       dynamic stuff = JsonConvert.DeserializeObject(File.ReadAllText("C:\\Users\\Spajk\\Desktop\\lines.json"));
-            List<Line> lines = new List<Line>();
-
-            foreach (dynamic obj in stuff)
-            {
-                Line line = new Line();
-                line.Color = obj.color;
-                line.Name = obj.name;
-
-                var points = new List<GeoLocation>();
-
-                foreach (dynamic point in obj.waypoints)
-                {
-                    GeoLocation geo = new GeoLocation();
-                    geo.Lat = point.lat;
-                    geo.Lon = point.lon;
-                    points.Add(geo);
-                }
-
-                line.Waypoints = points;
-
-                lines.Add(line);
-            }
-
-            dynamic stuff2 = JsonConvert.DeserializeObject(File.ReadAllText("C:\\Users\\Spajk\\Desktop\\stations.json"));
-            List<Station> stations = new List<Station>();
-
-            foreach (dynamic obj in stuff2)
-            {
-                Station station = new Station();
-                station.Name = obj.name;
-                station.Lat = obj.lat;
-                station.Lon = obj.lon;
-                station.Lines = new List<Line>();
-
-                foreach(string lineStr in obj.lines)
-                {
-                    foreach(Line line in lines)
-                    {
-                        if(line.Name.Equals(lineStr))
-                        {
-                            station.Lines.Add(line);
-                        }
-                    }
-                }
-
-                stations.Add(station);
-            }
-
-            unitOfWork.Lines.AddRange(lines.AsEnumerable());
-            unitOfWork.Stations.AddRange(stations.AsEnumerable());
-            unitOfWork.Complete();
-
-            return null;
-       */
-
         public LinesController(IUnitOfWork u)
         {
             this.unitOfWork = u;
@@ -86,14 +29,61 @@ namespace Backend.Controllers
 
         // GET: api/Lines
         public IHttpActionResult GetLines()
-        {
-            return JsonResult(unitOfWork.Lines.GetLines());
+        {            
+           return JsonResult(unitOfWork.Lines.GetLines());
         }
 
         [Route("api/Lines/WithStations")]
         public IHttpActionResult GetLinesWitStations()
         {
-            return JsonResult(unitOfWork.Lines.GetLinesWithStations());
+
+            var lines = unitOfWork.Lines.GetLines();
+            
+            //List<Vehicle> buses = new List<Vehicle>();
+            List<Timetable> timetables = new List<Timetable>();
+
+
+            foreach (Line l in lines)
+            {
+                /*for (int i = 0; i < 3; i++)
+                {
+                    Vehicle bus = new Vehicle();
+                    bus.TrackerSerial = "SN_Line" + l.Id + "_BusNO:" + i;
+                    bus.Name = "BUS";
+                    bus.Line = l;
+                    bus.Lat = 0;
+                    bus.Lon = 0;
+
+                    buses.Add(bus);
+                }
+                */
+
+                List<long> tList = new List<long>();
+
+                for (int j = 0; j <= 6; j++)
+                {
+                    Timetable timetable = new Timetable();
+                    timetable.Line = l;
+                    timetable.DayOfWeek = (DayOfWeek)j;
+                    for (int i = 21600; i <= 86400; i += 1800)
+                    {
+                        tList.Add(i);
+                    }
+
+                    timetable.Departures = tList;
+
+                    timetables.Add(timetable);
+                }
+
+            }
+
+           
+            //unitOfWork.Vehicles.AddRange(buses.AsEnumerable());
+            unitOfWork.Timetables.AddRange(timetables.AsEnumerable());
+            unitOfWork.Complete();
+
+            return null;
+            // return JsonResult(unitOfWork.Lines.GetLinesWithStations());
         }
 
         

@@ -37,6 +37,7 @@
 					<mat-icon matSuffix (click)="hideCP = !hideCP">{{hideCP ? 'visibility' : 'visibility_off'}}</mat-icon>
 					<mat-error *ngIf="formErrors.confirmPassword || formErrors.passwordGroup">
 						{{formErrors.confirmPassword ? formErrors.confirmPassword : formErrors.passwordGroup}}
+						{{formErrors.passwordGroup}}
 					</mat-error>
 				</mat-form-field>
 			</div>

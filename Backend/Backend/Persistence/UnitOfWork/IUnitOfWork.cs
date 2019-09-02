@@ -15,6 +15,7 @@ namespace WebApp.Persistence.UnitOfWork
         IStationRepository Stations { get; set; }
         ITimetableRepository Timetables { get; set; }
         IPricelistRepository Pricelists { get; set; }
+        IVehicleRepository Vehicles { get; set; }
         
         int Complete();
     }
