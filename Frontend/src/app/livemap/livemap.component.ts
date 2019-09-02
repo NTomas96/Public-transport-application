@@ -2,6 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {MapTypeStyle} from "@agm/core";
 import {ApiService} from "../api/api.service";
 import {MatSelectChange} from "@angular/material";
+import {environment} from "../../environments/environment";
+//import * as $ from "jquery";
 
 
 @Component({
@@ -47,6 +49,32 @@ export class LivemapComponent implements OnInit {
 				alert("Error " + message);
 			}
 		});
+
+		const connection = $.hubConnection("http://localhost:57563");
+		const contosoChatHubProxy = connection.createHubProxy("Bus");
+		contosoChatHubProxy.on("hello", (name, message) => {
+			console.log(name + " " + message);
+		});
+		connection.start().done(() => {
+
+		});
+
+		/*
+		this.hubConnection = new signalR.HubConnectionBuilder()
+			.withUrl("http://localhost:57563/" + "signalr")
+			.build();
+
+		this.hubConnection.on("transferchartdata", (data) => {
+			// this.data = data;
+			console.log(data);
+		});
+
+		this.hubConnection
+			.start()
+			.then(() => console.log("Connection started"))
+			.catch(err => console.log("Error while starting connection: " + err));
+
+		 */
 	}
 
 	lineChanged($event: MatSelectChange) {

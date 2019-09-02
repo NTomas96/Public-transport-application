@@ -20,7 +20,7 @@ namespace Backend
             var resolver = new UnityResolver(container);
             resolver.RegisterTypes();
             config.DependencyResolver = resolver;
-            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
+            //config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             //GlobalHost.DependencyResolver = new SignalRUnityDependencyResolver(container);
 

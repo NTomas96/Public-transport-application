@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
+using Backend.Hubs;
 using Backend.Models;
 using Backend.Persistence;
 using Newtonsoft.Json;
@@ -49,6 +50,17 @@ namespace Backend.Controllers
             }
 
             return JsonResult(line);
+        }
+
+        [Route("api/Lines/Bus/{busId}")]
+        [HttpPost]
+        public IHttpActionResult Bus(string busId, [FromBody] dynamic data)
+        {
+            Vehicle vehicle = unitOfWork.Vehicles.GetVehicleByTrackerSerial(busId);
+
+            BusHub.SayHello();
+
+            return JsonResult(null);
         }
 
         /*

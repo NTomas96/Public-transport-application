@@ -11,5 +11,6 @@ namespace Backend.Persistence.Repository
     public interface IVehicleRepository : IRepository<Vehicle, int>
     {
         IQueryable<Vehicle> GetVehicles();
+        Vehicle GetVehicleByTrackerSerial(string busId);
     }
 }
