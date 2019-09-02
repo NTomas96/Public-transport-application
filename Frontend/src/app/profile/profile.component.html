@@ -74,6 +74,15 @@
 				<img *ngIf="additionalInfo !== null;" src="{{additionalInfo}}" width="200" height="200"  alt="Preview image"/>
 			</mat-form-field>
 
+			<mat-form-field>
+				<mat-label>Status verifikacije:</mat-label>
+				<mat-select formControlName="verificationStatus" [disabled]="true">
+					<mat-option *ngFor="let vs of verificationStatuses; let i = index" [value]="i">
+						{{vs}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
 
 			<button mat-raised-button color="primary" [disabled]="false" >Sacuvaj</button>
 		</div>

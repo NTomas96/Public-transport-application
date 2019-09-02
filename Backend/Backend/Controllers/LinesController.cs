@@ -22,63 +22,6 @@ namespace Backend.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
 
-        /*
-       dynamic stuff = JsonConvert.DeserializeObject(File.ReadAllText("C:\\Users\\Spajk\\Desktop\\lines.json"));
-            List<Line> lines = new List<Line>();
-
-            foreach (dynamic obj in stuff)
-            {
-                Line line = new Line();
-                line.Color = obj.color;
-                line.Name = obj.name;
-
-                var points = new List<GeoLocation>();
-
-                foreach (dynamic point in obj.waypoints)
-                {
-                    GeoLocation geo = new GeoLocation();
-                    geo.Lat = point.lat;
-                    geo.Lon = point.lon;
-                    points.Add(geo);
-                }
-
-                line.Waypoints = points;
-
-                lines.Add(line);
-            }
-
-            dynamic stuff2 = JsonConvert.DeserializeObject(File.ReadAllText("C:\\Users\\Spajk\\Desktop\\stations.json"));
-            List<Station> stations = new List<Station>();
-
-            foreach (dynamic obj in stuff2)
-            {
-                Station station = new Station();
-                station.Name = obj.name;
-                station.Lat = obj.lat;
-                station.Lon = obj.lon;
-                station.Lines = new List<Line>();
-
-                foreach(string lineStr in obj.lines)
-                {
-                    foreach(Line line in lines)
-                    {
-                        if(line.Name.Equals(lineStr))
-                        {
-                            station.Lines.Add(line);
-                        }
-                    }
-                }
-
-                stations.Add(station);
-            }
-
-            unitOfWork.Lines.AddRange(lines.AsEnumerable());
-            unitOfWork.Stations.AddRange(stations.AsEnumerable());
-            unitOfWork.Complete();
-
-            return null;
-       */
-
         public LinesController(IUnitOfWork u)
         {
             this.unitOfWork = u;
@@ -86,8 +29,8 @@ namespace Backend.Controllers
 
         // GET: api/Lines
         public IHttpActionResult GetLines()
-        {
-            return JsonResult(unitOfWork.Lines.GetLines());
+        {            
+           return JsonResult(unitOfWork.Lines.GetLines());
         }
 
         [Route("api/Lines/WithStations")]

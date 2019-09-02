@@ -63,10 +63,11 @@ export class ApiService {
 	private handleResponse(data: HttpResponse<any>, callbackObject) {
 
 		let member = "body";
-
 		if (data instanceof HttpErrorResponse) {
 			member = "error";
 		}
+
+		console.log(member);
 
 		if (data[member] && "Success" in data[member]) {
 			if (data[member].Success) {
@@ -90,8 +91,11 @@ export class ApiService {
 	private apiPostRequest(method: string, postBody, callbackObject, auth?: boolean) {
 		this.http.post<any>(environment.apiUrl + method, postBody, this.getHttpOptions(auth)).subscribe((data: HttpResponse<any>) => {
 			this.handleResponse(data, callbackObject);
+
+			console.log(data);
 		}, (error) => {
 			this.handleResponse(error, callbackObject);
+			console.log(error);
 		});
 	}
 
