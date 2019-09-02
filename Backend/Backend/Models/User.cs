@@ -25,5 +25,48 @@ namespace Backend.Models
         public UserType UserType { get; set; }
         public bool Active { get; set; }
         public VerificationStatus VerificationStatus { get; set; }
+
+
+        public bool checkUserProperties()
+        {
+            if (String.IsNullOrEmpty(FirstName) || String.IsNullOrWhiteSpace(FirstName))
+                return false;
+
+            if (String.IsNullOrEmpty(LastName) || String.IsNullOrWhiteSpace(LastName))
+                return false;
+
+            if (String.IsNullOrEmpty(Email) || String.IsNullOrWhiteSpace(Email))
+            { return false; }
+            else
+            {
+                int indexET = Email.LastIndexOf('@');
+                int indexDOT = Email.LastIndexOf('.');
+
+                if(indexET < 0 || indexDOT < 0)
+                {
+                    return false;
+                }
+                else if(indexET > indexDOT)
+                {
+                    return false;
+                }
+            }
+
+            if (String.IsNullOrEmpty(Password) || String.IsNullOrWhiteSpace(Password))
+                return false;
+
+            DateTime d = new DateTime(1, 1, 1, 12, 0, 0, 0);
+            var res = DateTime.Compare(DayOfBirth, d);
+
+            if (DayOfBirth == null || res <= 0)
+                return false;
+
+            if (String.IsNullOrEmpty(Address) || String.IsNullOrWhiteSpace(Address))
+                return false;
+
+                return true;
+        }
+
+        
     }
 }
