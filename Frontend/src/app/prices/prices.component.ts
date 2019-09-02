@@ -1,7 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {MatSelectChange} from "@angular/material";
+import {MatDialog, MatDialogConfig, MatSelectChange} from "@angular/material";
 import {ApiService} from "../api/api.service";
 import {ICreateOrderRequest, IPayPalConfig} from "ngx-paypal/lib/models/paypal-models";
+import {TicketdialogComponent} from "./ticketdialog/ticketdialog.component";
 
 @Component({
 	selector: "app-prices",
@@ -10,7 +11,7 @@ import {ICreateOrderRequest, IPayPalConfig} from "ngx-paypal/lib/models/paypal-m
 })
 export class PricesComponent implements OnInit {
 
-	constructor(private apiService: ApiService) {
+	constructor(private apiService: ApiService, private dialog: MatDialog) {
 
 	}
 	title = "Cenovnik";
@@ -61,7 +62,7 @@ export class PricesComponent implements OnInit {
 						},
 						items: [
 							{
-								name: this.ticketTypes[cardType.TicketType] + " karta",
+								name: this.ticketTypes[cardType.TicketType].name + " karta",
 								quantity: "1",
 								category: "DIGITAL_GOODS",
 								unit_amount: {
@@ -80,31 +81,32 @@ export class PricesComponent implements OnInit {
 				label: "paypal",
 				layout: "vertical"
 			},
-			onApprove: (data, actions) => {
-				console.log("onApprove - transaction was approved, but not authorized", data, actions);
-				actions.order.get().then(details => {
-					console.log("onApprove - you can get full order details inside onApprove: ", details);
-				});
+			onApprove: () => {
 			},
 			onClientAuthorization: (data) => {
 				this.apiService.buyTicket(this.buyTicketTypePrice.TicketType, data.id, {
-					success: (res) => {
+					success: (ticket) => {
+						const dialogConfig = new MatDialogConfig();
 
+						dialogConfig.disableClose = false;
+						dialogConfig.autoFocus = true;
+						dialogConfig.data = ticket.TicketNumber;
+
+						console.log("test");
+
+						this.dialog.open(TicketdialogComponent, dialogConfig);
 					},
 					error: (code, message) => {
 						alert("Error " + message);
 					}
 				});
-				console.log("onClientAuthorization - you should probably inform your server about completed transaction at this point", data);
 			},
-			onCancel: (data, actions) => {
-				console.log("OnCancel", data, actions);
+			onCancel: () => {
 			},
 			onError: err => {
 				console.log("OnError", err);
 			},
-			onClick: (data, actions) => {
-				console.log("onClick", data, actions);
+			onClick: () => {
 			},
 		};
 	}

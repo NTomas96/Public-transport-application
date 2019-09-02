@@ -37,6 +37,8 @@ import {MaterialFileInputModule} from "ngx-material-file-input";
 import { UserverifyComponent } from "./userverify/userverify.component";
 import { InfodialogComponent } from "./userverify/infodialog/infodialog.component";
 import {NgxPayPalModule} from "ngx-paypal";
+import { TicketdialogComponent } from "./prices/ticketdialog/ticketdialog.component";
+import { TicketverifyComponent } from './ticketverify/ticketverify.component';
 @NgModule({
 	declarations: [
 		PageComponent,
@@ -51,6 +53,8 @@ import {NgxPayPalModule} from "ngx-paypal";
 		ProfileComponent,
 		UserverifyComponent,
 		InfodialogComponent,
+		TicketdialogComponent,
+		TicketverifyComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -84,7 +88,7 @@ import {NgxPayPalModule} from "ngx-paypal";
 	],
 	providers: [ApiService],
 	bootstrap: [PageComponent],
-	entryComponents: [InfodialogComponent]
+	entryComponents: [InfodialogComponent, TicketdialogComponent]
 })
 export class AppModule {
 }

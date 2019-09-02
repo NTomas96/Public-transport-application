@@ -67,8 +67,6 @@ export class ApiService {
 			member = "error";
 		}
 
-		console.log(member);
-
 		if (data[member] && "Success" in data[member]) {
 			if (data[member].Success) {
 				callbackObject.success(data[member].Value);
@@ -91,11 +89,8 @@ export class ApiService {
 	private apiPostRequest(method: string, postBody, callbackObject, auth?: boolean) {
 		this.http.post<any>(environment.apiUrl + method, postBody, this.getHttpOptions(auth)).subscribe((data: HttpResponse<any>) => {
 			this.handleResponse(data, callbackObject);
-
-			console.log(data);
 		}, (error) => {
 			this.handleResponse(error, callbackObject);
-			console.log(error);
 		});
 	}
 
@@ -158,5 +153,9 @@ export class ApiService {
 	buyTicket(ticketType, orderId, callbackObject) {
 		this.apiPostRequest("BuyTickets/" + ticketType + "/" + orderId, "", callbackObject, this.loggedIn());
 
+	}
+
+	checkTicket(ticketNumber, callbackObject) {
+		this.apiPostRequest("Users/CheckTicket/" + ticketNumber, "", callbackObject, true);
 	}
 }

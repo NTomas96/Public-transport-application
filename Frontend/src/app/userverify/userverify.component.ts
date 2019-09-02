@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import {ApiService} from "../api/api.service";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {InfodialogComponent} from "./infodialog/infodialog.component";
-import {Router} from "@angular/router";
 
 @Component({
 	selector: "app-userverify",

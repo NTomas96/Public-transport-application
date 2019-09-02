@@ -10,6 +10,7 @@ import {RegisterComponent} from "./register/register.component";
 import {LogoutComponent} from "./logout/logout.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {UserverifyComponent} from "./userverify/userverify.component";
+import {TicketverifyComponent} from "./ticketverify/ticketverify.component";
 
 const routes: Routes = [
 	{path: "home", component: HomeComponent},
@@ -22,7 +23,8 @@ const routes: Routes = [
 	{path: "register", component: RegisterComponent},
 	{path: "logout", component: LogoutComponent},
 	{path: "profile", component: ProfileComponent},
-	{path: "userverify", component: UserverifyComponent}
+	{path: "userverify", component: UserverifyComponent},
+	{path: "ticketverify", component: TicketverifyComponent}
 ];
 
 @NgModule({

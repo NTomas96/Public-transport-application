@@ -1,0 +1,12 @@
+<div class="text-container">
+	<h1 class="mat-headline">Registracija</h1>
+	<mat-divider></mat-divider>
+
+	<mat-form-field>
+		<input matInput (change)="ticketNumberChanged($event)" placeholder="">
+		<mat-label>Kod karte</mat-label>
+	</mat-form-field>
+
+	<button mat-raised-button color="primary" (click)="checkTicket()" >Proveri</button>
+
+</div>

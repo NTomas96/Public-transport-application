@@ -192,5 +192,22 @@ namespace Backend.Controllers
                 return ErrorResult(7001, "User not found.");
             }
         }
+
+        [Route("api/Users/CheckTicket/{ticketNumber}")]
+        [HttpPost]
+        [JwtAuthorize(new UserType[] { UserType.Controller })]
+        public IHttpActionResult CheckTicket(string ticketNumber)
+        {
+            Ticket ticket = unitOfWork.Tickets.GetTicketBySerial(ticketNumber);
+
+            if (ticket != null)
+            {
+                return JsonResult(ticket.IsValid());
+            }
+            else
+            {
+                return JsonResult(false);
+            }
+        }
     }
 }

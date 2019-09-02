@@ -22,6 +22,7 @@ export class PageComponent {
 		{href: "login", name: "Prijava", icon: "account_circle", side: "right", auth: false},
 		{href: "profile", name: "Profil", icon: "account_circle", side: "right", auth: true, role: 0},
 		{href: "userverify", name: "Verifikacija korisnika", icon: "account_circle", side: "right", auth: true, role: 1},
+		{href: "ticketverify", name: "Verifikacija karata", icon: "account_circle", side: "right", auth: true, role: 1},
 		{href: "logout", name: "Odjava", icon: "account_circle", side: "right", auth: true}
 
 	];
