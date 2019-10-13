@@ -1,9 +1,10 @@
 ﻿using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
+using System.Threading.Tasks;
+using Toolbelt.ComponentModel.DataAnnotations;
 
 namespace Backend.Persistence
 {
@@ -17,13 +18,26 @@ namespace Backend.Persistence
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
 
-        public AppDbContext() : base("name=DefaultConnection")
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\web2;Initial Catalog=AppDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
-        public static AppDbContext Create()
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            return new AppDbContext();
+            modelBuilder.Entity<StationLine>()
+                .HasKey(sl => new { sl.StationId, sl.LineId });
+            modelBuilder.Entity<StationLine>()
+                .HasOne(sl => sl.Station)
+                .WithMany(s => s.Lines)
+                .HasForeignKey(sl => sl.StationId);
+            modelBuilder.Entity<StationLine>()
+                .HasOne(sl => sl.Line)
+                .WithMany(l => l.Stations)
+                .HasForeignKey(sl => sl.LineId);
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.BuildIndexesFromAnnotations();
         }
     }
 }

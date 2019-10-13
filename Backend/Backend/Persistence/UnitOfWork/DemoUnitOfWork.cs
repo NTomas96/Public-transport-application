@@ -1,37 +1,35 @@
 ﻿using Backend.Persistence.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using Unity;
-using WebApp.Persistence.Repository;
+using System.Threading.Tasks;
 
-namespace WebApp.Persistence.UnitOfWork
+namespace Backend.Persistence.UnitOfWork
 {
     public class DemoUnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context;
-      
+
         public DemoUnitOfWork(DbContext context)
         {
             _context = context;
+
+            Users = new UserRepository(context);
+            Lines = new LineRepository(context);
+            Stations = new StationRepository(context);
+            Timetables = new TimetableRepository(context);
+            Pricelists = new PricelistRepository(context);
+            Vehicles = new VehicleRepository(context);
+            Tickets = new TicketRepository(context);
         }
 
-
-        [Dependency]
         public IUserRepository Users { get; set; }
-        [Dependency]
         public ILineRepository Lines { get; set; }
-        [Dependency]
         public IStationRepository Stations { get; set; }
-        [Dependency]
         public ITimetableRepository Timetables { get; set; }
-        [Dependency]
         public IPricelistRepository Pricelists { get; set; }
-        [Dependency]
-        public IVehicleRepository Vehicles { get ; set; }
-        [Dependency]
+        public IVehicleRepository Vehicles { get; set; }
         public ITicketRepository Tickets { get; set; }
 
         public int Complete()

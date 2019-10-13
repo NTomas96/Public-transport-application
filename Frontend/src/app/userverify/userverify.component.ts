@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import {ApiService} from "../api/api.service";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {InfodialogComponent} from "./infodialog/infodialog.component";
+import {UsersService} from "../api/services/users.service";
+import {ErrorApiResponse} from "../api/models/error-api-response";
+import {User} from "../api/models/user";
 
 @Component({
 	selector: "app-userverify",
@@ -10,18 +12,18 @@ import {InfodialogComponent} from "./infodialog/infodialog.component";
 })
 export class UserverifyComponent implements OnInit {
 
-	constructor(private apiService: ApiService, private dialog: MatDialog) { }
+	constructor(private usersService: UsersService, private dialog: MatDialog) { }
 
 	passengerTypes = ["Regularani", "Student", "Penzioner"];
 
-	unverifiedUsers = [];
+	unverifiedUsers: User[] = [];
 
 	displayColumns = [
-		{key: "Id", name: "#", auto: true},
-		{key: "FirstName", name: "Ime", auto: true},
-		{key: "LastName", name: "Prezime", auto: true},
-		{key: "PassengerType", name: "Tip putnika", auto: false},
-		{key: "Actions", name: "Akcije", auto: false},
+		{key: "id", name: "#", auto: true},
+		{key: "firstName", name: "Ime", auto: true},
+		{key: "lastName", name: "Prezime", auto: true},
+		{key: "passengerType", name: "Tip putnika", auto: false},
+		{key: "actions", name: "Akcije", auto: false},
 	];
 
 	displayColumnsParsed = Array.from(this.displayColumns, (x) => x.key);
@@ -31,47 +33,47 @@ export class UserverifyComponent implements OnInit {
 	}
 
 	refreshData() {
-		this.apiService.getUnverifiedUsers({
-			success: (users) => {
+		this.usersService.getUnverified().subscribe(
+			(users: User[]) => {
 				this.unverifiedUsers = users;
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 	}
 
-	showInfo(element: any) {
+	showInfo(element: User) {
 		const dialogConfig = new MatDialogConfig();
 
 		dialogConfig.disableClose = false;
 		dialogConfig.autoFocus = true;
 		dialogConfig.data = {
-			image: element.AdditionalInfo
+			image: element.additionalInfo
 		};
 
 		this.dialog.open(InfodialogComponent, dialogConfig);
 	}
 
-	acceptUser(element: any) {
-		this.apiService.acceptUser(element.Id, {
-			success: (ignore) => {
+	acceptUser(element: User) {
+		this.usersService.accept({userId: element.id}).subscribe(
+			() => {
 				this.refreshData();
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 	}
 
-	denyUser(element: any) {
-		this.apiService.denyUser(element.Id, {
-			success: (ignore) => {
+	denyUser(element: User) {
+		this.usersService.deny({userId: element.id}).subscribe(
+			() => {
 				this.refreshData();
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 	}
 }

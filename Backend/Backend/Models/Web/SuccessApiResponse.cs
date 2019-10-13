@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Threading.Tasks;
 
 namespace Backend.Models.Web
 {
-    public class SuccessApiResponse : ApiResponse
+    public class SuccessApiResponse<T> : ApiResponse
     {
-        public object Value { get; set; }
+        public T Value { get; set; }
 
-        public SuccessApiResponse(object value)
+        public SuccessApiResponse(T value)
         {
             this.Success = true;
             this.Value = value;

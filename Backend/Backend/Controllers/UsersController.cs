@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
@@ -11,29 +9,38 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using System.Web.Http.Description;
 using Backend.Models;
 using Backend.Models.Web;
 using Backend.Persistence;
+using Backend.Persistence.UnitOfWork;
 using Backend.Util;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using WebApp.Persistence.UnitOfWork;
 
 namespace Backend.Controllers
 {
-    public class UsersController : BetterApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
+    public class UsersController : ApiController
     {
+        
         private readonly IUnitOfWork unitOfWork;
+        private readonly AppSettings appSettings;
 
-        public UsersController(IUnitOfWork u)
+        public UsersController(IUnitOfWork u, IOptions<AppSettings> appSettings)
         {
             this.unitOfWork = u;
+            this.appSettings = appSettings.Value;
         }
 
-        [Route("api/Users/Register")]
-        [HttpPost]
-        public IHttpActionResult Register(User user)
+        [HttpPost("register")]
+        [ProducesResponseType(200, Type = typeof(User))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult Register([FromBody]User user)
         {
             if(user.checkUserProperties())
             {
@@ -57,43 +64,56 @@ namespace Backend.Controllers
                 unitOfWork.Complete();
 
 
-                return JsonResult(user);
+                return Success(user);
             }
 
-            return ErrorResult(442, "Greska! Proverite da li ste uneli sva polja.");
+            return Error(442, "Greska! Proverite da li ste uneli sva polja.");
         }
 
-        [Route("api/Users/Login")]
-        [HttpPost]
-        public IHttpActionResult Login(User cred)
+        [HttpPost("login")]
+        [ProducesResponseType(200, Type = typeof(LoginResponse))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult Login([FromBody]User cred)
         {
             User user = unitOfWork.Users.GetUserByEmail(cred.Email);
 
             if (user != null && user.Password == Util.Hash.Sha256Hash(cred.Password))
             {
-                var userToken = JwtManager.GenerateToken(user);
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(appSettings.JwtSecret);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim(ClaimTypes.Name, user.Id.ToString()),
+                        new Claim(ClaimTypes.Role, user.UserType.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var userToken = tokenHandler.WriteToken(token);
 
                 var response = new LoginResponse();
                 response.Token = userToken;
-				user.Password = "";
                 response.UserType = user.UserType;
 
-                return JsonResult(response);
+                return Success(response);
             }
             else
             {
-                return ErrorResult(5001, "User not found!");
+                return Error(5001, "User not found!");
             }
         }
-
-        [Route("api/Users/EditProfile")]
-        [JwtAuthorize]
-        [HttpPost]
-        public IHttpActionResult EditProfile(User profile)
+        
+        [HttpPost("editprofile")]
+        [Authorize(Roles = "Passenger")]
+        [ProducesResponseType(200, Type = typeof(bool))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult EditProfile([FromBody] User profile)
         {
-            var principal = Thread.CurrentPrincipal as JwtPrincipal;
+            User user = GetUser(unitOfWork);
 
-            User user = unitOfWork.Users.GetUserById(principal.UserId);
             if (user != null)
             {
                 if(profile.checkUserProperties() && !(String.IsNullOrEmpty(profile.AdditionalInfo) || String.IsNullOrWhiteSpace(profile.AdditionalInfo)))
@@ -121,44 +141,46 @@ namespace Backend.Controllers
 
                     unitOfWork.Complete();
 
-                    return JsonResult(true);
+                    return Success(true);
                 }
 
-                return ErrorResult(442, "Greska! Proverite da li ste uneli sve podatke.");
+                return Error(442, "Greska! Proverite da li ste uneli sve podatke.");
                 
             }
 
-            return ErrorResult(6001, "Unexpected error somehow managed to occur. God help us.");
+            return Error(6001, "Unexpected error somehow managed to occur. God help us.");
         }
 
-        // GET: api/Users/5
-        [Route("api/Users/Me")]
-        [JwtAuthorize(new UserType[] { UserType.Passenger })]
-        public IHttpActionResult GetMe()
+        [HttpGet("me")]
+        [Authorize(Roles = "Passenger")]
+        [ProducesResponseType(200, Type = typeof(User))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult GetMe()
         {
-            var principal = Thread.CurrentPrincipal as JwtPrincipal;
-
-            User user = unitOfWork.Users.GetUserById(principal.UserId);
+            User user = GetUser(unitOfWork);
             if (user != null)
             {
                 user.Password = "******";
-                return JsonResult(user);
+                return Success(user);
             }
 
-            return ErrorResult(6001, "Unexpected error somehow managed to occur. God help us.");
+            return Error(6001, "Unexpected error somehow managed to occur. God help us.");
         }
 
-        [Route("api/Users/Unverified")]
-        [JwtAuthorize(new UserType[] { UserType.Controller })]
-        public IHttpActionResult GetUnverified()
+        [HttpGet("unverified")]
+        [Authorize(Roles = "Controller")]
+        [ProducesResponseType(200, Type = typeof(IQueryable<User>))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult GetUnverified()
         {
-            return JsonResult(unitOfWork.Users.GetUnverifiedUsers());
+            return Success(unitOfWork.Users.GetUnverifiedUsers());
         }
 
-        [Route("api/Users/Verify/Accept/{userId}")]
-        [HttpPost]
-        [JwtAuthorize(new UserType[] { UserType.Controller })]
-        public IHttpActionResult Accept(int userId)
+        [HttpPost("verify/accept/{userId}")]
+        [Authorize(Roles = "Controller")]
+        [ProducesResponseType(200, Type = typeof(bool))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult Accept(int userId)
         {
             User user = unitOfWork.Users.GetUserById(userId);
 
@@ -169,20 +191,21 @@ namespace Backend.Controllers
                 user.AdditionalInfo = "";
                 unitOfWork.Complete();
 
-                return JsonResult(null);
+                return Success(true);
             }
             else
             {
-                return ErrorResult(7001, "User not found.");
+                return Error(7001, "User not found.");
             }
 
             
         }
 
-        [Route("api/Users/Verify/Deny/{userId}")]
-        [HttpPost]
-        [JwtAuthorize(new UserType[] { UserType.Controller })]
-        public IHttpActionResult Deny(int userId)
+        [HttpPost("verify/deny/{userId}")]
+        [Authorize(Roles = "Controller")]
+        [ProducesResponseType(200, Type = typeof(bool))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult Deny(int userId)
         {
             User user = unitOfWork.Users.GetUserById(userId);
 
@@ -193,28 +216,29 @@ namespace Backend.Controllers
                 user.AdditionalInfo = "";
                 unitOfWork.Complete();
 
-                return JsonResult(null);
+                return Success(true);
             }
             else
             {
-                return ErrorResult(7001, "User not found.");
+                return Error(7001, "User not found.");
             }
         }
 
-        [Route("api/Users/CheckTicket/{ticketNumber}")]
-        [HttpPost]
-        [JwtAuthorize(new UserType[] { UserType.Controller })]
-        public IHttpActionResult CheckTicket(string ticketNumber)
+        [HttpPost("checkTicket/{ticketNumber}")]
+        [Authorize(Roles = "Controller")]
+        [ProducesResponseType(200, Type = typeof(bool))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult CheckTicket(string ticketNumber)
         {
             Ticket ticket = unitOfWork.Tickets.GetTicketBySerial(ticketNumber);
 
             if (ticket != null)
             {
-                return JsonResult(ticket.IsValid());
+                return Success(ticket.IsValid());
             }
             else
             {
-                return JsonResult(false);
+                return Success(false);
             }
         }
     }

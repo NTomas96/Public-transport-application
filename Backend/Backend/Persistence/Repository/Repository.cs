@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace WebApp.Persistence.Repository
+namespace Backend.Persistence.Repository
 {
     public class Repository<TEntity, TPKey> : IRepository<TEntity, TPKey> where TEntity : class
     {

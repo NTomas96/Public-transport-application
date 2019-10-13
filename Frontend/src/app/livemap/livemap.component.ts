@@ -1,9 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 import {MapTypeStyle} from "@agm/core";
-import {ApiService} from "../api/api.service";
 import {MatSelectChange} from "@angular/material";
-import {environment} from "../../environments/environment";
-//import * as $ from "jquery";
+import {LinesService} from "../api/services/lines.service";
+import {Station} from "../api/models/station";
+import {Line} from "../api/models/line";
+import {ErrorApiResponse} from "../api/models/error-api-response";
+import {StationsService} from "../api/services/stations.service";
 
 
 @Component({
@@ -13,10 +15,9 @@ import {environment} from "../../environments/environment";
 })
 export class LivemapComponent implements OnInit {
 
-	constructor(private apiService: ApiService) {
+	constructor(private linesService: LinesService, private stationsService: StationsService) {
 	}
 
-	title = "Trenutna lokacija";
 	lat = 44.2743;
 	lng = 19.8903;
 	zoom = 14;
@@ -26,11 +27,11 @@ export class LivemapComponent implements OnInit {
 		stylers: [{visibility: "off"}]
 	} as MapTypeStyle)];
 
-	stations = [];
+	stations: Array<Station> = [];
 	vehicles = [];
-	lines = [];
+	lines: Array<Line> = [];
 
-	selectedLine = null;
+	selectedLine: Line = null;
 
 	getVehicleById(id) {
 		for (const vehicle of this.vehicles) {
@@ -43,24 +44,25 @@ export class LivemapComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.apiService.getLinesWithStations({
-			success: (data) => {
+
+		this.linesService.getLinesWithStations().subscribe(
+			(data: Array<Line>) => {
 				this.lines = data;
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 
-		this.apiService.getStations({
-			success: (data) => {
+		this.stationsService.getStations().subscribe(
+			(data: Array<Station>) => {
 				this.stations = data;
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
-
+		);
+		/*
 		const connection = $.hubConnection("http://localhost:57563");
 		const contosoChatHubProxy = connection.createHubProxy("Bus");
 		contosoChatHubProxy.on("hello", (v) => {
@@ -100,21 +102,14 @@ export class LivemapComponent implements OnInit {
 	}
 
 	lineChanged($event: MatSelectChange) {
-		this.apiService.getLine($event.value, {
-			success: (data) => {
+
+		this.linesService.getLine({id: $event.value}).subscribe(
+			(data: Line) => {
 				this.selectedLine = data;
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
-	}
-
-	onMouseOver(infoWindow: any) {
-		infoWindow.open();
-	}
-
-	onMouseOut(infoWindow: any) {
-		infoWindow.close();
+		);
 	}
 }

@@ -1,10 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import {ApiService} from "../api/api.service";
 import {Router} from "@angular/router";
 import {MyErrorStateMatcher} from "../mailErrorCathcer";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CustomValidators} from "../shared/custom.Validators";
 import {FileInput} from "ngx-material-file-input";
+import {UsersService} from "../api/services/users.service";
+import {UserLogin} from "../shared/user-login";
+import {ErrorApiResponse} from "../api/models/error-api-response";
+import {User} from "../api/models/user";
 
 @Component({
 	selector: "app-profile",
@@ -13,7 +16,7 @@ import {FileInput} from "ngx-material-file-input";
 })
 export class ProfileComponent implements OnInit {
 
-	constructor(private fb: FormBuilder, private router: Router, private apiService: ApiService) {
+	constructor(private fb: FormBuilder, private router: Router, private usersService: UsersService, private userLogin: UserLogin) {
 	}
 
 	validationMessages = {
@@ -87,39 +90,39 @@ export class ProfileComponent implements OnInit {
 	// verificationStatus = null;
 
 	ngOnInit() {
-		if (! this.apiService.loggedIn()) {
+		if (! this.userLogin.isLoggedIn()) {
 			this.router.navigateByUrl("/login");
 		}
 
 		this.hideP = true;
 		this.hideCP = true;
 
-		this.editProfileForm.valueChanges.subscribe((data) => {
+		this.editProfileForm.valueChanges.subscribe(() => {
 			this.logValidationErrors(this.editProfileForm);
 		});
 
-		this.apiService.getUser({
-			success: (user) => {
+		this.usersService.getMe().subscribe(
+			(user: User) => {
 				this.editProfileForm.setValue({
-					firstName: user.FirstName,
-					lastName: user.LastName,
+					firstName: user.firstName,
+					lastName: user.lastName,
 					passwordGroup: {
-						password: user.Password,
-						confirmPassword: user.Password
+						password: user.password,
+						confirmPassword: user.password
 					},
-					email: user.Email,
-					dayOfBirth: user.DayOfBirth,
-					address: user.Address,
-					passengerType: user.PassengerType,
-					additionalInfo: user.AdditionalInfo,
-					verificationStatus: user.VerificationStatus
+					email: user.email,
+					dayOfBirth: user.dayOfBirth,
+					address: user.address,
+					passengerType: user.passengerType,
+					additionalInfo: user.additionalInfo,
+					verificationStatus: user.verificationStatus
 				}, {emitEvent: false});
-				this.additionalInfo = user.AdditionalInfo;
+				this.additionalInfo = user.additionalInfo;
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 	}
 
 	logValidationErrors(group: FormGroup = this.editProfileForm): void {
@@ -148,14 +151,14 @@ export class ProfileComponent implements OnInit {
 		this.editProfileForm.value.password = this.editProfileForm.value.passwordGroup.password;
 		this.editProfileForm.value.additionalInfo = this.additionalInfo;
 
-		this.apiService.editProfileUser(this.editProfileForm.value, {
-			success: (data) => {
-				alert("Izmene prihvacene.")
+		this.usersService.editProfile$Json({body: this.editProfileForm.value as User}).subscribe(
+			() => {
+				alert("Izmene prihvacene.");
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 	}
 
 	onFileChanged() {

@@ -1,7 +1,6 @@
-import {ChangeDetectionStrategy, Component} from "@angular/core";
-import {FormBuilder} from "@angular/forms";
-import {ApiService} from "../api/api.service";
-import {Router} from "@angular/router";
+import {Component} from "@angular/core";
+import {UserType} from "../api/models/user-type";
+import {UserLogin} from "../shared/user-login";
 
 @Component({
 	selector: "app-root",
@@ -10,9 +9,8 @@ import {Router} from "@angular/router";
 })
 export class PageComponent {
 
-	constructor(private apiService: ApiService) { }
+	constructor(private userLogin: UserLogin) { }
 
-	title = "...";
 	links = [
 		{href: "", name: "Pocetna", icon: "home", side: "left"},
 		{href: "lines", name: "Mreza linija", icon: "map", side: "left"},
@@ -20,24 +18,24 @@ export class PageComponent {
 		{href: "livemap", name: "Trenutna lokacija", icon: "directions_bus", side: "left"},
 		{href: "prices", name: "Cenovnik", icon: "money", side: "left"},
 		{href: "login", name: "Prijava", icon: "account_circle", side: "right", auth: false},
-		{href: "profile", name: "Profil", icon: "account_circle", side: "right", auth: true, role: 0},
-		{href: "userverify", name: "Verifikacija korisnika", icon: "account_circle", side: "right", auth: true, role: 1},
-		{href: "ticketverify", name: "Verifikacija karata", icon: "account_circle", side: "right", auth: true, role: 1},
+		{href: "profile", name: "Profil", icon: "account_circle", side: "right", auth: true, role: UserType.Passenger},
+		{href: "userverify", name: "Verifikacija korisnika", icon: "account_circle", side: "right", auth: true, role: UserType.Controller},
+		{href: "ticketverify", name: "Verifikacija karata", icon: "account_circle", side: "right", auth: true, role: UserType.Controller},
 		{href: "logout", name: "Odjava", icon: "account_circle", side: "right", auth: true}
 
 	];
 
 	shouldShowLink(link) {
 		return (link.auth === undefined ||
-			((link.auth === true && this.getAuth()) && (link.role === undefined || (link.role === this.getRole()) )) ||
+			((link.auth === true && this.getAuth()) && (link.role === undefined || (link.role === this.getUserType()) )) ||
 			(link.auth === false && ! this.getAuth()));
 	}
 
 	getAuth() {
-		return this.apiService.loggedIn();
+		return this.userLogin.isLoggedIn();
 	}
 
-	getRole() {
-		return this.apiService.getRole();
+	getUserType(): UserType {
+		return this.userLogin.userType;
 	}
 }

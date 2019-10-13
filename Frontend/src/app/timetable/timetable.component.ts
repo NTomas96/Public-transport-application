@@ -1,6 +1,11 @@
 import {Component, OnInit} from "@angular/core";
-import {ApiService} from "../api/api.service";
 import {MatSelectChange} from "@angular/material";
+import {TimetablesService} from "../api/services/timetables.service";
+import {LinesService} from "../api/services/lines.service";
+import {Line} from "../api/models/line";
+import {ErrorApiResponse} from "../api/models/error-api-response";
+import {Timetable} from "../api/models/timetable";
+import {LineType} from "../api/models/line-type";
 
 @Component({
 	selector: "app-timetable",
@@ -9,14 +14,13 @@ import {MatSelectChange} from "@angular/material";
 })
 export class TimetableComponent implements OnInit {
 
-	constructor(private apiService: ApiService) {
+	constructor(private linesService: LinesService, private timetablesService: TimetablesService) {
 
 	}
-	title = "Red voznje";
 
 	lineTypes = [
-		{id: 0, name: "Gradska"},
-		{id: 1, name: "Prigradska"}
+		{id: LineType.CityLine, name: "Gradska"},
+		{id: LineType.SuburbanLine, name: "Prigradska"}
 	];
 
 	dayNames = [
@@ -29,25 +33,25 @@ export class TimetableComponent implements OnInit {
 		"Subota"
 	];
 
-	lines: any[] = [];
+	lines: Line[] = [];
 	linesShown = false;
-	selectedLines = [];
+	selectedLines: Line[] = [];
 	dateChosen: string = null;
 	lineSelected: number = null;
-	selectedTimetable = null;
+	selectedTimetable: Timetable = null;
 
 	selectedTimetableSorted = null;
 	displayColumns = null;
 
 	ngOnInit(): void {
-		this.apiService.getLinesWithStations({
-			success: (lines) => {
-				this.lines = lines;
+		this.linesService.getLinesWithStations().subscribe(
+			(data: Array<Line>) => {
+				this.lines = data;
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 	}
 
 	dateChanged(data) {
@@ -60,9 +64,8 @@ export class TimetableComponent implements OnInit {
 
 	lineTypeChanged($event: MatSelectChange) {
 		this.selectedLines = [];
-
 		for (const line of this.lines) {
-			if ( line.LineType === $event.value) {
+			if ( line.lineType === $event.value) {
 				this.selectedLines.push(line);
 			}
 		}
@@ -82,13 +85,12 @@ export class TimetableComponent implements OnInit {
 
 		const time = new Date(Date.parse(date)).toISOString();
 
-		this.apiService.getTimetable(line, time, {
-			success: (timetable) => {
-				console.log(timetable);
+		this.timetablesService.getTimetable({line, date: time}).subscribe(
+			(timetable: Timetable) => {
 				const tmpObj = {};
 				this.selectedTimetableSorted = [];
 
-				for (const depTime of timetable.Departures) {
+				for (const depTime of timetable.departures) {
 					const hour = Math.floor(depTime / 3600);
 
 					if (!( hour in tmpObj)) {
@@ -109,8 +111,6 @@ export class TimetableComponent implements OnInit {
 						max = tmpObj[row].length;
 					}
 				}
-
-				console.log(max);
 
 				for (const row of Object.keys(tmpObj)) {
 					if (tmpObj[row].length < max) {
@@ -140,13 +140,10 @@ export class TimetableComponent implements OnInit {
 
 
 				this.selectedTimetable = timetable;
-
-				console.log(tmpObj);
-				console.log(this.selectedTimetableSorted);
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 	}
 }

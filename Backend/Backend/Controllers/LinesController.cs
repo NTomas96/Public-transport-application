@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using System.Web.Http.Description;
-using Backend.Hubs;
 using Backend.Models;
 using Backend.Models.Web;
 using Backend.Persistence;
 using Newtonsoft.Json;
-using WebApp.Persistence.UnitOfWork;
+using Backend.Persistence.UnitOfWork;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
-    public class LinesController : BetterApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
+    public class LinesController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -29,33 +28,40 @@ namespace Backend.Controllers
             this.unitOfWork = u;
         }
 
-        // GET: api/Lines
-        public IHttpActionResult GetLines()
-        {            
-           return JsonResult(unitOfWork.Lines.GetLines());
-        }
-
-        [Route("api/Lines/WithStations")]
-        public IHttpActionResult GetLinesWitStations()
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(IQueryable<Line>))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult GetLines()
         {
-            return JsonResult(unitOfWork.Lines.GetLinesWithStations());
+            return Success(unitOfWork.Lines.GetLines());
         }
 
-        
-        public IHttpActionResult GetLine(int id)
+        [HttpGet("withStations")]
+        [ProducesResponseType(200, Type = typeof(IQueryable<Line>))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult GetLinesWithStations()
+        {
+            return Success(unitOfWork.Lines.GetLinesWithStations());
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(Line))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult GetLine(int id)
         {
             Line line = unitOfWork.Lines.GetLineWithStations(id);
             if (line == null)
             {
-                return ErrorResult(2001, "Line doesn't exist.");
+                return Error(2001, "Line doesn't exist.");
             }
 
-            return JsonResult(line);
+            return Success(line);
         }
 
+        /*
         [Route("api/Lines/Bus")]
         [HttpPost]
-        public IHttpActionResult Bus([FromBody] BusJson data)
+        public IActionResult Bus([FromBody] BusJson data)
         {
             Vehicle vehicle = unitOfWork.Vehicles.GetVehicleByTrackerSerial(data.TrackerSerial);
 
@@ -69,5 +75,6 @@ namespace Backend.Controllers
 
             return JsonResult(null);
         }
+        */
     }
 }

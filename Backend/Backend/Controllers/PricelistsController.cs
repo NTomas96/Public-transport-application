@@ -1,5 +1,8 @@
 ﻿using Backend.Models;
-using Backend.Util;
+using Backend.Models.Web;
+using Backend.Persistence.UnitOfWork;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +10,15 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using WebApp.Persistence.UnitOfWork;
 
 namespace Backend.Controllers
 {
-    public class PricelistsController : BetterApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
+    public class PricelistsController : ApiController
     {
+        
         private readonly IUnitOfWork unitOfWork;
 
         public PricelistsController(IUnitOfWork u)
@@ -21,9 +26,12 @@ namespace Backend.Controllers
             this.unitOfWork = u;
         }
 
-        [Route("api/Pricelists/Me/{ticketType}")]
-        [JwtAuthorize(DontBlock = true)]
-        public IHttpActionResult Get(TicketType ticketType)
+        [Authorize]
+        [AllowAnonymous]
+        [HttpGet("me/{ticketType}")]
+        [ProducesResponseType(200, Type = typeof(Pricelist))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult GetPricelistMe(TicketType ticketType)
         {
             bool userAllowedToBuyTicket = false;
 
@@ -32,48 +40,47 @@ namespace Backend.Controllers
 
             PassengerType myType = PassengerType.Regular;
 
-            if(Thread.CurrentPrincipal is JwtPrincipal)
-            {
-                User user = unitOfWork.Users.GetUserById(((JwtPrincipal)Thread.CurrentPrincipal).UserId);
+            User user = GetUser(unitOfWork);
 
-                if(user != null)
-                {
-                    myType = user.PassengerType;
-                    userAllowedToBuyTicket = user.Active;
-                }
+            if (user != null)
+            {
+                myType = user.PassengerType;
+                userAllowedToBuyTicket = user.Active;
             }
 
-            if(userAllowedToBuyTicket)
+            if (userAllowedToBuyTicket)
             {
                 Pricelist price = this.unitOfWork.Pricelists.GetTicketPrice(ticketType, myType);
 
                 if (price != null)
                 {
-                    return JsonResult(price);
+                    return Success(price);
                 }
                 else
                 {
-                    return ErrorResult(6002, "Price not found.");
+                    return Error(6002, "Price not found.");
                 }
             }
             else
             {
-                return ErrorResult(6003, "User not allowed to buy the selected ticket.");
+                return Error(6003, "User not allowed to buy the selected ticket.");
             }
         }
 
-        [Route("api/Pricelists/{ticketType}/{passengerType}")]
-        public IHttpActionResult Get(TicketType ticketType, PassengerType passengerType)
+        [HttpGet("{ticketType}/{passengerType}")]
+        [ProducesResponseType(200, Type = typeof(Pricelist))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult GetPricelist(TicketType ticketType, PassengerType passengerType)
         {
             Pricelist price = this.unitOfWork.Pricelists.GetTicketPrice(ticketType, passengerType);
 
             if(price != null)
             {
-                return JsonResult(price);
+                return Success(price);
             }
             else
             {
-                return ErrorResult(6001, "Price not found.");
+                return Error(6001, "Price not found.");
             }
         }
     }

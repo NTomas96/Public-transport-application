@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web;
+using System.Threading.Tasks;
+using Toolbelt.ComponentModel.DataAnnotations.Schema;
 
 namespace Backend.Models
 {
@@ -14,8 +15,7 @@ namespace Backend.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [Index(IsUnique = true)]
-        [Column(TypeName = "VARCHAR")]
-        [StringLength(100)]
+        [Column(TypeName = "VARCHAR(100)")]
         public string Email { get; set; }
         public string Password { get; set; }
         public DateTime DayOfBirth { get; set; }
@@ -42,11 +42,11 @@ namespace Backend.Models
                 int indexET = Email.LastIndexOf('@');
                 int indexDOT = Email.LastIndexOf('.');
 
-                if(indexET < 0 || indexDOT < 0)
+                if (indexET < 0 || indexDOT < 0)
                 {
                     return false;
                 }
-                else if(indexET > indexDOT)
+                else if (indexET > indexDOT)
                 {
                     return false;
                 }
@@ -64,9 +64,9 @@ namespace Backend.Models
             if (String.IsNullOrEmpty(Address) || String.IsNullOrWhiteSpace(Address))
                 return false;
 
-                return true;
+            return true;
         }
 
-        
+
     }
 }

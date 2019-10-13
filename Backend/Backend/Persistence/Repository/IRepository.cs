@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 
-namespace WebApp.Persistence.Repository
+namespace Backend.Persistence.Repository
 {
     public interface IRepository<TEntity, TPKey> where TEntity : class
     {

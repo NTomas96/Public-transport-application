@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import {ApiService} from "../api/api.service";
+import {UsersService} from "../api/services/users.service";
+import {Line} from "../api/models/line";
+import {ErrorApiResponse} from "../api/models/error-api-response";
 
 @Component({
 	selector: "app-ticketverify",
@@ -9,20 +11,20 @@ import {ApiService} from "../api/api.service";
 export class TicketverifyComponent implements OnInit {
 	ticketNumber = "";
 
-	constructor(private apiService: ApiService) { }
+	constructor(private usersService: UsersService) { }
 
 	ngOnInit() {
 	}
 
 	checkTicket() {
-		this.apiService.checkTicket(this.ticketNumber, {
-			success: (valid) => {
+		this.usersService.checkTicket({ticketNumber: this.ticketNumber}).subscribe(
+			(valid: boolean) => {
 				alert(valid ? "Karta je validna." : "Karta nije validna");
 			},
-			error: (code, message) => {
-				alert(message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 	}
 
 	ticketNumberChanged($event) {

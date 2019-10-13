@@ -18,13 +18,13 @@
 		<mat-form-field [hidden]="!linesShown">
 			<mat-label>Linije:</mat-label>
 			<mat-select (selectionChange)="lineChanged($event)" >
-				<mat-option *ngFor="let line of selectedLines" [value]="line.Id">{{line.Name}}</mat-option>
+				<mat-option *ngFor="let line of selectedLines" [value]="line.id">{{line.name}}</mat-option>
 			</mat-select>
 		</mat-form-field>
 	</div>
 	<div *ngIf="selectedTimetable != null" class="timetable-body">
-		<h5 class="mat-headline mat-h2">Linija: {{selectedTimetable.Line.Name}}</h5>
-		<h5 class="mat-headline mat-h2">Dan: {{dayNames[selectedTimetable.DayOfWeek]}}</h5>
+		<h5 class="mat-headline mat-h2">Linija: {{selectedTimetable.line.name}}</h5>
+		<h5 class="mat-headline mat-h2">Dan: {{dayNames[selectedTimetable.dayOfWeek]}}</h5>
 
 		<table mat-table [dataSource]="selectedTimetableSorted" class="mat-elevation-z8">
 			<ng-container *ngFor="let column of displayColumns">

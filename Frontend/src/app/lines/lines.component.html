@@ -3,17 +3,17 @@
 	<mat-divider></mat-divider>
 	<div class="map-body">
 		<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="mapStyle">
-			<agm-polyline *ngFor="let line of lines" [strokeColor]="line.Color" [strokeWeight]="4">
-				<agm-polyline-point *ngFor="let point of line.Waypoints;" [latitude]="point.Lat" [longitude]="point.Lon">
+			<agm-polyline *ngFor="let line of lines" [strokeColor]="line.color" [strokeWeight]="4">
+				<agm-polyline-point *ngFor="let point of line.waypoints;" [latitude]="point.lat" [longitude]="point.lon">
 				</agm-polyline-point>
 			</agm-polyline>
 
-			<agm-marker *ngFor="let station of stations" [latitude]="station.Lat" [longitude]="station.Lon" [iconUrl]="'assets/img/bus-icon.png'" (mouseOver)="onMouseOver(infoWindow)"
+			<agm-marker *ngFor="let station of stations" [latitude]="station.lat" [longitude]="station.lon" [iconUrl]="'assets/img/bus-icon.png'" (mouseOver)="onMouseOver(infoWindow)"
 						(mouseOut)="onMouseOut(infoWindow)">
 				<agm-info-window [disableAutoPan]="false" #infoWindow>
 
 					<div>
-						{{station.Name}}
+						{{station.name}}
 					</div>
 
 				</agm-info-window>

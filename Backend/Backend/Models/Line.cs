@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web;
 
 namespace Backend.Models
 {
@@ -25,7 +24,7 @@ namespace Backend.Models
                 List<GeoLocation> list = new List<GeoLocation>();
                 string[] coords = WaypointsInternal.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
-                foreach(var coord in coords)
+                foreach (var coord in coords)
                 {
                     double[] points = Array.ConvertAll(coord.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries), Double.Parse);
                     GeoLocation loc = new GeoLocation();
@@ -44,6 +43,6 @@ namespace Backend.Models
 
         [JsonIgnore]
         public string WaypointsInternal { get; set; }
-        public List<Station> Stations { get; set; }
+        public List<StationLine> Stations { get; set; }
     }
 }

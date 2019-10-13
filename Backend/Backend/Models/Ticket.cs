@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web;
+using System.Threading.Tasks;
+using Toolbelt.ComponentModel.DataAnnotations.Schema;
 
 namespace Backend.Models
 {
@@ -12,23 +13,21 @@ namespace Backend.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Index(IsUnique = true)]
-        [Column(TypeName = "VARCHAR")]
-        [StringLength(15)]
+        [Column(TypeName = "VARCHAR(15)")]
         public string TicketNumber { get; set; }
         public User User { get; set; }
         public TicketType TicketType { get; set; }
         public DateTime TimeBought { get; set; }
         [Index(IsUnique = true)]
-        [Column(TypeName = "VARCHAR")]
-        [StringLength(100)]
+        [Column(TypeName = "VARCHAR(100)")]
         public string PayPalOrderId { get; set; }
         public string PayPalData { get; set; }
 
         public bool IsValid()
         {
-            if(TicketType == TicketType.TimeTicket)
+            if (TicketType == TicketType.TimeTicket)
             {
-                if(DateTime.Compare(DateTime.Now, TimeBought.Add(TimeSpan.FromMinutes(60))) > 0)
+                if (DateTime.Compare(DateTime.Now, TimeBought.Add(TimeSpan.FromMinutes(60))) > 0)
                 {
                     return false;
                 }
@@ -37,7 +36,7 @@ namespace Backend.Models
                     return true;
                 }
             }
-            else if(TicketType == TicketType.YearlyTicket)
+            else if (TicketType == TicketType.YearlyTicket)
             {
                 return (DateTime.Now.Year == TimeBought.Year);
             }

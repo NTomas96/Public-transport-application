@@ -1,6 +1,10 @@
 import {Component, OnInit} from "@angular/core";
 import {MapTypeStyle} from "@agm/core";
-import {ApiService} from "../api/api.service";
+import {LinesService} from "../api/services/lines.service";
+import {Line} from "../api/models/line";
+import {ErrorApiResponse} from "../api/models/error-api-response";
+import {StationsService} from "../api/services/stations.service";
+import {Station} from "../api/models/station";
 
 
 @Component({
@@ -10,10 +14,9 @@ import {ApiService} from "../api/api.service";
 })
 export class LinesComponent implements OnInit {
 
-	constructor(private apiService: ApiService) {
+	constructor(private linesService: LinesService, private stationsService: StationsService) {
 	}
 
-	title = "Mreza linija";
 	lat = 44.2743;
 	lng = 19.8903;
 	zoom = 14;
@@ -23,27 +26,28 @@ export class LinesComponent implements OnInit {
 		stylers: [{visibility: "off"}]
 	} as MapTypeStyle)];
 
-	stations = [];
-	lines = [];
+	stations: Array<Station> = [];
+	lines: Array<Line> = [];
 
 	ngOnInit(): void {
-		this.apiService.getLinesWithStations({
-			success: (data) => {
+		this.linesService.getLinesWithStations().subscribe(
+			(data: Line[]) => {
 				this.lines = data;
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 
-		this.apiService.getStations({
-			success: (data) => {
+		this.stationsService.getStations().subscribe(
+			(data: Array<Station>) => {
 				this.stations = data;
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
+
 	}
 
 	onMouseOver(infoWindow: any) {

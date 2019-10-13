@@ -1,7 +1,5 @@
 ﻿using Backend.Models;
-using Backend.Util;
 using Newtonsoft.Json;
-using PayPalCheckoutSdk.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +8,19 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using WebApp.Persistence.UnitOfWork;
+using Backend.Persistence.UnitOfWork;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using PayPalCheckoutSdk.Orders;
+using Backend.Util;
+using Backend.Models.Web;
 
 namespace Backend.Controllers
 {
-    public class BuyTicketsController : BetterApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
+    public class BuyTicketsController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -24,11 +29,14 @@ namespace Backend.Controllers
             this.unitOfWork = u;
         }
 
-        [Route("api/BuyTickets/{ticketType}/{orderId}")]
-        [JwtAuthorize(DontBlock = true)]
-        [HttpPost]
-        public async Task<IHttpActionResult> BuyTickets(TicketType ticketType, string orderId)
+        [Authorize]
+        [AllowAnonymous]
+        [HttpPost("{ticketType}/{orderId}")]
+        [ProducesResponseType(200, Type = typeof(Ticket))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public async Task<IActionResult> BuyTicket(TicketType ticketType, string orderId)
         {
+            
             bool userAllowedToBuyTicket = false;
             User myUser = null;
 
@@ -37,19 +45,16 @@ namespace Backend.Controllers
 
             PassengerType myType = PassengerType.Regular;
 
-            if(Thread.CurrentPrincipal is JwtPrincipal)
-            {
-                User user = unitOfWork.Users.GetUserById(((JwtPrincipal)Thread.CurrentPrincipal).UserId);
+            User user = GetUser(unitOfWork);
 
-                if(user != null)
-                {
-                    myUser = user;
-                    myType = user.PassengerType;
-                    userAllowedToBuyTicket = user.Active;
-                }
+            if (user != null)
+            {
+                myUser = user;
+                myType = user.PassengerType;
+                userAllowedToBuyTicket = user.Active;
             }
 
-            if(userAllowedToBuyTicket)
+            if (userAllowedToBuyTicket)
             {
                 Pricelist price = this.unitOfWork.Pricelists.GetTicketPrice(ticketType, myType);
 
@@ -57,10 +62,8 @@ namespace Backend.Controllers
                 {
                     
                     OrdersGetRequest request = new OrdersGetRequest(orderId);
-                    //3. Call PayPal to get the transaction
                     var response = await PayPalClient.client().Execute(request);
                     
-                    //4. Save the transaction in your database. Implement logic to save transaction to your database for future reference.
                     var result =  response.Result<Order>();
 
                     if(result.Status.Equals("COMPLETED"))
@@ -70,9 +73,6 @@ namespace Backend.Controllers
 
                         if(floatValue == price.Price)
                         {
-                            Console.WriteLine("a");
-                            //TODO: add ticket
-
                             Ticket ticket = new Ticket();
                             ticket.PayPalOrderId = result.Id;
                             ticket.TimeBought = DateTime.Now;
@@ -98,26 +98,26 @@ namespace Backend.Controllers
                             unitOfWork.Tickets.Add(ticket);
                             unitOfWork.Complete();
 
-                            return JsonResult(ticket);
+                            return Success(ticket);
                         }
                         else
                         {
-                            return ErrorResult(9001, "Paid amount doesn't match ticket price.");
+                            return Error(9001, "Paid amount doesn't match ticket price.");
                         }
                     }
                     else
                     {
-                        return ErrorResult(9002, "Payment not completed.");
+                        return Error(9002, "Payment not completed.");
                     }
                 }
                 else
                 {
-                    return ErrorResult(9003, "Price not found.");
+                    return Error(9003, "Price not found.");
                 }
             }
             else
             {
-                return ErrorResult(9004, "User not allowed to buy the selected ticket.");
+                return Error(9004, "User not allowed to buy the selected ticket.");
             }
         }
     }

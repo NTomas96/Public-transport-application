@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using Backend.Models;
 using Backend.Persistence;
+using Microsoft.EntityFrameworkCore;
 
-namespace WebApp.Persistence.Repository
+namespace Backend.Persistence.Repository
 {
     public class LineRepository : Repository<Line, int>, ILineRepository
     {
@@ -24,6 +24,8 @@ namespace WebApp.Persistence.Repository
 
         public IQueryable<Line> GetLinesWithStations()
         {
+            List<Line> var = appDbContext.Lines.Include(l => l.Stations).ThenInclude(sl => sl.Station).ToList();
+
             return appDbContext.Lines.Include(l => l.Stations);
         }
 

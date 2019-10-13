@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebApp.Persistence.Repository
+namespace Backend.Persistence.Repository
 {
     public interface ILineRepository : IRepository<Line,int>
     {

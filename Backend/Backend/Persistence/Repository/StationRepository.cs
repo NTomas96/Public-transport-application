@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using Backend.Models;
 using Backend.Persistence;
+using Microsoft.EntityFrameworkCore;
 
-namespace WebApp.Persistence.Repository
+namespace Backend.Persistence.Repository
 {
     public class StationRepository : Repository<Station, int>, IStationRepository
     {

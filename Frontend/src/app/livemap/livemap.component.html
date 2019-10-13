@@ -5,22 +5,22 @@
 		<mat-form-field>
 			<mat-label>Linija</mat-label>
 			<mat-select (selectionChange)="lineChanged($event)">
-				<mat-option *ngFor="let line of lines" [value]="line.Id">{{line.Name}}</mat-option>
+				<mat-option *ngFor="let line of lines" [value]="line.id">{{line.name}}</mat-option>
 			</mat-select>
 		</mat-form-field>
 		<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="mapStyle">
 			<ng-container *ngIf="selectedLine !== null">
-				<agm-polyline [strokeColor]="selectedLine.Color" [strokeWeight]="4">
-					<agm-polyline-point *ngFor="let point of selectedLine.Waypoints;" [latitude]="point.Lat" [longitude]="point.Lon">
+				<agm-polyline [strokeColor]="selectedLine.color" [strokeWeight]="4">
+					<agm-polyline-point *ngFor="let point of selectedLine.waypoints;" [latitude]="point.lat" [longitude]="point.lon">
 					</agm-polyline-point>
 				</agm-polyline>
 
 				<ng-container *ngFor="let vehicle of vehicles">
-				<agm-marker *ngIf="vehicle.Line.Id === selectedLine.Id"  [latitude]="vehicle.Lat" [longitude]="vehicle.Lon" [iconUrl]="'assets/img/bus-icon.png'">
-					<agm-info-window [disableAutoPan]="false" #infoWindow>
+				<agm-marker *ngIf="vehicle.line.id === selectedLine.id"  [latitude]="vehicle.lat" [longitude]="vehicle.lon" [iconUrl]="'assets/img/bus-icon.png'">
+					<agm-info-window [disableAutoPan]="false">
 
 						<div>
-							{{vehicle.Name}} - Linija {{vehicle.Line.Name}}
+							{{vehicle.name}} - Linija {{vehicle.line.name}}
 						</div>
 
 					</agm-info-window>

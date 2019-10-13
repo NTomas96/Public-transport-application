@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {ApiService} from "../api/api.service";
 import {Router} from "@angular/router";
+import {UserLogin} from "../shared/user-login";
 
 @Component({
 	selector: "app-logout",
@@ -9,11 +9,11 @@ import {Router} from "@angular/router";
 })
 export class LogoutComponent implements OnInit {
 
-	constructor(private apiService: ApiService, private router: Router) { }
+	constructor(private userLogin: UserLogin, private router: Router) { }
 
 	ngOnInit() {
 		setTimeout(() => {
-			this.apiService.setJwtToken(null, null);
+			this.userLogin.logout();
 			this.router.navigateByUrl("/login");
 		}, 0);
 

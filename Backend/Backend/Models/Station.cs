@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web;
+using System.Threading.Tasks;
 
 namespace Backend.Models
 {
@@ -14,6 +14,6 @@ namespace Backend.Models
         public int Id { get; set; }
         public string Name { get; set; }
         [JsonIgnore]
-        public List<Line> Lines { get; set; }
+        public List<StationLine> Lines { get; set; }
     }
 }

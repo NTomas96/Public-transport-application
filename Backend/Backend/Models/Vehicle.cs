@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web;
+using System.Threading.Tasks;
+using Toolbelt.ComponentModel.DataAnnotations.Schema;
 
 namespace Backend.Models
 {
@@ -13,8 +14,7 @@ namespace Backend.Models
         public int Id { get; set; }
         public string Name { get; set; }
         [Index(IsUnique = true)]
-        [Column(TypeName = "VARCHAR")]
-        [StringLength(100)]
+        [Column(TypeName = "VARCHAR(100)")]
         public string TrackerSerial { get; set; }
         public Line Line { get; set; }
     }

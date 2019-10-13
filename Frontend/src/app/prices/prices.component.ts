@@ -1,8 +1,15 @@
 import {Component, OnInit} from "@angular/core";
 import {MatDialog, MatDialogConfig, MatSelectChange} from "@angular/material";
-import {ApiService} from "../api/api.service";
 import {ICreateOrderRequest, IPayPalConfig} from "ngx-paypal/lib/models/paypal-models";
 import {TicketdialogComponent} from "./ticketdialog/ticketdialog.component";
+import {PricelistsService} from "../api/services/pricelists.service";
+import {BuyTicketsService} from "../api/services/buy-tickets.service";
+import {Pricelist} from "../api/models/pricelist";
+import {ErrorApiResponse} from "../api/models/error-api-response";
+import {Ticket} from "../api/models/ticket";
+import {PassengerType, TicketType, User} from "../api/models";
+import {UserLogin} from "../shared/user-login";
+import {UsersService} from "../api/services/users.service";
 
 @Component({
 	selector: "app-prices",
@@ -11,30 +18,30 @@ import {TicketdialogComponent} from "./ticketdialog/ticketdialog.component";
 })
 export class PricesComponent implements OnInit {
 
-	constructor(private apiService: ApiService, private dialog: MatDialog) {
+	// tslint:disable-next-line:max-line-length
+	constructor(private userLogin: UserLogin, private usersService: UsersService, private pricelistsService: PricelistsService, private buyTicketsService: BuyTicketsService, private dialog: MatDialog) {
 
 	}
-	title = "Cenovnik";
 
 	passengerTypes = [
-		{id: 0, name: "Regularni"},
-		{id: 1, name: "Student"},
-		{id: 2, name: "Penzioner"}
+		{id: PassengerType.Regular, name: "Regularni"},
+		{id: PassengerType.Student, name: "Student"},
+		{id: PassengerType.Pensioner, name: "Penzioner"}
 	];
 	ticketTypes = [
-		{id: 0, name: "Vremenska"},
-		{id: 1, name: "Dnevna"},
-		{id: 2, name: "Mesecna"},
-		{id: 3, name: "Godisnja"},
+		{id: TicketType.TimeTicket, name: "Vremenska"},
+		{id: TicketType.DailyTicket, name: "Dnevna"},
+		{id: TicketType.MonthlyTicket, name: "Mesecna"},
+		{id: TicketType.YearlyTicket, name: "Godisnja"},
 	];
 
 	buyTicketTypes = [];
-	buyTicketType = null;
-	buyTicketTypePrice = null;
+	buyTicketType: TicketType = null;
+	buyTicketTypePrice: Pricelist = null;
 
-	selectedTicketType = null;
-	selectedPassengerType = null;
-	selectedTicket = null;
+	selectedTicketType: TicketType = null;
+	selectedPassengerType: PassengerType = null;
+	selectedTicket: Pricelist = null;
 
 	public payPalConfig?: IPayPalConfig;
 
@@ -46,7 +53,7 @@ export class PricesComponent implements OnInit {
 		this.payPalConfig = {
 			currency: "EUR",
 			clientId: "ATsKexGYCoUhokUVT1tHhSjXHKAuvNcRLNNFXWYbyzsS7uPFOThLrcoesZjsDWjhp2Ly3xBWFzp00T3t",
-			createOrderOnClient: (data) => ({
+			createOrderOnClient: () => ({
 				intent: "CAPTURE",
 				purchase_units: [
 					{
@@ -84,22 +91,22 @@ export class PricesComponent implements OnInit {
 			onApprove: () => {
 			},
 			onClientAuthorization: (data) => {
-				this.apiService.buyTicket(this.buyTicketTypePrice.TicketType, data.id, {
-					success: (ticket) => {
+				this.buyTicketsService.buyTicket({ticketType: this.buyTicketTypePrice.ticketType, orderId: data.id}).subscribe(
+					(ticket: Ticket) => {
 						const dialogConfig = new MatDialogConfig();
 
 						dialogConfig.disableClose = false;
 						dialogConfig.autoFocus = true;
-						dialogConfig.data = ticket.TicketNumber;
+						dialogConfig.data = ticket.ticketNumber;
 
 						console.log("test");
 
 						this.dialog.open(TicketdialogComponent, dialogConfig);
 					},
-					error: (code, message) => {
-						alert("Error " + message);
+					(error: ErrorApiResponse) => {
+						alert("Error " + error.errorMessage);
 					}
-				});
+				);
 			},
 			onCancel: () => {
 			},
@@ -111,11 +118,11 @@ export class PricesComponent implements OnInit {
 		};
 	}
 
-	getPassengerTypeName(id: number) {
+	getPassengerTypeName(id: PassengerType) {
 		return this.passengerTypes.filter(o => o.id === id)[0].name;
 	}
 
-	getTicketTypeName(id: number) {
+	getTicketTypeName(id: TicketType) {
 		return this.ticketTypes.filter(o => o.id === id)[0].name;
 	}
 
@@ -127,20 +134,6 @@ export class PricesComponent implements OnInit {
 		}
 	}
 
-	buyTicketTypeChanged($event: MatSelectChange) {
-		this.buyTicketType = $event.value;
-
-		this.apiService.getTicketPriceMe(this.buyTicketType, {
-			success: (price) => {
-				this.buyTicketTypePrice = price;
-				this.initConfig(price);
-			},
-			error: (code, message) => {
-				alert("Error " + message);
-			}
-		});
-	}
-
 	passengerTypeChanged($event: MatSelectChange) {
 		this.selectedPassengerType = $event.value;
 
@@ -149,35 +142,49 @@ export class PricesComponent implements OnInit {
 		}
 	}
 
-	updateTicket(selectedTicketType: number, selectedPassengerType: number) {
-		this.apiService.getTicketPrice(selectedTicketType, selectedPassengerType, {
-			success: (price) => {
+	buyTicketTypeChanged($event: MatSelectChange) {
+		this.buyTicketType = $event.value;
+
+		this.pricelistsService.getPricelistMe({ticketType: this.buyTicketType}).subscribe(
+			(price: Pricelist) => {
+				this.buyTicketTypePrice = price;
+				this.initConfig(price);
+			},
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
+			}
+		);
+	}
+
+	updateTicket(selectedTicketType: TicketType, selectedPassengerType: PassengerType) {
+		this.pricelistsService.getPricelist({ticketType: 0, passengerType: 1}).subscribe(
+			(price: Pricelist) => {
 				this.selectedTicket = price;
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 	}
 
 	updateBuyTickets() {
-		if (!this.apiService.loggedIn()) {
+		if (!this.userLogin.isLoggedIn()) {
 			this.buyTicketTypes = [{id: 0, name: "Vremenska"}];
 			return;
 		}
 
-		this.apiService.getUser({
-			success: (user) => {
-				if (user.Active) {
+		this.usersService.getMe().subscribe(
+			(user: User) => {
+				if (user.active) {
 					this.buyTicketTypes = this.ticketTypes;
 				} else {
 					this.buyTicketTypes = [];
 				}
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 	}
 
 	getBuyTicketTypes() {

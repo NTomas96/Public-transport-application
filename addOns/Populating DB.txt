@@ -11,9 +11,9 @@ insert into Pricelists (TicketType,PassengerType,Price) values (3,0,50.00)
 insert into Pricelists (TicketType,PassengerType,Price) values (3,1,45.00)
 insert into Pricelists (TicketType,PassengerType,Price) values (3,2,42.00)
 
-	dynamic stuff = JsonConvert.DeserializeObject(File.ReadAllText("C:\\Users\\Nemanja\\Desktop\\lines.json"));
-		List<Line> lines = new List<Line>();
-			foreach (dynamic obj in stuff)
+            dynamic stuff = JsonConvert.DeserializeObject(System.IO.File.ReadAllText(@"C:\Users\Spajk\Desktop\uniproj\addOns\lines.json"));
+            List<Line> lines = new List<Line>();
+            foreach (dynamic obj in stuff)
             {
                 Line line = new Line();
                 line.Color = obj.color;
@@ -33,14 +33,14 @@ insert into Pricelists (TicketType,PassengerType,Price) values (3,2,42.00)
 
                 lines.Add(line);
             }
-			
-		unitOfWork.Lines.AddRange(lines.AsEnumerable());
-		unitOfWork.Complete();
-		
-		
-		var lines = unitOfWork.Lines.GetLines();
-		
-		dynamic stuff2 = JsonConvert.DeserializeObject(File.ReadAllText("C:\\Users\\Nemanja\\Desktop\\stations.json"));
+
+            unitOfWork.Lines.AddRange(lines.AsEnumerable());
+            unitOfWork.Complete();
+
+
+            var lines2 = unitOfWork.Lines.GetLines();
+
+            dynamic stuff2 = JsonConvert.DeserializeObject(System.IO.File.ReadAllText(@"C:\Users\Spajk\Desktop\uniproj\addOns\stations.json"));
             List<Station> stations = new List<Station>();
 
             foreach (dynamic obj in stuff2)
@@ -49,48 +49,28 @@ insert into Pricelists (TicketType,PassengerType,Price) values (3,2,42.00)
                 station.Name = obj.name;
                 station.Lat = obj.lat;
                 station.Lon = obj.lon;
-                station.Lines = new List<Line>();
+                station.Lines = new List<StationLine>();
 
                 foreach (string lineStr in obj.lines)
                 {
-                    foreach (Line line in lines)
+                    foreach (Line line in lines2)
                     {
                         if (line.Name.Equals(lineStr))
                         {
-                            station.Lines.Add(line);
+                            var sl = new StationLine();
+                            sl.Line = line;
+                            sl.Station = station;
+                            station.Lines.Add(sl);
                         }
                     }
                 }
 
                 stations.Add(station);
             }
-		
-        unitOfWork.Stations.AddRange(stations.AsEnumerable());
-		unitOfWork.Complete();
-            
-            List<Vehicle> buses = new List<Vehicle>();
-            List<Timetable> timetables = new List<Timetable>();
 
-
-            foreach (Line l in lines)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    Vehicle bus = new Vehicle();
-                    bus.TrackerSerial = "SN_Line" + l.Id + "_BusNO:" + i;
-                    bus.Name = "BUS";
-                    bus.Line = l;
-                    bus.Lat = 0;
-                    bus.Lon = 0;
-
-                    buses.Add(bus);
-                }
-
-            }
-
-           
-            unitOfWork.Vehicles.AddRange(buses.AsEnumerable());
+            unitOfWork.Stations.AddRange(stations.AsEnumerable());
             unitOfWork.Complete();
+
 			
 			
 		21600;23400;25200;27000;28800;30600;32400;34200;36000;37800;39600;41400;43200;45000;46800;48600;50400;52200;54000;55800;57600;59400;61200;63000;64800;66600;68400;70200;72000;73800;75600;77400;79200;81000;82800;84600;86400

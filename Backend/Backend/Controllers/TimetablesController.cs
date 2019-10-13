@@ -1,17 +1,22 @@
 ﻿using Backend.Models;
+using Backend.Models.Web;
+using Backend.Persistence.UnitOfWork;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using WebApp.Persistence.UnitOfWork;
 
 namespace Backend.Controllers
 {
-    public class TimetablesController : BetterApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
+    public class TimetablesController : ApiController
     {
+        
         private readonly IUnitOfWork unitOfWork;
 
         public TimetablesController(IUnitOfWork u)
@@ -19,8 +24,10 @@ namespace Backend.Controllers
             this.unitOfWork = u;
         }
 
-        [Route("api/Timetables/{line}")]
-        public IHttpActionResult Get(int line, DateTime date)
+        [HttpGet("{line}")]
+        [ProducesResponseType(200, Type = typeof(Timetable))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult GetTimetable(int line, [FromQuery] DateTime date)
         {
             Line lineObj = this.unitOfWork.Lines.Get(line);
 
@@ -30,16 +37,16 @@ namespace Backend.Controllers
 
                 if(table != null)
                 {
-                    return JsonResult(table);
+                    return Success(table);
                 }
                 else
                 {
-                    return ErrorResult(4001, "Time table not found.");
+                    return Error(4001, "Time table not found.");
                 }
             }
             else
             {
-                return ErrorResult(4001, "Line not found.");
+                return Error(4001, "Line not found.");
             }
         }
     }

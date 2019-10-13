@@ -1,12 +1,15 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MyErrorStateMatcher} from "../mailErrorCathcer";
-import {ApiService} from "../api/api.service";
 import {Router} from "@angular/router";
 
 import {CustomValidators} from "../shared/custom.Validators";
 
 import {FileInput} from "ngx-material-file-input";
+import {UsersService} from "../api/services/users.service";
+import {UserLogin} from "../shared/user-login";
+import {User} from "../api/models/user";
+import {ErrorApiResponse} from "../api/models/error-api-response";
 
 
 @Component({
@@ -16,7 +19,7 @@ import {FileInput} from "ngx-material-file-input";
 })
 export class RegisterComponent implements OnInit {
 
-	constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+	constructor(private fb: FormBuilder, private usersService: UsersService, private router: Router, private userLogin: UserLogin) {
 	}
 
 	validationMessages = {
@@ -87,13 +90,14 @@ export class RegisterComponent implements OnInit {
 	additionalInfo = null;
 
   	ngOnInit() {
-		if (this.apiService.loggedIn()) {
+		if (this.userLogin.isLoggedIn()) {
 			this.router.navigateByUrl("/profile");
 		}
+
 		this.hideP = true;
 		this.hideCP = true;
 
-		this.registrationForm.valueChanges.subscribe((data) => {
+		this.registrationForm.valueChanges.subscribe(() => {
 			this.logValidationErrors(this.registrationForm);
 		});
   	}
@@ -124,15 +128,15 @@ export class RegisterComponent implements OnInit {
 		this.registrationForm.value.password = this.registrationForm.value.passwordGroup.password;
 		this.registrationForm.value.additionalInfo = this.additionalInfo;
 
-		this.apiService.registerUser(this.registrationForm.value, {
-			success: (data) => {
+		this.usersService.register$Json({body: this.registrationForm.value as User}).subscribe(
+			() => {
 				this.router.navigateByUrl("/login");
-				alert("Uspesno ste se registrovali.")
+				alert("Uspesno ste se registrovali.");
 			},
-			error: (code, message) => {
-				alert("Error " + message);
+			(error: ErrorApiResponse) => {
+				alert("Error " + error.errorMessage);
 			}
-		});
+		);
 	}
 
 	onFileChanged() {
