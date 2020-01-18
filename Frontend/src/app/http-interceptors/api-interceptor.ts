@@ -16,6 +16,12 @@ export class ApiInterceptor implements HttpInterceptor {
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		console.log("Making a request. JWT Token: ", this.userLogin.jwtToken);
 
+		if (this.userLogin.isLoggedIn()) {
+			request = request.clone({
+				headers: request.headers.set("Authorization", "Bearer " + this.userLogin.jwtToken)
+			});
+		}
+
 		return next.handle(request).pipe(
 			map(
 				(event) => {
