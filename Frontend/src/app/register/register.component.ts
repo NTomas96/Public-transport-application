@@ -3,13 +3,12 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MyErrorStateMatcher} from "../mailErrorCathcer";
 import {Router} from "@angular/router";
 
-import {CustomValidators} from "../shared/custom.Validators";
-
 import {FileInput} from "ngx-material-file-input";
 import {UsersService} from "../api/services/users.service";
 import {UserLogin} from "../shared/user-login";
 import {User} from "../api/models/user";
 import {ErrorApiResponse} from "../api/models/error-api-response";
+import {MustMatch} from "../shared/must-match.validator";
 
 
 @Component({
@@ -39,9 +38,7 @@ export class RegisterComponent implements OnInit {
 		},
 		confirmPassword: {
 			required: "Niste ponovili lozinku.",
-		},
-		passwordGroup: {
-			passwordMismatch: "Lozinke se ne poklapaju, potvrdi lozinku ponovo.",
+			mustMatch: "Ne poklapaju se lozinke."
 		},
 		dayOfBirth: {
 			required: "Unesite datum rodjnja.",
@@ -60,7 +57,6 @@ export class RegisterComponent implements OnInit {
 		email: "",
 		password: "",
 		confirmPassword: "",
-		passwordGroup: "",
 		dayOfBirth: "",
 		address: "",
 		passengerType: ""
@@ -74,15 +70,13 @@ export class RegisterComponent implements OnInit {
 		firstName: ["", [Validators.required]],
 		lastName: ["", [Validators.required]],
 		email: ["", [Validators.required, Validators.email]],
-		passwordGroup: this.fb.group ({
-			password: ["", [Validators.required, Validators.minLength(6)]],
-			confirmPassword: ["", [Validators.required]]
-		}, {validator: CustomValidators.checkPassword}),
+		password: ["", [Validators.required, Validators.minLength(6)]],
+		confirmPassword: ["", [Validators.required]],
 		dayOfBirth: ["", [Validators.required]],
 		address: ["", [Validators.required]],
 		passengerType: [0, [Validators.required]],
-		additionalInfo: [null]
-	});
+		additionalInfo: [null]}
+		, {validator: MustMatch("password", "confirmPassword")});
 
 	hideP: boolean;
 	hideCP: boolean;
@@ -124,8 +118,6 @@ export class RegisterComponent implements OnInit {
 	}
 
 	onSubmit() {
-
-		this.registrationForm.value.password = this.registrationForm.value.passwordGroup.password;
 		this.registrationForm.value.additionalInfo = this.additionalInfo;
 
 		this.usersService.register$Json({body: this.registrationForm.value as User}).subscribe(
