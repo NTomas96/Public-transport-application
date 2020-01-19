@@ -23,24 +23,21 @@
 					{{formErrors.email}}
 				</mat-error>
 			</mat-form-field>
-			<div formGroupName="passwordGroup" class="mat-body register-body">
-				<mat-form-field [ngClass]="{'has-error' : formErrors.password}">
-					<input matInput type="password" placeholder="Lozinka" formControlName="password" [type] = "hideP ? 'password' : 'text'" (blur)="logValidationErrors()"/>
-					<mat-icon matSuffix (click)="hideP = !hideP">{{hideP ? 'visibility' : 'visibility_off'}}</mat-icon>
-					<mat-error *ngIf="formErrors.password">
-						{{formErrors.password}}
-					</mat-error>
-				</mat-form-field>
+			<mat-form-field [ngClass]="{'has-error' : formErrors.password}">
+				<input matInput type="password" placeholder="Lozinka" formControlName="password" [type] = "hideP ? 'password' : 'text'" (blur)="logValidationErrors()" />
+				<mat-icon matSuffix (click)="hideP = !hideP">{{hideP ? 'visibility' : 'visibility_off'}}</mat-icon>
+				<mat-error *ngIf="formErrors.password">
+					{{formErrors.password}}
+				</mat-error>
+			</mat-form-field>
 
-				<mat-form-field [ngClass]="{'has-error' : formErrors.confirmPassword || formErrors.passwordGroup}">
-					<input matInput type="password" placeholder="Potvrdi lozinku" formControlName="confirmPassword" [type] = "hideCP ? 'password' : 'text'" (blur)="logValidationErrors()"/>
-					<mat-icon matSuffix (click)="hideCP = !hideCP">{{hideCP ? 'visibility' : 'visibility_off'}}</mat-icon>
-					<mat-error *ngIf="formErrors.confirmPassword || formErrors.passwordGroup">
-						{{formErrors.confirmPassword ? formErrors.confirmPassword : formErrors.passwordGroup}}
-						{{formErrors.passwordGroup}}
-					</mat-error>
-				</mat-form-field>
-			</div>
+			<mat-form-field [ngClass]="{'has-error' : formErrors.confirmPassword }">
+				<input matInput type="password" placeholder="Potvrdi lozinku" formControlName="confirmPassword" [type] = "hideCP ? 'password' : 'text'" (blur)="logValidationErrors()"/>
+				<mat-icon matSuffix (click)="hideCP = !hideCP">{{hideCP ? 'visibility' : 'visibility_off'}}</mat-icon>
+				<mat-error *ngIf="formErrors.confirmPassword">
+					{{formErrors.confirmPassword }}
+				</mat-error>
+			</mat-form-field>
 			<mat-form-field [ngClass]="{'has-error' : formErrors.dayOfBirth}">
 				<input matInput formControlName="dayOfBirth" [matDatepicker]="picker" placeholder="Datum rodjenja" (blur)="logValidationErrors()">
 				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {Router} from "@angular/router";
 import {MyErrorStateMatcher} from "../mailErrorCathcer";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CustomValidators} from "../shared/custom.Validators";
+import {MustMatch} from "../shared/must-match.validator";
 import {FileInput} from "ngx-material-file-input";
 import {UsersService} from "../api/services/users.service";
 import {UserLogin} from "../shared/user-login";
@@ -35,7 +35,8 @@ export class ProfileComponent implements OnInit {
 			minlength: "Greska pri unosu (min 6 karaktera)."
 		},
 		confirmPassword: {
-			required: "Niste ponovili lozinku."
+			required: "Niste ponovili lozinku.",
+			mustMatch: "Nisu iste lozinke."
 		},
 		passwordGroup: {
 			passwordMismatch: "Lozinke se ne poklapaju, potvrdi lozinku ponovo."
@@ -57,7 +58,6 @@ export class ProfileComponent implements OnInit {
 		email: "",
 		password: "",
 		confirmPassword: "",
-		passwordGroup: "",
 		dayOfBirth: "",
 		address: "",
 		passengerType: ""
@@ -72,16 +72,16 @@ export class ProfileComponent implements OnInit {
 		firstName: ["", [Validators.required]],
 		lastName: ["", [Validators.required]],
 		email: ["", [Validators.required, Validators.email]],
-		passwordGroup: this.fb.group ({
-			password: ["", [Validators.required, Validators.minLength(6)]],
-			confirmPassword: ["", [Validators.required]]
-		}, { validator: CustomValidators.checkPassword}),
+		password: ["", [Validators.required, Validators.minLength(6)]],
+		confirmPassword: ["", [Validators.required]],
 		dayOfBirth: ["", [Validators.required]],
 		address: ["", [Validators.required]],
 		passengerType: [""],
 		additionalInfo: ["", [Validators.required]],
-		verificationStatus: [""]
-	});
+		verificationStatus: [""]},
+		{ validator: MustMatch("password", "confirmPassword")}
+		);
+
 
 	hideP: boolean;
 	hideCP: boolean;
@@ -106,10 +106,8 @@ export class ProfileComponent implements OnInit {
 				this.editProfileForm.setValue({
 					firstName: user.firstName,
 					lastName: user.lastName,
-					passwordGroup: {
-						password: user.password,
-						confirmPassword: user.password
-					},
+					password: user.password,
+					confirmPassword: user.password,
 					email: user.email,
 					dayOfBirth: user.dayOfBirth,
 					address: user.address,
@@ -147,8 +145,6 @@ export class ProfileComponent implements OnInit {
 	}
 
 	onSubmit() {
-
-		this.editProfileForm.value.password = this.editProfileForm.value.passwordGroup.password;
 		this.editProfileForm.value.additionalInfo = this.additionalInfo;
 
 		this.usersService.editProfile$Json({body: this.editProfileForm.value as User}).subscribe(
