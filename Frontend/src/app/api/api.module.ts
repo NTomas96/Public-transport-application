@@ -3,6 +3,7 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
+import { AdminService } from './services/admin.service';
 import { BuyTicketsService } from './services/buy-tickets.service';
 import { LinesService } from './services/lines.service';
 import { PricelistsService } from './services/pricelists.service';
@@ -18,6 +19,7 @@ import { UsersService } from './services/users.service';
   exports: [],
   declarations: [],
   providers: [
+    AdminService,
     BuyTicketsService,
     LinesService,
     PricelistsService,

@@ -11,6 +11,12 @@ import {LogoutComponent} from "./logout/logout.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {UserverifyComponent} from "./userverify/userverify.component";
 import {TicketverifyComponent} from "./ticketverify/ticketverify.component";
+import {AdminComponent} from "./admin/admin.component";
+import {AdminlinesComponent} from "./admin/adminlines/adminlines.component";
+import {AdminbusesComponent} from "./admin/adminbuses/adminbuses.component";
+import {AdminpricelistsComponent} from "./admin/adminpricelists/adminpricelists.component";
+import {AdmintimetablesComponent} from "./admin/admintimetables/admintimetables.component";
+import {AdminstationsComponent} from "./admin/adminstations/adminstations.component";
 
 const routes: Routes = [
 	{path: "home", component: HomeComponent},
@@ -24,7 +30,13 @@ const routes: Routes = [
 	{path: "logout", component: LogoutComponent},
 	{path: "profile", component: ProfileComponent},
 	{path: "userverify", component: UserverifyComponent},
-	{path: "ticketverify", component: TicketverifyComponent}
+	{path: "ticketverify", component: TicketverifyComponent},
+	{path: "admin", component: AdminComponent},
+	{path: "admin/lines", component: AdminlinesComponent},
+	{path: "admin/stations", component: AdminstationsComponent},
+	{path: "admin/timetables", component: AdmintimetablesComponent},
+	{path: "admin/pricelists", component: AdminpricelistsComponent},
+	{path: "admin/buses", component: AdminbusesComponent}
 ];
 
 @NgModule({

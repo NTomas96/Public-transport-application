@@ -1,5 +1,5 @@
 /* tslint:disable */
-export interface ErrorApiResponse  {
+export interface ErrorApiResponse {
   errorCode?: number;
   errorMessage?: null | string;
   success?: boolean;

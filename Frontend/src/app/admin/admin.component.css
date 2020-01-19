@@ -1,0 +1,13 @@
+.admin-body {
+	margin-top: 16px;
+	width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.admin-body > button
+{
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+}

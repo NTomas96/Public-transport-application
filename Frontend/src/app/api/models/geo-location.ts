@@ -1,5 +1,5 @@
 /* tslint:disable */
-export interface GeoLocation  {
+export interface GeoLocation {
   lat?: number;
   lon?: number;
 }

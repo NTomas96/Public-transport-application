@@ -1,5 +1,5 @@
 /* tslint:disable */
-export interface Station  {
+export interface Station {
   id?: number;
   lat?: number;
   lon?: number;

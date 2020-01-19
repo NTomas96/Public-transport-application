@@ -22,21 +22,21 @@ export class LinesService extends BaseService {
   }
 
   /**
-   * Path part for operation getLines
+   * Path part for operation apiLinesGet
    */
-  static readonly GetLinesPath = '/api/Lines';
+  static readonly ApiLinesGetPath = '/api/Lines';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `getLines()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getLines$Response(params?: {
 
   }): Observable<StrictHttpResponse<Array<Line>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, LinesService.GetLinesPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, LinesService.ApiLinesGetPath, 'get');
     if (params) {
 
 
@@ -56,7 +56,7 @@ export class LinesService extends BaseService {
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `getLines$Response()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getLines(params?: {
 
@@ -68,21 +68,21 @@ export class LinesService extends BaseService {
   }
 
   /**
-   * Path part for operation getLinesWithStations
+   * Path part for operation apiLinesWithStationsGet
    */
-  static readonly GetLinesWithStationsPath = '/api/Lines/withStations';
+  static readonly ApiLinesWithStationsGetPath = '/api/Lines/withStations';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `getLinesWithStations()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getLinesWithStations$Response(params?: {
 
   }): Observable<StrictHttpResponse<Array<Line>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, LinesService.GetLinesWithStationsPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, LinesService.ApiLinesWithStationsGetPath, 'get');
     if (params) {
 
 
@@ -102,7 +102,7 @@ export class LinesService extends BaseService {
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `getLinesWithStations$Response()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getLinesWithStations(params?: {
 
@@ -114,22 +114,22 @@ export class LinesService extends BaseService {
   }
 
   /**
-   * Path part for operation getLine
+   * Path part for operation apiLinesIdGet
    */
-  static readonly GetLinePath = '/api/Lines/{id}';
+  static readonly ApiLinesIdGetPath = '/api/Lines/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `getLine()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getLine$Response(params: {
     id: number;
 
   }): Observable<StrictHttpResponse<Line>> {
 
-    const rb = new RequestBuilder(this.rootUrl, LinesService.GetLinePath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, LinesService.ApiLinesIdGetPath, 'get');
     if (params) {
 
       rb.path('id', params.id);
@@ -150,7 +150,7 @@ export class LinesService extends BaseService {
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `getLine$Response()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getLine(params: {
     id: number;

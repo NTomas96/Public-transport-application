@@ -1,3 +1,4 @@
+export { AdminService } from './services/admin.service';
 export { BuyTicketsService } from './services/buy-tickets.service';
 export { LinesService } from './services/lines.service';
 export { PricelistsService } from './services/pricelists.service';

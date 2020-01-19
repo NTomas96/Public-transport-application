@@ -22,21 +22,21 @@ export class StationsService extends BaseService {
   }
 
   /**
-   * Path part for operation getStations
+   * Path part for operation apiStationsGet
    */
-  static readonly GetStationsPath = '/api/Stations';
+  static readonly ApiStationsGetPath = '/api/Stations';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `getStations()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getStations$Response(params?: {
 
   }): Observable<StrictHttpResponse<Array<Station>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, StationsService.GetStationsPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, StationsService.ApiStationsGetPath, 'get');
     if (params) {
 
 
@@ -56,7 +56,7 @@ export class StationsService extends BaseService {
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `getStations$Response()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getStations(params?: {
 

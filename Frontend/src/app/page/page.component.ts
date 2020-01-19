@@ -21,6 +21,7 @@ export class PageComponent {
 		{href: "profile", name: "Profil", icon: "account_circle", side: "right", auth: true, role: UserType.Passenger},
 		{href: "userverify", name: "Verifikacija korisnika", icon: "account_circle", side: "right", auth: true, role: UserType.Controller},
 		{href: "ticketverify", name: "Verifikacija karata", icon: "account_circle", side: "right", auth: true, role: UserType.Controller},
+		{href: "admin", name: "Admin", icon: "account_circle", side: "right", auth: true, role: UserType.Admin},
 		{href: "logout", name: "Odjava", icon: "account_circle", side: "right", auth: true}
 
 	];

@@ -23,15 +23,15 @@ export class BuyTicketsService extends BaseService {
   }
 
   /**
-   * Path part for operation buyTicket
+   * Path part for operation apiBuyTicketsTicketTypeOrderIdPost
    */
-  static readonly BuyTicketPath = '/api/BuyTickets/{ticketType}/{orderId}';
+  static readonly ApiBuyTicketsTicketTypeOrderIdPostPath = '/api/BuyTickets/{ticketType}/{orderId}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `buyTicket()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   buyTicket$Response(params: {
     ticketType: TicketType;
@@ -39,7 +39,7 @@ export class BuyTicketsService extends BaseService {
 
   }): Observable<StrictHttpResponse<Ticket>> {
 
-    const rb = new RequestBuilder(this.rootUrl, BuyTicketsService.BuyTicketPath, 'post');
+    const rb = new RequestBuilder(this.rootUrl, BuyTicketsService.ApiBuyTicketsTicketTypeOrderIdPostPath, 'post');
     if (params) {
 
       rb.path('ticketType', params.ticketType);
@@ -61,7 +61,7 @@ export class BuyTicketsService extends BaseService {
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `buyTicket$Response()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   buyTicket(params: {
     ticketType: TicketType;

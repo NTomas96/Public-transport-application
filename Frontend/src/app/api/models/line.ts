@@ -2,7 +2,7 @@
 import { GeoLocation } from './geo-location';
 import { LineType } from './line-type';
 import { StationLine } from './station-line';
-export interface Line  {
+export interface Line {
   color?: null | string;
   id?: number;
   lineType?: LineType;

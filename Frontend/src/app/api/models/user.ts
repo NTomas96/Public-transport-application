@@ -2,7 +2,7 @@
 import { PassengerType } from './passenger-type';
 import { UserType } from './user-type';
 import { VerificationStatus } from './verification-status';
-export interface User  {
+export interface User {
   active?: boolean;
   additionalInfo?: null | string;
   address?: null | string;

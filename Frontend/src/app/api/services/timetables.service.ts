@@ -22,15 +22,15 @@ export class TimetablesService extends BaseService {
   }
 
   /**
-   * Path part for operation getTimetable
+   * Path part for operation apiTimetablesLineGet
    */
-  static readonly GetTimetablePath = '/api/Timetables/{line}';
+  static readonly ApiTimetablesLineGetPath = '/api/Timetables/{line}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `getTimetable()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getTimetable$Response(params: {
     line: number;
@@ -38,7 +38,7 @@ export class TimetablesService extends BaseService {
 
   }): Observable<StrictHttpResponse<Timetable>> {
 
-    const rb = new RequestBuilder(this.rootUrl, TimetablesService.GetTimetablePath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, TimetablesService.ApiTimetablesLineGetPath, 'get');
     if (params) {
 
       rb.path('line', params.line);
@@ -60,7 +60,7 @@ export class TimetablesService extends BaseService {
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `getTimetable$Response()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getTimetable(params: {
     line: number;

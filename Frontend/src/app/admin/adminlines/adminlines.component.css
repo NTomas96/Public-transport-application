@@ -1,0 +1,12 @@
+table {
+	width: 100%;
+}
+
+.line-color {
+	width: 30px;
+	height: 10px;
+}
+
+button {
+	margin-right: 20px;
+}

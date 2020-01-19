@@ -24,22 +24,22 @@ export class PricelistsService extends BaseService {
   }
 
   /**
-   * Path part for operation getPricelistMe
+   * Path part for operation apiPricelistsMeTicketTypeGet
    */
-  static readonly GetPricelistMePath = '/api/Pricelists/me/{ticketType}';
+  static readonly ApiPricelistsMeTicketTypeGetPath = '/api/Pricelists/me/{ticketType}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `getPricelistMe()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getPricelistMe$Response(params: {
     ticketType: TicketType;
 
   }): Observable<StrictHttpResponse<Pricelist>> {
 
-    const rb = new RequestBuilder(this.rootUrl, PricelistsService.GetPricelistMePath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, PricelistsService.ApiPricelistsMeTicketTypeGetPath, 'get');
     if (params) {
 
       rb.path('ticketType', params.ticketType);
@@ -60,7 +60,7 @@ export class PricelistsService extends BaseService {
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `getPricelistMe$Response()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getPricelistMe(params: {
     ticketType: TicketType;
@@ -73,15 +73,15 @@ export class PricelistsService extends BaseService {
   }
 
   /**
-   * Path part for operation getPricelist
+   * Path part for operation apiPricelistsTicketTypePassengerTypeGet
    */
-  static readonly GetPricelistPath = '/api/Pricelists/{ticketType}/{passengerType}';
+  static readonly ApiPricelistsTicketTypePassengerTypeGetPath = '/api/Pricelists/{ticketType}/{passengerType}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `getPricelist()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getPricelist$Response(params: {
     ticketType: TicketType;
@@ -89,14 +89,13 @@ export class PricelistsService extends BaseService {
 
   }): Observable<StrictHttpResponse<Pricelist>> {
 
-    const rb = new RequestBuilder(this.rootUrl, PricelistsService.GetPricelistPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, PricelistsService.ApiPricelistsTicketTypePassengerTypeGetPath, 'get');
     if (params) {
 
       rb.path('ticketType', params.ticketType);
       rb.path('passengerType', params.passengerType);
 
     }
-    debugger;
     return this.http.request(rb.build({
       responseType: 'json',
       accept: 'application/json'
@@ -112,7 +111,7 @@ export class PricelistsService extends BaseService {
    * This method provides access to only to the response body.
    * To access the full response (for headers, for example), `getPricelist$Response()` instead.
    *
-   * This method doesn't expect any response body
+   * This method doesn't expect any request body.
    */
   getPricelist(params: {
     ticketType: TicketType;
