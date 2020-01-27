@@ -1,0 +1,49 @@
+<div class="text-container">
+	<h1 class="mat-headline">Izmeni stanicu</h1>
+	<mat-divider></mat-divider>
+	<form [formGroup]="form" (ngSubmit)="onSubmit()">
+		<div class="mat-body register-body">
+			<div>
+				<mat-form-field [ngClass]="{'has-error' : formErrors.id}">
+					<input matInput placeholder="Id" formControlName="id" (blur)="logValidationErrors()">
+					<mat-error *ngIf="formErrors.id">
+						{{formErrors.id}}
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field [ngClass]="{'has-error' : formErrors.name}">
+					<input matInput placeholder="Ime" formControlName="name" (blur)="logValidationErrors()">
+					<mat-error *ngIf="formErrors.name">
+						{{formErrors.name}}
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field [ngClass]="{'has-error' : formErrors.lat}">
+					<input matInput placeholder="Lat" formControlName="lat" (blur)="logValidationErrors()">
+					<mat-error *ngIf="formErrors.lat">
+						{{formErrors.lat}}
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field [ngClass]="{'has-error' : formErrors.lon}">
+					<input matInput placeholder="Lon" formControlName="lat" (blur)="logValidationErrors()">
+					<mat-error *ngIf="formErrors.lon">
+						{{formErrors.lon}}
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div>
+				<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="mapStyle" (mapClick)="onMapClick($event)">
+					<agm-marker *ngIf="this.station !== null" [latitude]="station.lat" [longitude]="station.lon" [iconUrl]="'assets/img/bus-icon.png'">
+					</agm-marker>
+				</agm-map>
+			</div>
+			<div>
+				<button mat-raised-button color="primary">{{buttonText}}</button>
+			</div>
+		</div>
+	</form>
+</div>

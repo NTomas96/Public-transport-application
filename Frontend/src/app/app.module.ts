@@ -19,7 +19,7 @@ import {
 	MatInputModule,
 	MatOptionModule,
 	MatSelectModule,
-	MatDatepickerModule, MatNativeDateModule, MatTableModule, MatPaginatorModule, MatCardModule
+	MatDatepickerModule, MatNativeDateModule, MatTableModule, MatPaginatorModule, MatCardModule, MatProgressSpinnerModule
 } from "@angular/material";
 
 import {LinesComponent} from "./lines/lines.component";
@@ -46,6 +46,8 @@ import {AdminstationsComponent} from "./admin/adminstations/adminstations.compon
 import {AdmintimetablesComponent} from "./admin/admintimetables/admintimetables.component";
 import {AdminpricelistsComponent} from "./admin/adminpricelists/adminpricelists.component";
 import {AdminbusesComponent} from "./admin/adminbuses/adminbuses.component";
+import {EditstationComponent} from "./admin/adminstations/editstation/editstation.component";
+import {DialogComponent} from "./dialog/dialog.component";
 
 @NgModule({
 	declarations: [
@@ -69,6 +71,8 @@ import {AdminbusesComponent} from "./admin/adminbuses/adminbuses.component";
 		AdmintimetablesComponent,
 		AdminpricelistsComponent,
 		AdminbusesComponent,
+		EditstationComponent,
+		DialogComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -99,11 +103,12 @@ import {AdminbusesComponent} from "./admin/adminbuses/adminbuses.component";
 		MatPaginatorModule,
 		MaterialFileInputModule,
 		MatCardModule,
-		NgxPayPalModule
+		NgxPayPalModule,
+		MatProgressSpinnerModule
 	],
 	providers: [httpInterceptorProviders],
 	bootstrap: [PageComponent],
-	entryComponents: [InfodialogComponent, TicketdialogComponent]
+	entryComponents: [InfodialogComponent, TicketdialogComponent, DialogComponent]
 })
 export class AppModule {
 }
