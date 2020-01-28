@@ -6,6 +6,7 @@ import {Station} from "../api/models/station";
 import {Line} from "../api/models/line";
 import {ErrorApiResponse} from "../api/models/error-api-response";
 import {StationsService} from "../api/services/stations.service";
+import * as signalR from "@aspnet/signalr";
 
 
 @Component({
@@ -32,6 +33,8 @@ export class LivemapComponent implements OnInit {
 	lines: Array<Line> = [];
 
 	selectedLine: Line = null;
+
+	private hubConnection: signalR.HubConnection;
 
 	getVehicleById(id) {
 		for (const vehicle of this.vehicles) {
@@ -62,33 +65,31 @@ export class LivemapComponent implements OnInit {
 				alert("Error " + error.errorMessage);
 			}
 		);
-		/*
-		const connection = $.hubConnection("http://localhost:57563");
+
+		/*const connection = signalR.hubConnection;
 		const contosoChatHubProxy = connection.createHubProxy("Bus");
 		contosoChatHubProxy.on("hello", (v) => {
 
-			let vehicle = this.getVehicleById(v.Id);
+			const vehicle = this.getVehicleById(v.Id);
 
 			if (vehicle === null) {
 				this.vehicles.push(v);
-			}
-			else {
+			} else {
 				vehicle.Lat = v.Lat;
 				vehicle.Lon = v.Lon;
 			}
 
-			//console.log(vehicle);
+			// console.log(vehicle);
 		});
 		connection.start().done(() => {
 
-		});
+		});*/
 
-		/*
 		this.hubConnection = new signalR.HubConnectionBuilder()
 			.withUrl("http://localhost:57563/" + "signalr")
 			.build();
 
-		this.hubConnection.on("transferchartdata", (data) => {
+		this.hubConnection.on("transferbusdata", (data) => {
 			// this.data = data;
 			console.log(data);
 		});
@@ -97,8 +98,6 @@ export class LivemapComponent implements OnInit {
 			.start()
 			.then(() => console.log("Connection started"))
 			.catch(err => console.log("Error while starting connection: " + err));
-
-		 */
 	}
 
 	lineChanged($event: MatSelectChange) {
