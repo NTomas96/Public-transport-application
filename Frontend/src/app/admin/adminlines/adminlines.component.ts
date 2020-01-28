@@ -2,6 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {ErrorApiResponse} from "../../api/models/error-api-response";
 import {Line} from "../../api/models/line";
 import {AdminService} from "../../api/services";
+import {Station} from "../../api/models/station";
+import {Router} from "@angular/router";
 
 @Component({
 	selector: "app-adminlines",
@@ -10,7 +12,7 @@ import {AdminService} from "../../api/services";
 })
 export class AdminlinesComponent implements OnInit {
 
-	constructor(private adminService: AdminService) {
+	constructor(private adminService: AdminService, private router: Router) {
 	}
 
 	lines: Line[] = [];
@@ -42,8 +44,12 @@ export class AdminlinesComponent implements OnInit {
 		);
 	}
 
+	add() {
+		this.router.navigate(["/admin/lines/edit"]);
+	}
+
 	edit(line: Line) {
-		console.log(line);
+		this.router.navigate(["/admin/lines/edit", {id: line.id}]);
 	}
 
 	delete(line: Line) {

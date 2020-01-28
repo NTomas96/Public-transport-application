@@ -1,4 +1,5 @@
 <div>
+	<button class="add-button" mat-raised-button color="primary" (click)="add();" >Dodaj</button>
 	<table mat-table [dataSource]="lines" class="mat-elevation-z8">
 		<ng-container *ngFor="let column of displayColumns">
 			<ng-container *ngIf="column.auto" matColumnDef="{{column.key}}">

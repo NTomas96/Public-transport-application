@@ -1,0 +1,57 @@
+<div class="text-container">
+	<h1 class="mat-headline">Izmeni liniju</h1>
+	<mat-divider></mat-divider>
+	<form [formGroup]="form" (ngSubmit)="onSubmit()">
+		<div class="mat-body register-body">
+			<div>
+				<mat-form-field [ngClass]="{'has-error' : formErrors.id}">
+					<input matInput placeholder="Id" formControlName="id" (blur)="logValidationErrors()">
+					<mat-error *ngIf="formErrors.id">
+						{{formErrors.id}}
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field [ngClass]="{'has-error' : formErrors.name}">
+					<input matInput placeholder="Ime" formControlName="name" (blur)="logValidationErrors()">
+					<mat-error *ngIf="formErrors.name">
+						{{formErrors.name}}
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field [ngClass]="{'has-error' : formErrors.color}">
+					<input matInput [(colorPicker)]="this.line.color" [value]="this.line.color" [style.background]="this.line.color" placeholder="Boja" formControlName="color" (blur)="logValidationErrors()">
+					<mat-error *ngIf="formErrors.color">
+						{{formErrors.color}}
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field [ngClass]="{'has-error' : formErrors.lineType}">
+					<mat-select placeholder="Tip linije" formControlName="lineType" (blur)="logValidationErrors()">
+						<mat-option *ngFor="let lineType of lineTypes" [value]="lineType.id">
+							{{lineType.name}}
+						</mat-option>
+					</mat-select>
+					<mat-error *ngIf="formErrors.lineType">
+						{{formErrors.lineType}}
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div>
+				<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="mapStyle" (mapClick)="onMapClick($event)">
+					<agm-marker *ngFor="let waypoint of this.line.waypoints" [latitude]="waypoint.lat" [longitude]="waypoint.lon">
+					</agm-marker>
+				</agm-map>
+			</div>
+			<div>
+				<button mat-raised-button color="primary" type="button" (click)="deleteLastWaypoint()">Obrisi poslednji waypoint</button>
+				<button mat-raised-button color="primary" type="button" (click)="deleteAllWaypoints()">Obrisi sve waypointe</button>
+			</div>
+			<div>
+				<button mat-raised-button color="primary">{{buttonText}}</button>
+			</div>
+		</div>
+	</form>
+</div>

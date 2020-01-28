@@ -48,6 +48,8 @@ import {AdminpricelistsComponent} from "./admin/adminpricelists/adminpricelists.
 import {AdminbusesComponent} from "./admin/adminbuses/adminbuses.component";
 import {EditstationComponent} from "./admin/adminstations/editstation/editstation.component";
 import {DialogComponent} from "./dialog/dialog.component";
+import {EditlineComponent} from "./admin/adminlines/editline/editline.component";
+import {ColorPickerModule} from "ngx-color-picker";
 
 @NgModule({
 	declarations: [
@@ -72,6 +74,7 @@ import {DialogComponent} from "./dialog/dialog.component";
 		AdminpricelistsComponent,
 		AdminbusesComponent,
 		EditstationComponent,
+		EditlineComponent,
 		DialogComponent,
 	],
 	imports: [
@@ -104,7 +107,8 @@ import {DialogComponent} from "./dialog/dialog.component";
 		MaterialFileInputModule,
 		MatCardModule,
 		NgxPayPalModule,
-		MatProgressSpinnerModule
+		MatProgressSpinnerModule,
+		ColorPickerModule
 	],
 	providers: [httpInterceptorProviders],
 	bootstrap: [PageComponent],
