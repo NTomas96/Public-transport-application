@@ -8,5 +8,9 @@ namespace Backend.Util
 {
     public class BusHub : Hub
     {
+        public void SayHello(string message)
+        {
+            Clients.All.SendAsync("SayHello", message);
+        }
     }
 }

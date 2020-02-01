@@ -13,6 +13,7 @@ using Backend.Persistence;
 using Newtonsoft.Json;
 using Backend.Persistence.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
+using Backend.Util;
 
 namespace Backend.Controllers
 {
@@ -70,11 +71,11 @@ namespace Backend.Controllers
                 vehicle.Lat = data.GeoLocation.Lat;
                 vehicle.Lon = data.GeoLocation.Lon;
 
-                BusHub.SayHello(vehicle);
+                BusHub.SayHello("Hello");
             }
-
             return JsonResult(null);
         }
         */
+        
     }
 }

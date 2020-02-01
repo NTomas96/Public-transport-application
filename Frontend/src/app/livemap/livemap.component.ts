@@ -35,6 +35,7 @@ export class LivemapComponent implements OnInit {
 	selectedLine: Line = null;
 
 	private hubConnection: signalR.HubConnection;
+	message = "";
 
 	getVehicleById(id) {
 		for (const vehicle of this.vehicles) {
@@ -86,18 +87,19 @@ export class LivemapComponent implements OnInit {
 		});*/
 
 		this.hubConnection = new signalR.HubConnectionBuilder()
-			.withUrl("http://localhost:57563/" + "signalr")
+			.withUrl("http://localhost:57563/" + "bus")
 			.build();
-
-		this.hubConnection.on("transferbusdata", (data) => {
-			// this.data = data;
-			console.log(data);
-		});
 
 		this.hubConnection
 			.start()
 			.then(() => console.log("Connection started"))
 			.catch(err => console.log("Error while starting connection: " + err));
+
+		this.hubConnection.on("SayHello", (data) => {
+			this.message = data;
+			console.log(data);
+		});
+
 	}
 
 	lineChanged($event: MatSelectChange) {
