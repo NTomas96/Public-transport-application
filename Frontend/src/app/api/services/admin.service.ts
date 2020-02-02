@@ -8,8 +8,13 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
+import { DayOfWeek } from '../models/day-of-week';
 import { Line } from '../models/line';
+import { PassengerType } from '../models/passenger-type';
+import { Pricelist } from '../models/pricelist';
 import { Station } from '../models/station';
+import { TicketType } from '../models/ticket-type';
+import { Timetable } from '../models/timetable';
 
 @Injectable({
   providedIn: 'root',
@@ -508,6 +513,220 @@ export class AdminService extends BaseService {
   }): Observable<boolean> {
 
     return this.deleteStation$Response(params).pipe(
+      map((r: StrictHttpResponse<boolean>) => r.body as boolean)
+    );
+  }
+
+  /**
+   * Path part for operation apiAdminTimetablesLineIdDayGet
+   */
+  static readonly ApiAdminTimetablesLineIdDayGetPath = '/api/Admin/timetables/{lineId}/{day}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getTimeTable()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getTimeTable$Response(params: {
+    lineId: number;
+    day: DayOfWeek;
+
+  }): Observable<StrictHttpResponse<Timetable>> {
+
+    const rb = new RequestBuilder(this.rootUrl, AdminService.ApiAdminTimetablesLineIdDayGetPath, 'get');
+    if (params) {
+
+      rb.path('lineId', params.lineId);
+      rb.path('day', params.day);
+
+    }
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Timetable>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getTimeTable$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getTimeTable(params: {
+    lineId: number;
+    day: DayOfWeek;
+
+  }): Observable<Timetable> {
+
+    return this.getTimeTable$Response(params).pipe(
+      map((r: StrictHttpResponse<Timetable>) => r.body as Timetable)
+    );
+  }
+
+  /**
+   * Path part for operation apiAdminTimetablesLineIdDayPost
+   */
+  static readonly ApiAdminTimetablesLineIdDayPostPath = '/api/Admin/timetables/{lineId}/{day}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `editTimeTable$Json()` instead.
+   *
+   * This method sends `application/json-patch+json` and handles request body of type `application/json-patch+json`.
+   */
+  editTimeTable$Json$Response(params: {
+    lineId: number;
+    day: DayOfWeek;
+
+    body?: Timetable
+  }): Observable<StrictHttpResponse<boolean>> {
+
+    const rb = new RequestBuilder(this.rootUrl, AdminService.ApiAdminTimetablesLineIdDayPostPath, 'post');
+    if (params) {
+
+      rb.path('lineId', params.lineId);
+      rb.path('day', params.day);
+
+      rb.body(params.body, 'application/json-patch+json');
+    }
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: String((r as HttpResponse<any>).body) === 'true' }) as StrictHttpResponse<boolean>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `editTimeTable$Json$Response()` instead.
+   *
+   * This method sends `application/json-patch+json` and handles request body of type `application/json-patch+json`.
+   */
+  editTimeTable$Json(params: {
+    lineId: number;
+    day: DayOfWeek;
+
+    body?: Timetable
+  }): Observable<boolean> {
+
+    return this.editTimeTable$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<boolean>) => r.body as boolean)
+    );
+  }
+
+  /**
+   * Path part for operation apiAdminPricelistsTicketTypePassengerTypeGet
+   */
+  static readonly ApiAdminPricelistsTicketTypePassengerTypeGetPath = '/api/Admin/pricelists/{ticketType}/{passengerType}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getTicketPrice()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getTicketPrice$Response(params: {
+    ticketType: TicketType;
+    passengerType: PassengerType;
+
+  }): Observable<StrictHttpResponse<Pricelist>> {
+
+    const rb = new RequestBuilder(this.rootUrl, AdminService.ApiAdminPricelistsTicketTypePassengerTypeGetPath, 'get');
+    if (params) {
+
+      rb.path('ticketType', params.ticketType);
+      rb.path('passengerType', params.passengerType);
+
+    }
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Pricelist>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getTicketPrice$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getTicketPrice(params: {
+    ticketType: TicketType;
+    passengerType: PassengerType;
+
+  }): Observable<Pricelist> {
+
+    return this.getTicketPrice$Response(params).pipe(
+      map((r: StrictHttpResponse<Pricelist>) => r.body as Pricelist)
+    );
+  }
+
+  /**
+   * Path part for operation apiAdminPricelistsTicketTypePassengerTypePost
+   */
+  static readonly ApiAdminPricelistsTicketTypePassengerTypePostPath = '/api/Admin/pricelists/{ticketType}/{passengerType}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `setTicketPrice$Json()` instead.
+   *
+   * This method sends `application/json-patch+json` and handles request body of type `application/json-patch+json`.
+   */
+  setTicketPrice$Json$Response(params: {
+    ticketType: TicketType;
+    passengerType: PassengerType;
+
+    body?: Pricelist
+  }): Observable<StrictHttpResponse<boolean>> {
+
+    const rb = new RequestBuilder(this.rootUrl, AdminService.ApiAdminPricelistsTicketTypePassengerTypePostPath, 'post');
+    if (params) {
+
+      rb.path('ticketType', params.ticketType);
+      rb.path('passengerType', params.passengerType);
+
+      rb.body(params.body, 'application/json-patch+json');
+    }
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: String((r as HttpResponse<any>).body) === 'true' }) as StrictHttpResponse<boolean>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `setTicketPrice$Json$Response()` instead.
+   *
+   * This method sends `application/json-patch+json` and handles request body of type `application/json-patch+json`.
+   */
+  setTicketPrice$Json(params: {
+    ticketType: TicketType;
+    passengerType: PassengerType;
+
+    body?: Pricelist
+  }): Observable<boolean> {
+
+    return this.setTicketPrice$Json$Response(params).pipe(
       map((r: StrictHttpResponse<boolean>) => r.body as boolean)
     );
   }

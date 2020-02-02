@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Backend.Persistence.Repository
 {
-    public class PricelistRepository : Repository<Timetable,int>, IPricelistRepository
+    public class PricelistRepository : Repository<Pricelist,int>, IPricelistRepository
     {
         protected AppDbContext appDbContext { get { return context as AppDbContext; } }
 

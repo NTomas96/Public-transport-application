@@ -1,6 +1,6 @@
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import {AppRoutingModule} from "./app-routing.module";
 import {PageComponent} from "./page/page.component";
@@ -108,7 +108,8 @@ import {ColorPickerModule} from "ngx-color-picker";
 		MatCardModule,
 		NgxPayPalModule,
 		MatProgressSpinnerModule,
-		ColorPickerModule
+		ColorPickerModule,
+		FormsModule
 	],
 	providers: [httpInterceptorProviders],
 	bootstrap: [PageComponent],

@@ -475,6 +475,288 @@
         "x-operation-name": "deleteStation"
       }
     },
+    "/api/Admin/timetables/{lineId}/{day}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "lineId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "x-enumNames": [ ]
+            }
+          },
+          {
+            "name": "day",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/DayOfWeek"
+            },
+            "x-enumNames": [
+              "Sunday",
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timetable"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-operation-name": "getTimeTable"
+      },
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "lineId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "x-enumNames": [ ]
+            }
+          },
+          {
+            "name": "day",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/DayOfWeek"
+            },
+            "x-enumNames": [
+              "Sunday",
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Timetable"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Timetable"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Timetable"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Timetable"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean",
+                  "x-enumNames": [ ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-operation-name": "editTimeTable"
+      }
+    },
+    "/api/Admin/pricelists/{ticketType}/{passengerType}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "ticketType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/TicketType"
+            },
+            "x-enumNames": [
+              "TimeTicket",
+              "DailyTicket",
+              "MonthlyTicket",
+              "YearlyTicket"
+            ]
+          },
+          {
+            "name": "passengerType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PassengerType"
+            },
+            "x-enumNames": [
+              "Regular",
+              "Student",
+              "Pensioner"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pricelist"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-operation-name": "getTicketPrice"
+      },
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "ticketType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/TicketType"
+            },
+            "x-enumNames": [
+              "TimeTicket",
+              "DailyTicket",
+              "MonthlyTicket",
+              "YearlyTicket"
+            ]
+          },
+          {
+            "name": "passengerType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PassengerType"
+            },
+            "x-enumNames": [
+              "Regular",
+              "Student",
+              "Pensioner"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pricelist"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pricelist"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pricelist"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pricelist"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean",
+                  "x-enumNames": [ ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-operation-name": "setTicketPrice"
+      }
+    },
     "/api/BuyTickets/{ticketType}/{orderId}": {
       "post": {
         "tags": [
@@ -1335,6 +1617,65 @@
         "additionalProperties": false,
         "x-enumNames": [ ]
       },
+      "DayOfWeek": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ]
+      },
+      "Timetable": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "x-enumNames": [ ]
+          },
+          "dayOfWeek": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DayOfWeek"
+              }
+            ]
+          },
+          "line": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Line"
+              }
+            ],
+            "nullable": true
+          },
+          "departures": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64",
+              "x-enumNames": [ ]
+            },
+            "nullable": true,
+            "x-enumNames": [ ]
+          }
+        },
+        "additionalProperties": false,
+        "x-enumNames": [ ]
+      },
       "TicketType": {
         "enum": [
           0,
@@ -1364,6 +1705,37 @@
           "Student",
           "Pensioner"
         ]
+      },
+      "Pricelist": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "x-enumNames": [ ]
+          },
+          "ticketType": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TicketType"
+              }
+            ]
+          },
+          "passengerType": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PassengerType"
+              }
+            ]
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "x-enumNames": [ ]
+          }
+        },
+        "additionalProperties": false,
+        "x-enumNames": [ ]
       },
       "UserType": {
         "enum": [
@@ -1505,96 +1877,6 @@
           },
           "payPalData": {
             "type": "string",
-            "nullable": true,
-            "x-enumNames": [ ]
-          }
-        },
-        "additionalProperties": false,
-        "x-enumNames": [ ]
-      },
-      "Pricelist": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "x-enumNames": [ ]
-          },
-          "ticketType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/TicketType"
-              }
-            ]
-          },
-          "passengerType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/PassengerType"
-              }
-            ]
-          },
-          "price": {
-            "type": "number",
-            "format": "double",
-            "x-enumNames": [ ]
-          }
-        },
-        "additionalProperties": false,
-        "x-enumNames": [ ]
-      },
-      "DayOfWeek": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6
-        ],
-        "type": "integer",
-        "format": "int32",
-        "x-enumNames": [
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday"
-        ]
-      },
-      "Timetable": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "x-enumNames": [ ]
-          },
-          "dayOfWeek": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/DayOfWeek"
-              }
-            ]
-          },
-          "line": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Line"
-              }
-            ],
-            "nullable": true
-          },
-          "departures": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int64",
-              "x-enumNames": [ ]
-            },
             "nullable": true,
             "x-enumNames": [ ]
           }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Backend.Persistence.Repository
 {
-    public interface IPricelistRepository : IRepository<Timetable, int>
+    public interface IPricelistRepository : IRepository<Pricelist, int>
     {
         Pricelist GetTicketPrice(TicketType ticketType, PassengerType passengerType);
     }

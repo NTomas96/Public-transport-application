@@ -198,5 +198,125 @@ namespace Backend.Controllers
         }
 
         #endregion
+
+        #region Timetables
+        [HttpGet("timetables/{lineId}/{day}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(200, Type = typeof(Timetable))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult GetTimeTable(int lineId, DayOfWeek day)
+        {
+            var item = unitOfWork.Timetables.GetTimetable(lineId, day);
+
+            if (item == null)
+            {
+                item = new Timetable();
+                item.Line = new Line() { Id = lineId };
+                item.DayOfWeek = day;
+                item.Departures = new List<long>();
+            }
+            else
+            {
+                // TODO: this is a workaround
+                item.Line = new Line() { Id = lineId };
+            }
+
+            return Success(item);
+        }
+
+        [HttpPost("timetables/{lineId}/{day}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(200, Type = typeof(bool))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult EditTimeTable(int lineId, DayOfWeek day, [FromBody] Timetable newItem)
+        {
+            try
+            {
+                var item = unitOfWork.Timetables.GetTimetable(lineId, day);
+
+                if (item == null)
+                {
+                    item = new Timetable();
+                    item.Line = unitOfWork.Lines.Get(lineId);
+                    item.DayOfWeek = day;
+                    item.Departures = newItem.Departures;
+
+                    unitOfWork.Timetables.Add(item);
+                    unitOfWork.Complete();
+
+                    return Success(true);
+                }
+
+                item.Departures = newItem.Departures;
+                
+                unitOfWork.Timetables.Update(item);
+                unitOfWork.Complete();
+
+                return Success(true);
+            }
+            catch
+            {
+                return Error(11002, "Error while editing Timetable. Unexpected error has occured.");
+            }
+        }
+
+        #endregion
+
+        #region Pricelists
+        [HttpGet("pricelists/{ticketType}/{passengerType}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(200, Type = typeof(Pricelist))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult GetTicketPrice(TicketType ticketType, PassengerType passengerType)
+        {
+            var item = unitOfWork.Pricelists.GetTicketPrice(ticketType, passengerType);
+
+            if (item == null)
+            {
+                item = new Pricelist();
+                item.TicketType = ticketType;
+                item.PassengerType = passengerType;
+                item.Price = 0;
+            }
+
+            return Success(item);
+        }
+
+        [HttpPost("pricelists/{ticketType}/{passengerType}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(200, Type = typeof(bool))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
+        public IActionResult SetTicketPrice(TicketType ticketType, PassengerType passengerType, [FromBody] Pricelist newItem)
+        {
+            try
+            {
+                var item = unitOfWork.Pricelists.GetTicketPrice(ticketType, passengerType);
+
+                if (item == null)
+                {
+                    item = new Pricelist();
+                    item.TicketType = ticketType;
+                    item.PassengerType = passengerType;
+                    item.Price = newItem.Price;
+
+                    unitOfWork.Pricelists.Add(item);
+                    unitOfWork.Complete();
+
+                    return Success(true);
+                }
+
+                item.Price = newItem.Price;
+
+                unitOfWork.Pricelists.Update(item);
+                unitOfWork.Complete();
+
+                return Success(true);
+            }
+            catch
+            {
+                return Error(12002, "Error while editing Pricelist. Unexpected error has occured.");
+            }
+        }
+        #endregion
     }
 }

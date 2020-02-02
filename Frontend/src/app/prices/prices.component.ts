@@ -49,7 +49,7 @@ export class PricesComponent implements OnInit {
 		this.updateBuyTickets();
 	}
 
-	private initConfig(cardType): void {
+	private initConfig(card: Pricelist): void {
 		this.payPalConfig = {
 			currency: "EUR",
 			clientId: "ATsKexGYCoUhokUVT1tHhSjXHKAuvNcRLNNFXWYbyzsS7uPFOThLrcoesZjsDWjhp2Ly3xBWFzp00T3t",
@@ -59,22 +59,22 @@ export class PricesComponent implements OnInit {
 					{
 						amount: {
 							currency_code: "EUR",
-							value: "" + cardType.Price,
+							value: "" + card.price,
 							breakdown: {
 								item_total: {
 									currency_code: "EUR",
-									value: "" + cardType.Price
+									value: "" + card.price
 								}
 							}
 						},
 						items: [
 							{
-								name: this.ticketTypes[cardType.TicketType].name + " karta",
+								name: this.getTicketTypeName(card.ticketType) + " karta",
 								quantity: "1",
 								category: "DIGITAL_GOODS",
 								unit_amount: {
 									currency_code: "EUR",
-									value: "" + cardType.Price,
+									value: "" + card.price,
 								},
 							}
 						]
@@ -98,8 +98,6 @@ export class PricesComponent implements OnInit {
 						dialogConfig.disableClose = false;
 						dialogConfig.autoFocus = true;
 						dialogConfig.data = ticket.ticketNumber;
-
-						console.log("test");
 
 						this.dialog.open(TicketdialogComponent, dialogConfig);
 					},
@@ -157,7 +155,7 @@ export class PricesComponent implements OnInit {
 	}
 
 	updateTicket(selectedTicketType: TicketType, selectedPassengerType: PassengerType) {
-		this.pricelistsService.getPricelist({ticketType: 0, passengerType: 1}).subscribe(
+		this.pricelistsService.getPricelist({ticketType: selectedTicketType, passengerType: selectedPassengerType}).subscribe(
 			(price: Pricelist) => {
 				this.selectedTicket = price;
 			},
