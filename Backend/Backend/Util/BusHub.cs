@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Models.Web.Bus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,5 @@ namespace Backend.Util
 {
     public class BusHub : Hub
     {
-        public void SayHello(string message)
-        {
-            Clients.All.SendAsync("SayHello", message);
-        }
     }
 }

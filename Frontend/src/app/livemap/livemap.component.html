@@ -16,11 +16,11 @@
 				</agm-polyline>
 
 				<ng-container *ngFor="let vehicle of vehicles">
-				<agm-marker *ngIf="vehicle.line.id === selectedLine.id"  [latitude]="vehicle.lat" [longitude]="vehicle.lon" [iconUrl]="'assets/img/bus-icon.png'">
+				<agm-marker *ngIf="vehicle.lineId === selectedLine.id"  [latitude]="vehicle.lat" [longitude]="vehicle.lon" [iconUrl]="'assets/img/bus-icon.png'">
 					<agm-info-window [disableAutoPan]="false">
 
 						<div>
-							{{vehicle.name}} - Linija {{vehicle.line.name}}
+							<!--{{vehicle.name}} - Linija {{vehicle.line.name}}-->
 						</div>
 
 					</agm-info-window>

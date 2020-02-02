@@ -76,7 +76,7 @@ namespace Backend
             {
                 options.AddPolicy("corsDevPolicy", builder =>
                 {
-                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                    builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                 });
             });
 

@@ -4,7 +4,9 @@
 
 export const environment = {
 	production: false,
-	apiUrl: "http://localhost:56014/api/"
+	apiUrl: "http://localhost:56014",
+	wsUrl: "http://localhost:56014/bus",
+	gmapsApiKey: "AIzaSyDuUc5PE9D64mJOBPUzEIHAs0gTTo_86Sc"
 };
 
 /*

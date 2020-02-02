@@ -7,6 +7,7 @@ import {Line} from "../api/models/line";
 import {ErrorApiResponse} from "../api/models/error-api-response";
 import {StationsService} from "../api/services/stations.service";
 import * as signalR from "@aspnet/signalr";
+import {environment} from "../../environments/environment";
 
 
 @Component({
@@ -39,7 +40,7 @@ export class LivemapComponent implements OnInit {
 
 	getVehicleById(id) {
 		for (const vehicle of this.vehicles) {
-			if (vehicle.Id === id) {
+			if (vehicle.id === id) {
 				return vehicle;
 			}
 		}
@@ -67,27 +68,8 @@ export class LivemapComponent implements OnInit {
 			}
 		);
 
-		/*const connection = signalR.hubConnection;
-		const contosoChatHubProxy = connection.createHubProxy("Bus");
-		contosoChatHubProxy.on("hello", (v) => {
-
-			const vehicle = this.getVehicleById(v.Id);
-
-			if (vehicle === null) {
-				this.vehicles.push(v);
-			} else {
-				vehicle.Lat = v.Lat;
-				vehicle.Lon = v.Lon;
-			}
-
-			// console.log(vehicle);
-		});
-		connection.start().done(() => {
-
-		});*/
-
 		this.hubConnection = new signalR.HubConnectionBuilder()
-			.withUrl("http://localhost:57563/" + "bus")
+			.withUrl(environment.wsUrl)
 			.build();
 
 		this.hubConnection
@@ -95,9 +77,16 @@ export class LivemapComponent implements OnInit {
 			.then(() => console.log("Connection started"))
 			.catch(err => console.log("Error while starting connection: " + err));
 
-		this.hubConnection.on("SayHello", (data) => {
-			this.message = data;
-			console.log(data);
+		this.hubConnection.on("UpdateVehicle", (id, lineId, lat, lon) => {
+
+			const vehicle = this.getVehicleById(id);
+
+			if (vehicle === null) {
+				this.vehicles.push({id, lineId, lat, lon});
+			} else {
+				vehicle.lat = lat;
+				vehicle.lon = lon;
+			}
 		});
 
 	}

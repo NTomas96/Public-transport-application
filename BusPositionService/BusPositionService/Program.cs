@@ -31,7 +31,7 @@ namespace BusPositionService
 
                         string parameters = JsonConvert.SerializeObject(bj);
 
-                        HttpPost("http://localhost:57563/api/Lines/Bus", parameters);
+                        HttpPost("http://localhost:56014/api/Lines/Bus", parameters);
                     }
                 }
 
@@ -60,19 +60,19 @@ namespace BusPositionService
                         l.LineRoute = false;
                     }
 
-                    for(int i=0;i<3;i++)
+                    for(int i=0;i<1;i++)
                     {
                         Bus bus = new Bus();
                         bus.TrackerSerial = "SN_Line" + l.Name + "_BusNO:" + i;
 
-                        
-                        int index = rnd.Next(0, l.Waypoints.Count);
 
-                        bus.BusLocation.Lat = l.Waypoints[index].Lat;
-                        bus.BusLocation.Lon = l.Waypoints[index].Lon;
+                        int index = rnd.Next(0, l.Waypoints.Count);
+                        bus.Index = index;
 
                         l.Buses.Add(bus);
                     }
+
+                    break;
                 }
 
                 /*

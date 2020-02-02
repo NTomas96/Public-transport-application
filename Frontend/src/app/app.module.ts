@@ -51,6 +51,7 @@ import {DialogComponent} from "./dialog/dialog.component";
 import {EditlineComponent} from "./admin/adminlines/editline/editline.component";
 import {ColorPickerModule} from "ngx-color-picker";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {environment} from "../environments/environment";
 
 @NgModule({
 	declarations: [
@@ -94,9 +95,9 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 		MatSelectModule,
 		MatNativeDateModule,
 		AgmCoreModule.forRoot({
-			apiKey: "AIzaSyDuUc5PE9D64mJOBPUzEIHAs0gTTo_86Sc" // Google Maps API key
+			apiKey: environment.gmapsApiKey // Google Maps API key
 		}),
-		ApiModule.forRoot({rootUrl: "http://localhost:56014"}),
+		ApiModule.forRoot({rootUrl: environment.apiUrl}),
 		ReactiveFormsModule,
 		MatFormFieldModule,
 		MatInputModule,

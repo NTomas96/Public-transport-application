@@ -14,6 +14,8 @@ using Newtonsoft.Json;
 using Backend.Persistence.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Backend.Util;
+using Models.Web.Bus;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Backend.Controllers
 {
@@ -23,10 +25,12 @@ namespace Backend.Controllers
     public class LinesController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IHubContext<BusHub> hubContext;
 
-        public LinesController(IUnitOfWork u)
+        public LinesController(IUnitOfWork u, IHubContext<BusHub> hubContext)
         {
             this.unitOfWork = u;
+            this.hubContext = hubContext;
         }
 
         [HttpGet]
@@ -59,23 +63,25 @@ namespace Backend.Controllers
             return Success(line);
         }
 
-        /*
-        [Route("api/Lines/Bus")]
-        [HttpPost]
+
+        [HttpPost("bus")]
+        [ProducesResponseType(200, Type = typeof(bool))]
+        [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
         public IActionResult Bus([FromBody] BusJson data)
         {
-            Vehicle vehicle = unitOfWork.Vehicles.GetVehicleByTrackerSerial(data.TrackerSerial);
+            Vehicle vehicle = unitOfWork.Vehicles.GetVehicleByTrackerSerial(data.SerialNumber);
 
             if(vehicle != null)
             {
-                vehicle.Lat = data.GeoLocation.Lat;
-                vehicle.Lon = data.GeoLocation.Lon;
+                vehicle.Lat = data.Lat;
+                vehicle.Lon = data.Lon;
 
-                BusHub.SayHello("Hello");
+                unitOfWork.Vehicles.Update(vehicle);
+
+                hubContext.Clients.All.SendAsync("UpdateVehicle", vehicle.Id, vehicle.Line.Id, vehicle.Lat, vehicle.Lon);
             }
-            return JsonResult(null);
+
+            return Success(true);
         }
-        */
-        
     }
 }
