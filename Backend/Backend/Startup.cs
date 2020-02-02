@@ -50,6 +50,8 @@ namespace Backend
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.JwtSecret);
 
+            services.AddSignalR();
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -118,6 +120,7 @@ namespace Backend
                 app.UseSwagger();
             }
 
+            app.UseSignalR(routes => { routes.MapHub<BusHub>("/bus"); });
             app.UseAuthentication();
             app.UseMvc();
         }
