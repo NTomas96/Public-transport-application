@@ -116,7 +116,12 @@ namespace Backend.Controllers
 
             if (user != null)
             {
-                if(profile.checkUserProperties() && !(String.IsNullOrEmpty(profile.AdditionalInfo) || String.IsNullOrWhiteSpace(profile.AdditionalInfo)))
+                if(user.PassengerType == PassengerType.Regular)
+                {
+                    profile.AdditionalInfo = null;
+                }
+
+                if(profile.checkUserProperties() && !(string.IsNullOrEmpty(profile.AdditionalInfo) || string.IsNullOrWhiteSpace(profile.AdditionalInfo)))
                 {
                     user.FirstName = profile.FirstName;
                     user.LastName = profile.LastName;
@@ -124,14 +129,11 @@ namespace Backend.Controllers
                     user.DayOfBirth = profile.DayOfBirth;
                     user.Address = profile.Address;
 
-                    if (user.AdditionalInfo != null)
+                    if (user.AdditionalInfo != profile.AdditionalInfo)
                     {
-                        if (user.AdditionalInfo != profile.AdditionalInfo)
-                        {
-                            user.Active = false;
-                            user.VerificationStatus = VerificationStatus.Processing;
-                            user.AdditionalInfo = profile.AdditionalInfo;
-                        }
+                        user.Active = false;
+                        user.VerificationStatus = VerificationStatus.Processing;
+                        user.AdditionalInfo = profile.AdditionalInfo;
                     }
 
                     if (!profile.Password.Equals("******"))
@@ -188,7 +190,7 @@ namespace Backend.Controllers
             {
                 user.VerificationStatus = VerificationStatus.Accepted;
                 user.Active = true;
-                user.AdditionalInfo = "";
+                user.AdditionalInfo = null;
                 unitOfWork.Complete();
 
                 return Success(true);

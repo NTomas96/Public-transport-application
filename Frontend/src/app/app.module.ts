@@ -50,6 +50,7 @@ import {EditstationComponent} from "./admin/adminstations/editstation/editstatio
 import {DialogComponent} from "./dialog/dialog.component";
 import {EditlineComponent} from "./admin/adminlines/editline/editline.component";
 import {ColorPickerModule} from "ngx-color-picker";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
 	declarations: [
@@ -109,7 +110,8 @@ import {ColorPickerModule} from "ngx-color-picker";
 		NgxPayPalModule,
 		MatProgressSpinnerModule,
 		ColorPickerModule,
-		FormsModule
+		FormsModule,
+		MatTooltipModule
 	],
 	providers: [httpInterceptorProviders],
 	bootstrap: [PageComponent],
