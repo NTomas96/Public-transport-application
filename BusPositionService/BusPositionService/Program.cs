@@ -63,7 +63,7 @@ namespace BusPositionService
                     for(int i=0;i<3;i++)
                     {
                         Bus bus = new Bus();
-                        bus.TrackerSerial = "No" + l.Name + "0" + (i + 1);
+                        bus.TrackerSerial = "No" + (i + 1) + "0" + l.Name;
 
 
                         int index = rnd.Next(0, l.Waypoints.Count);

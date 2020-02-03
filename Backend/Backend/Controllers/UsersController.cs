@@ -121,7 +121,7 @@ namespace Backend.Controllers
                     profile.AdditionalInfo = null;
                 }
 
-                if(profile.checkUserProperties() && !(string.IsNullOrEmpty(profile.AdditionalInfo) || string.IsNullOrWhiteSpace(profile.AdditionalInfo)))
+                if(profile.checkUserProperties())// && !(string.IsNullOrEmpty(profile.AdditionalInfo) || string.IsNullOrWhiteSpace(profile.AdditionalInfo)))
                 {
                     user.FirstName = profile.FirstName;
                     user.LastName = profile.LastName;

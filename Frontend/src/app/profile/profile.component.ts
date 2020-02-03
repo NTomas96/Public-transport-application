@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
 		dayOfBirth: ["", [Validators.required]],
 		address: ["", [Validators.required]],
 		passengerType: [""],
-		additionalInfo: ["", [Validators.required]],
+		additionalInfo: [""],
 		verificationStatus: [""]},
 		{ validator: MustMatch("password", "confirmPassword")}
 		);

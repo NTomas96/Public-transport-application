@@ -36,7 +36,6 @@ export class LivemapComponent implements OnInit {
 	selectedLine: Line = null;
 
 	private hubConnection: signalR.HubConnection;
-	message = "";
 
 	getVehicleById(id) {
 		for (const vehicle of this.vehicles) {
