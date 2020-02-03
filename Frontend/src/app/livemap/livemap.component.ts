@@ -49,6 +49,8 @@ export class LivemapComponent implements OnInit {
 
 	ngOnInit(): void {
 
+		this.selectedLine = null;
+
 		this.linesService.getLinesWithStations().subscribe(
 			(data: Array<Line>) => {
 				this.lines = data;
@@ -87,7 +89,6 @@ export class LivemapComponent implements OnInit {
 				vehicle.lon = lon;
 			}
 		});
-
 	}
 
 	lineChanged($event: MatSelectChange) {

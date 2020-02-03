@@ -83,37 +83,41 @@ namespace Backend.Controllers
                 oldItem.LineType = item.LineType;
                 oldItem.Name = item.Name;
 
-                List<StationLine> toAdd = new List<StationLine>();
-                List<StationLine> toRemove = new List<StationLine>();
-
-                foreach(var s in item.Stations)
+                if(item.Stations != null)
                 {
-                    if(oldItem.Stations.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
+                    List<StationLine> toAdd = new List<StationLine>();
+                    List<StationLine> toRemove = new List<StationLine>();
+
+                    foreach (var s in item.Stations)
                     {
-                        toAdd.Add(s);
+                        if (oldItem.Stations.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
+                        {
+                            toAdd.Add(s);
+                        }
+                    }
+
+                    foreach (var s in oldItem.Stations)
+                    {
+                        if (item.Stations.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
+                        {
+                            toRemove.Add(s);
+                        }
+                    }
+
+                    foreach (var elm in toRemove)
+                    {
+                        oldItem.Stations.Remove(elm);
+                    }
+                    foreach (var elm in toAdd)
+                    {
+                        elm.Station = null;
+                        elm.Line = null;
+                        elm.LineId = oldItem.Id;
+
+                        oldItem.Stations.Add(elm);
                     }
                 }
-
-                foreach (var s in oldItem.Stations)
-                {
-                    if (item.Stations.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
-                    {
-                        toRemove.Add(s);
-                    }
-                }
-
-                foreach(var elm in toRemove)
-                {
-                    oldItem.Stations.Remove(elm);
-                }
-                foreach (var elm in toAdd)
-                {
-                    elm.Station = null;
-                    elm.Line = null;
-                    elm.LineId = oldItem.Id;
-
-                    oldItem.Stations.Add(elm);
-                }
+                
 
                 oldItem.Waypoints = item.Waypoints;
 
@@ -210,36 +214,39 @@ namespace Backend.Controllers
                 oldItem.Lon = item.Lon;
                 oldItem.Name = item.Name;
 
-                List<StationLine> toAdd = new List<StationLine>();
-                List<StationLine> toRemove = new List<StationLine>();
-
-                foreach (var s in item.Lines)
+                if(item.Lines != null)
                 {
-                    if (oldItem.Lines.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
+                    List<StationLine> toAdd = new List<StationLine>();
+                    List<StationLine> toRemove = new List<StationLine>();
+
+                    foreach (var s in item.Lines)
                     {
-                        toAdd.Add(s);
+                        if (oldItem.Lines.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
+                        {
+                            toAdd.Add(s);
+                        }
                     }
-                }
 
-                foreach (var s in oldItem.Lines)
-                {
-                    if (item.Lines.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
+                    foreach (var s in oldItem.Lines)
                     {
-                        toRemove.Add(s);
+                        if (item.Lines.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
+                        {
+                            toRemove.Add(s);
+                        }
                     }
-                }
 
-                foreach (var elm in toRemove)
-                {
-                    oldItem.Lines.Remove(elm);
-                }
-                foreach (var elm in toAdd)
-                {
-                    elm.Line = null;
-                    elm.Station = null;
-                    elm.StationId = oldItem.Id;
+                    foreach (var elm in toRemove)
+                    {
+                        oldItem.Lines.Remove(elm);
+                    }
+                    foreach (var elm in toAdd)
+                    {
+                        elm.Line = null;
+                        elm.Station = null;
+                        elm.StationId = oldItem.Id;
 
-                    oldItem.Lines.Add(elm);
+                        oldItem.Lines.Add(elm);
+                    }
                 }
 
                 unitOfWork.Stations.Update(oldItem);
