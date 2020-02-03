@@ -10,7 +10,6 @@ namespace Backend.Models
     {
         public int LineId { get; set; }
         public int StationId { get; set; }
-        [JsonIgnore]
         public Line Line { get; set; }
         public Station Station { get; set; }
     }

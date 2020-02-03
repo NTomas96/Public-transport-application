@@ -10,5 +10,7 @@ namespace Backend.Persistence.Repository
     public interface IStationRepository : IRepository<Station,int>
     {
         IQueryable<Station> GetStations();
+        IQueryable<Station> GetStationsWithLines();
+        Station GetStationWithLines(int id);
     }
 }

@@ -17,9 +17,19 @@ namespace Backend.Persistence.Repository
 
         }
 
-        IQueryable<Station> IStationRepository.GetStations()
+        public IQueryable<Station> GetStations()
         {
             return appDbContext.Stations;
+        }
+
+        public IQueryable<Station> GetStationsWithLines()
+        {
+            return appDbContext.Stations.Include(s => s.Lines);
+        }
+
+        public Station GetStationWithLines(int id)
+        {
+            return appDbContext.Stations.Include(s => s.Lines).ThenInclude(sl => sl.Line).Where(s => s.Id == id).FirstOrDefault();
         }
     }
 }

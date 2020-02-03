@@ -1,0 +1,23 @@
+<div>
+	<div>
+		<mat-form-field>
+			<mat-label>Linija:</mat-label>
+			<mat-select #lineSelect>
+				<mat-option *ngFor="let line of lines" [value]="line.id">{{line.name}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<button mat-raised-button color="primary" (click)="selectLine(lineSelect.value)">Submit</button>
+	</div>
+	<mat-divider></mat-divider>
+	<div>
+		<mat-form-field>
+			<mat-label>Stanica:</mat-label>
+			<mat-select #stationSelect>
+				<mat-option *ngFor="let station of stations" [value]="station.id">{{station.name}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<button mat-raised-button color="primary" (click)="selectStation(stationSelect.value)">Submit</button>
+	</div>
+</div>

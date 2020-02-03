@@ -60,10 +60,10 @@ namespace BusPositionService
                         l.LineRoute = false;
                     }
 
-                    for(int i=0;i<1;i++)
+                    for(int i=0;i<3;i++)
                     {
                         Bus bus = new Bus();
-                        bus.TrackerSerial = "SN_Line" + l.Name + "_BusNO:" + i;
+                        bus.TrackerSerial = "No" + l.Name + "0" + (i + 1);
 
 
                         int index = rnd.Next(0, l.Waypoints.Count);
@@ -71,19 +71,7 @@ namespace BusPositionService
 
                         l.Buses.Add(bus);
                     }
-
-                    break;
                 }
-
-                /*
-                Console.WriteLine(lines[0].BusLocation.Lon);
-
-                Waypoint[] niz = lines[0].Waypoints.ToArray();
-
-                Console.WriteLine(niz[0].Lat + " " + niz[0].Lon);
-
-                Console.ReadLine();
-                */
             }
         }
 

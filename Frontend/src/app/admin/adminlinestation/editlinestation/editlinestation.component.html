@@ -1,0 +1,31 @@
+<div *ngIf="selectedElement != null">
+	<table mat-table [dataSource]="elements" #elementTable class="mat-elevation-z8">
+		<ng-container  matColumnDef="elm">
+			<th mat-header-cell *matHeaderCellDef> {{this.isLine ? 'Stanica' : 'Linija'}} </th>
+			<td mat-cell *matCellDef="let element">
+				{{this.isLine ? element.station.name : element.line.name}}
+			</td>
+		</ng-container>
+		<ng-container  matColumnDef="actions">
+			<th mat-header-cell *matHeaderCellDef> Akcije </th>
+			<td mat-cell *matCellDef="let element">
+				<button mat-raised-button color="primary" (click)="delete(element);" >Obrisi</button>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="['elm', 'actions']"></tr>
+		<tr mat-row *matRowDef="let row; columns: ['elm', 'actions'];"></tr>
+	</table>
+	<div>
+		<mat-form-field>
+			<mat-label>{{this.isLine ? 'Stanica' : 'Linija'}}</mat-label>
+			<mat-select #elmSelect>
+				<mat-option *ngFor="let element of (this.isLine ? this.stations : this.lines)" [value]="element">{{element.name}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<button mat-raised-button color="primary" (click)="addLineStation(elmSelect.value)">Dodaj {{this.isLine ? 'Stanica' : 'Linija'}}</button>
+	</div>
+	<div>
+		<button mat-raised-button color="primary" (click)="saveLineStations()">Sacuvaj</button>
+	</div>
+</div>

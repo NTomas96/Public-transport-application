@@ -38,7 +38,7 @@ namespace Backend.Controllers
         [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
         public IActionResult GetLine(int id)
         {
-            var item = unitOfWork.Lines.Get(id);
+            var item = unitOfWork.Lines.GetLineWithStations(id);
 
             if (item == null)
             {
@@ -77,13 +77,52 @@ namespace Backend.Controllers
         {
             try
             {
-                item.Id = id;
-                unitOfWork.Lines.Update(item);
+                var oldItem = unitOfWork.Lines.GetLineWithStations(id);
+
+                oldItem.Color = item.Color;
+                oldItem.LineType = item.LineType;
+                oldItem.Name = item.Name;
+
+                List<StationLine> toAdd = new List<StationLine>();
+                List<StationLine> toRemove = new List<StationLine>();
+
+                foreach(var s in item.Stations)
+                {
+                    if(oldItem.Stations.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
+                    {
+                        toAdd.Add(s);
+                    }
+                }
+
+                foreach (var s in oldItem.Stations)
+                {
+                    if (item.Stations.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
+                    {
+                        toRemove.Add(s);
+                    }
+                }
+
+                foreach(var elm in toRemove)
+                {
+                    oldItem.Stations.Remove(elm);
+                }
+                foreach (var elm in toAdd)
+                {
+                    elm.Station = null;
+                    elm.Line = null;
+                    elm.LineId = oldItem.Id;
+
+                    oldItem.Stations.Add(elm);
+                }
+
+                oldItem.Waypoints = item.Waypoints;
+
+                unitOfWork.Lines.Update(oldItem);
                 unitOfWork.Complete();
 
                 return Success(true);
             }
-            catch
+            catch(Exception e)
             {
                 return Error(8003, "Error while editing. Are you sure that Line exists?");
             }
@@ -126,7 +165,7 @@ namespace Backend.Controllers
         [ProducesResponseType(400, Type = typeof(ErrorApiResponse))]
         public IActionResult GetStation(int id)
         {
-            var item = unitOfWork.Stations.Get(id);
+            var item = unitOfWork.Stations.GetStationWithLines(id);
 
             if (item == null)
             {
@@ -165,8 +204,45 @@ namespace Backend.Controllers
         {
             try
             {
-                item.Id = id;
-                unitOfWork.Stations.Update(item);
+                var oldItem = unitOfWork.Stations.GetStationWithLines(id);
+
+                oldItem.Lat = item.Lat;
+                oldItem.Lon = item.Lon;
+                oldItem.Name = item.Name;
+
+                List<StationLine> toAdd = new List<StationLine>();
+                List<StationLine> toRemove = new List<StationLine>();
+
+                foreach (var s in item.Lines)
+                {
+                    if (oldItem.Lines.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
+                    {
+                        toAdd.Add(s);
+                    }
+                }
+
+                foreach (var s in oldItem.Lines)
+                {
+                    if (item.Lines.Find(sl => sl.StationId == s.StationId && sl.LineId == s.LineId) == null)
+                    {
+                        toRemove.Add(s);
+                    }
+                }
+
+                foreach (var elm in toRemove)
+                {
+                    oldItem.Lines.Remove(elm);
+                }
+                foreach (var elm in toAdd)
+                {
+                    elm.Line = null;
+                    elm.Station = null;
+                    elm.StationId = oldItem.Id;
+
+                    oldItem.Lines.Add(elm);
+                }
+
+                unitOfWork.Stations.Update(oldItem);
                 unitOfWork.Complete();
 
                 return Success(true);

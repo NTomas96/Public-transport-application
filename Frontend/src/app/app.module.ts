@@ -52,6 +52,8 @@ import {EditlineComponent} from "./admin/adminlines/editline/editline.component"
 import {ColorPickerModule} from "ngx-color-picker";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {environment} from "../environments/environment";
+import { AdminlinestationComponent } from './admin/adminlinestation/adminlinestation.component';
+import { EditlinestationComponent } from './admin/adminlinestation/editlinestation/editlinestation.component';
 
 @NgModule({
 	declarations: [
@@ -78,6 +80,8 @@ import {environment} from "../environments/environment";
 		EditstationComponent,
 		EditlineComponent,
 		DialogComponent,
+		AdminlinestationComponent,
+		EditlinestationComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -13,4 +13,5 @@ export { UserType } from './models/user-type';
 export { VerificationStatus } from './models/verification-status';
 export { User } from './models/user';
 export { Ticket } from './models/ticket';
+export { BusJson } from './models/bus-json';
 export { LoginResponse } from './models/login-response';

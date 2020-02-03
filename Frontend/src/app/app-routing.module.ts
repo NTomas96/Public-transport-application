@@ -19,6 +19,8 @@ import {AdmintimetablesComponent} from "./admin/admintimetables/admintimetables.
 import {AdminstationsComponent} from "./admin/adminstations/adminstations.component";
 import {EditstationComponent} from "./admin/adminstations/editstation/editstation.component";
 import {EditlineComponent} from "./admin/adminlines/editline/editline.component";
+import {AdminlinestationComponent} from "./admin/adminlinestation/adminlinestation.component";
+import {EditlinestationComponent} from "./admin/adminlinestation/editlinestation/editlinestation.component";
 
 const routes: Routes = [
 	{path: "home", component: HomeComponent},
@@ -42,7 +44,9 @@ const routes: Routes = [
 	{path: "admin/stations/edit", component: EditstationComponent},
 	{path: "admin/stations/edit/:id", component: EditstationComponent},
 	{path: "admin/lines/edit", component: EditlineComponent},
-	{path: "admin/lines/edit/:id", component: EditlineComponent}
+	{path: "admin/lines/edit/:id", component: EditlineComponent},
+	{path: "admin/linestation", component: AdminlinestationComponent},
+	{path: "admin/linestation/:obj/:id", component: EditlinestationComponent}
 ];
 
 @NgModule({

@@ -31,14 +31,7 @@ namespace Backend.Persistence.Repository
 
         public Line GetLineWithStations(int id)
         {
-            Line line = Get(id);
-
-            if(line != null)
-            {
-                appDbContext.Entry(line).Collection(l => l.Stations).Load();
-            }
-
-            return line;
+            return appDbContext.Lines.Include(l => l.Stations).ThenInclude(sl => sl.Station).Where(l => l.Id == id).FirstOrDefault();
         }
     }
 }

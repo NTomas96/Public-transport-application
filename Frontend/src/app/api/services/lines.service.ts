@@ -8,6 +8,7 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
+import { BusJson } from '../models/bus-json';
 import { Line } from '../models/line';
 
 @Injectable({
@@ -159,6 +160,55 @@ export class LinesService extends BaseService {
 
     return this.getLine$Response(params).pipe(
       map((r: StrictHttpResponse<Line>) => r.body as Line)
+    );
+  }
+
+  /**
+   * Path part for operation apiLinesBusPost
+   */
+  static readonly ApiLinesBusPostPath = '/api/Lines/bus';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `bus$Json()` instead.
+   *
+   * This method sends `application/json-patch+json` and handles request body of type `application/json-patch+json`.
+   */
+  bus$Json$Response(params?: {
+
+    body?: BusJson
+  }): Observable<StrictHttpResponse<boolean>> {
+
+    const rb = new RequestBuilder(this.rootUrl, LinesService.ApiLinesBusPostPath, 'post');
+    if (params) {
+
+
+      rb.body(params.body, 'application/json-patch+json');
+    }
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: String((r as HttpResponse<any>).body) === 'true' }) as StrictHttpResponse<boolean>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `bus$Json$Response()` instead.
+   *
+   * This method sends `application/json-patch+json` and handles request body of type `application/json-patch+json`.
+   */
+  bus$Json(params?: {
+
+    body?: BusJson
+  }): Observable<boolean> {
+
+    return this.bus$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<boolean>) => r.body as boolean)
     );
   }
 

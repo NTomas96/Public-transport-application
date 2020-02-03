@@ -922,6 +922,61 @@
         "x-operation-name": "getLine"
       }
     },
+    "/api/Lines/bus": {
+      "post": {
+        "tags": [
+          "Lines"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BusJson"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BusJson"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BusJson"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BusJson"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean",
+                  "x-enumNames": [ ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-operation-name": "bus"
+      }
+    },
     "/api/Pricelists/me/{ticketType}": {
       "get": {
         "tags": [
@@ -1512,6 +1567,14 @@
             "nullable": true,
             "x-enumNames": [ ]
           },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StationLine"
+            },
+            "nullable": true,
+            "x-enumNames": [ ]
+          },
           "lat": {
             "type": "number",
             "format": "double",
@@ -1538,6 +1601,14 @@
             "type": "integer",
             "format": "int32",
             "x-enumNames": [ ]
+          },
+          "line": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Line"
+              }
+            ],
+            "nullable": true
           },
           "station": {
             "allOf": [
@@ -1878,6 +1949,28 @@
           "payPalData": {
             "type": "string",
             "nullable": true,
+            "x-enumNames": [ ]
+          }
+        },
+        "additionalProperties": false,
+        "x-enumNames": [ ]
+      },
+      "BusJson": {
+        "type": "object",
+        "properties": {
+          "serialNumber": {
+            "type": "string",
+            "nullable": true,
+            "x-enumNames": [ ]
+          },
+          "lat": {
+            "type": "number",
+            "format": "double",
+            "x-enumNames": [ ]
+          },
+          "lon": {
+            "type": "number",
+            "format": "double",
             "x-enumNames": [ ]
           }
         },
